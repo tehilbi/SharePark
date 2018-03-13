@@ -45,7 +45,7 @@ export default class App extends Component {
         </Text>
         <View style={styles.inputContainer}>  
            <TouchableOpacity
-              style={{height:220,backgroundColor:'red',justifyContent:'center',width:'100%'}}>
+              style={{height:220,backgroundColor:'green',justifyContent:'center',width:'100%'}}>
               <Text style={styles.Findpark}>
               {this.state.Findpark}
               </Text>
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
      color:'white'
    },
   /* instructions: {
-    textAlign: 'center',
+    textAlign: 'center',yuliaaa
     color: '#333333',
     marginBottom: 5,
   }, */
