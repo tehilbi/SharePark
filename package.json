@@ -6,10 +6,7 @@
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest"
   },
-  "dependencies": {
-    "react": "16.2.0",
-    "react-native": "0.53.3"
-  },
+  
   "devDependencies": {
     "babel-jest": "22.4.1",
     "babel-preset-react-native": "4.0.0",
@@ -18,5 +15,23 @@
   },
   "jest": {
     "preset": "react-native"
+  },
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tehilbi/SharePark.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tehilbi/SharePark/issues"
+  },
+  "homepage": "https://github.com/tehilbi/SharePark#readme",
+  "dependencies": {
+    "mongoose": "^5.0.10",
+    "react": "16.2.0",
+    "react-native": "0.53.3"
   }
+  
 }
