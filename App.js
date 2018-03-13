@@ -45,7 +45,7 @@ export default class App extends Component {
         </Text>
         <View style={styles.inputContainer}>  
            <TouchableOpacity
-              style={{height:220,backgroundColor:'green',justifyContent:'center',width:'100%'}}>
+              style={{height:220,backgroundColor:'black',justifyContent:'center',width:'100%'}}>
               <Text style={styles.Findpark}>
               {this.state.Findpark}
               </Text>
