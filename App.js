@@ -3,7 +3,7 @@
  * https://github.com/facebook/react-native
  * @flow
  */
-
+/*
 import React, { Component } from 'react';
 
 import {
@@ -23,7 +23,7 @@ import {
   android: 'Double tap R on your keyboard to reload,\n' +
     'Shake or press menu button for dev menu',
 }); */
-
+/*
 export default class App extends Component {
   state= {
     Welcome:'Welcome to SharePark',
@@ -35,7 +35,7 @@ export default class App extends Component {
       Welcome:val
     });
   }; */
-
+/*
   render() {
     console.log("For test")
     return (
@@ -57,7 +57,7 @@ export default class App extends Component {
   }
 }
 
-
+/*
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -90,4 +90,34 @@ const styles = StyleSheet.create({
     color: '#333333',
     marginBottom: 5,
   }, */
-});
+//});
+
+import React , {Component} from 'react';
+import {AppRegistry,Text,View,TextInput} from 'react-native';
+import {StackNavigator} from 'react-navigation';
+
+import LoginPage from './app/LoginPage/LoginPage';
+
+const Application=StackNavigator(
+  {
+    Home:{screen:LoginPage}
+  },
+  {
+    navigationOptions:
+    {
+      header:false
+    }
+  }    
+);
+
+export default class yuliaApp extends Component{
+ 
+  render(){
+    return(
+          <Application/>
+     
+    );
+  }
+
+}
+AppRegistry.registerComponent('yuliaApp',()=>yuliaApp);
