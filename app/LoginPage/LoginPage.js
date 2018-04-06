@@ -9,6 +9,7 @@ export default class LoginPage extends Component{
         this.state={
             username:'',
             Password:'',
+            permission:''
         }
     }
 
@@ -21,7 +22,14 @@ export default class LoginPage extends Component{
         var value=await AsyncStorage.getItem('user') ;
         if(value!==null)
         {
-            this.props.navigation.navigate('Profile');
+            switch(this.state.permission){
+                case 1:this.props.navigation.navigate('ManagerProfile');
+                break;
+                case 2:this.props.navigation.navigate('empWithParking');
+                break;
+                case 3:this.props.navigation.navigate('empWithNoParking');
+                break;
+            }
         }
     }
  
@@ -89,7 +97,13 @@ export default class LoginPage extends Component{
             if(res.success===true)
             {
                 AsyncStorage.setItem('user',res.user);
-                this.props.navigation.navigate('Profile');
+                this.state.permission=res.user;
+                if(res.user===1)
+                    this.props.navigation.navigate('ManagerProfile');
+                else if(res.user===2)
+                    this.props.navigation.navigate('empWithParking');
+                else if(res.user===3)
+                    this.props.navigation.navigate('empWithNoParking');    
             }
             else
             {
