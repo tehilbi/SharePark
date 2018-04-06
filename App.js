@@ -97,15 +97,17 @@ import {AppRegistry,Text,View,TextInput} from 'react-native';
 import {StackNavigator} from 'react-navigation';
 
 import LoginPage from './app/LoginPage/LoginPage';
+import Profile from './app/Profile/Profile';
 
 const Application=StackNavigator(
   {
-    Home:{screen:LoginPage}
+    Home:{screen:LoginPage},
+    Profile:{screen:Profile}
   },
   {
     navigationOptions:
     {
-      header:false
+      header:false,
     }
   }    
 );

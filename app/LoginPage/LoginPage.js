@@ -1,13 +1,15 @@
 import React , {Component} from 'react';
-import {AppRegistry,Text,View,TextInput,Image,StyleSheet,ScrollView,Button,TouchableOpacity,AsyncStorage} from 'react-native';
+import {AppRegistry,Text,View,TextInput,Image,StyleSheet,ScrollView,Button,TouchableOpacity,AsyncStorage,} from 'react-native';
 import {StackNavigator} from 'react-navigation';
-
 
 export default class LoginPage extends Component{
     constructor(props)
     {
         super(props);
-        this.state={username:'',Password:'',}
+        this.state={
+            username:'',
+            Password:'',
+        }
     }
 
     //check if the user loged in priviously or not
@@ -44,7 +46,7 @@ export default class LoginPage extends Component{
                         underlineColorAndroid='transparent' 
                         style={styles.input}
                         onChange={(username)=>this.setState({username})}
-                        value={this.state.username}
+                       // value={this.state.username}
                         placeholder='Username'>
                     </TextInput>
 
@@ -53,7 +55,7 @@ export default class LoginPage extends Component{
                         underlineColorAndroid='transparent' 
                         style={styles.input}
                         onChange={(Password)=>this.setState({Password})}
-                        value={this.state.Password}
+                       // value={this.state.Password}
                         placeholder='Password'>
                     </TextInput>
                 </View>
@@ -72,36 +74,33 @@ export default class LoginPage extends Component{
 
   login=()=>
   {
-      //alert(this.state.username);
-      //dfgh
-
-      fetch('http://141.226.14.110:3000',{
+      fetch('http://192.168.1.8:3000/users',{
         method:'POST',
         headers:{
             'Accept':'application/json',
-            'Content-Type':'applcation/json',
+            'Content-Type':'application/json',
         },
         body: JSON.stringify({
             username:this.state.username,
-            Password:this.state.Password,
+            Password:this.state.Password
         })
       })
-
-      .then((response)=>response.json())
-      .then((res)=>{
-          if(res.success===true)
-          {
-              AsyncStorage.setItem('user',res.user);
-              this.props.navigation.navigate('Profile');
-          }
-          else{
-              alert(res.message);
-          }
-      })
-      .done();
-    
-    
-  }
+        .then((response)=>response.json())
+        .then((res)=>
+        {
+            //alert(res.message);
+            if(res.success===true)
+            {
+                AsyncStorage.setItem('user',res.user);
+                this.props.navigation.navigate('Profile');
+            }
+            else
+            {
+                alert(res.message);
+            }
+        })
+        .done();
+    }
 
 }
 
