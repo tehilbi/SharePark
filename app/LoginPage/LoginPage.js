@@ -73,7 +73,7 @@ export default class LoginPage extends Component{
   }
 
   login=()=>
-  {
+  {//hi
       fetch('http://192.168.1.8:3000/users',{
         method:'POST',
         headers:{
@@ -82,7 +82,7 @@ export default class LoginPage extends Component{
         },
         body: JSON.stringify({
             username:this.state.username,
-            Password:this.state.Password
+            Password:this.state.Password,
         })
       })
         .then((response)=>response.json())
