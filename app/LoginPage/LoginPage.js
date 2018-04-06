@@ -73,8 +73,8 @@ export default class LoginPage extends Component{
   }
 
   login=()=>
-  {//hi
-      fetch('http://192.168.1.8:3000/users',{
+  {
+      fetch('http://192.168.1.28:3000/users',{
         method:'POST',
         headers:{
             'Accept':'application/json',
@@ -88,7 +88,7 @@ export default class LoginPage extends Component{
         .then((response)=>response.json())
         .then((res)=>
         {
-            //alert(res.message);
+            alert(res.message);
             if(res.success===true)
             {
                 AsyncStorage.setItem('user',res.user);
