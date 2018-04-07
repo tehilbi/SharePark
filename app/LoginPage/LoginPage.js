@@ -5,6 +5,7 @@ import {StackNavigator} from 'react-navigation';
 export default class LoginPage extends Component{
     constructor(props)
     {
+        //note
         super(props);
         this.state={
             username:'',
@@ -33,19 +34,16 @@ export default class LoginPage extends Component{
             style={styles.myPic}
             source={require('./Login.png')}
             />
-
             <View>
                 <Text 
                     style={styles.logo}>
                     Welcome to SharePark
                 </Text>
-
                 <View style={styles.inputContainer}>
-
                     <TextInput 
                         underlineColorAndroid='transparent' 
                         style={styles.input}
-                        onChange={(username)=>this.setState({username})}
+                        onChangeText={(username)=>this.setState({username})}
                        // value={this.state.username}
                         placeholder='Username'>
                     </TextInput>
@@ -54,12 +52,12 @@ export default class LoginPage extends Component{
                         secureTextEntry={true} 
                         underlineColorAndroid='transparent' 
                         style={styles.input}
-                        onChange={(Password)=>this.setState({Password})}
+                        onChangeText={(Password)=>this.setState({Password})}
                        // value={this.state.Password}
                         placeholder='Password'>
                     </TextInput>
                 </View>
-
+                
                 <TouchableOpacity 
                     onPress={this.login}
                     style={styles.buttonContainer} >
@@ -83,12 +81,13 @@ export default class LoginPage extends Component{
         body: JSON.stringify({
             username:this.state.username,
             Password:this.state.Password,
+         
         })
       })
         .then((response)=>response.json())
         .then((res)=>
         {
-            alert(res.message);
+
             if(res.success===true)
             {
                 AsyncStorage.setItem('user',res.user);
@@ -101,7 +100,6 @@ export default class LoginPage extends Component{
         })
         .done();
     }
-
 }
 
 var styles=StyleSheet.create({
