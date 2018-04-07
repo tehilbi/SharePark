@@ -4,12 +4,16 @@ import {AppRegistry,Text,View,TextInput} from 'react-native';
 import {StackNavigator} from 'react-navigation';
 
 import LoginPage from './app/LoginPage/LoginPage';
-import Profile from './app/Profile/Profile';
+import ManagerProfile from './app/Profiles/ManagerProfile';
+import empWithParking from './app/Profiles/empWithParking';
+import empWithNoParking from './app/Profiles/empWithNoParking';
 
 const Application=StackNavigator(
   {
     Home:{screen:LoginPage},
-    Profile:{screen:Profile}
+    ManagerProfile:{screen:ManagerProfile},
+    empWithParking:{screen:empWithParking},
+    empWithNoParking:{screen:empWithNoParking},
   },
   {
     navigationOptions:
@@ -29,4 +33,4 @@ export default class SharePark extends Component{
   }
 
 }
-//AppRegistry.registerComponent('yuliaApp',()=>yuliaApp);
+AppRegistry.registerComponent('SharePark',()=>SharePark);

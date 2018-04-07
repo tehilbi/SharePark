@@ -1,13 +1,13 @@
 import React , {Component} from 'react';
-import {Text,View,StyleSheet,TouchableOpacity,} from 'react-native';
+import {AppRegistry,Text,View,StyleSheet,TouchableOpacity,} from 'react-native';
 
 
-export default class Profile extends Component{
+export default class empWithParking extends Component{
   render(){
     return(
         <View style={styles.container}>
             <Text style={styles.text}>
-            Welcome to the Member Area
+            Welcome to the emp with parking Profile
             </Text>
         </View>   
     );
@@ -27,5 +27,5 @@ const styles=StyleSheet.create(
         }
     }
 );
-///hihihihihih
+AppRegistry.registerComponent('empWithParking',()=>empWithParking);
 
