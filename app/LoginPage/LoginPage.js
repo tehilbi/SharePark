@@ -8,9 +8,9 @@ export default class LoginPage extends Component{
         //note
         super(props);
         this.state={
-            username:'',
-            Password:'',
-            permission:''
+            username:'yul',
+            Password:'123',
+            permission:'1'
         }
     }
 
@@ -37,8 +37,8 @@ export default class LoginPage extends Component{
   render(){
     return(
         <ScrollView >
-
             <Image 
+            
             style={styles.myPic}
             source={require('./Login.png')}
             />
@@ -73,6 +73,7 @@ export default class LoginPage extends Component{
                         LOGIN
                         </Text>
                     </TouchableOpacity > 
+                   
             </View> 
         </ScrollView>   
     );
@@ -81,7 +82,7 @@ export default class LoginPage extends Component{
   login=()=>
   {
       //לשנות אייפי
-      fetch('http://192.168.1.8:3000/users',{
+      fetch('http://172.20.5.68:3000/users',{
         method:'POST',
         headers:{
             'Accept':'application/json',
@@ -96,7 +97,6 @@ export default class LoginPage extends Component{
         .then((response)=>response.json())
         .then((res)=>
         {
-
             if(res.success===true)
             {
                 AsyncStorage.setItem('user',res.user);
@@ -126,7 +126,6 @@ var styles=StyleSheet.create({
         flex: 1,
         alignSelf:'center',
         alignItems: 'center',
-
     },
     content:{
         alignItems: 'center'
@@ -147,7 +146,8 @@ var styles=StyleSheet.create({
         alignSelf:'center',
         alignItems: 'center',
         fontFamily: 'Cochin',
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        color:'black'
     },
     inputContainer:{
         marginBottom:0,
@@ -170,9 +170,9 @@ var styles=StyleSheet.create({
         alignSelf:'stretch',
         margin:20,
         padding:20,
-        backgroundColor:'blue',
+        backgroundColor:'#0099FF',//'#0099FF',
         borderWidth:1,
-        borderColor:'#fff',
+        borderColor:'black',
        // backgroundColor:'rgba(255,255,255,0.6)',
 
 
