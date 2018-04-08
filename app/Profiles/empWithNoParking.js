@@ -24,19 +24,19 @@ const AppEmpWithNoParking=DrawerNavigator({
     }
 })
 
-const styles=StyleSheet.create(
-    {
-        container:{
-            flex:1,
-            alignItems:'center',
-            justifyContent:'center',
-            backgroundColor:'#2896d3'
-        },
-        text:{
-            color:'#fff'
-        }
-    }
-);
+// const styles=StyleSheet.create(
+//     {
+//         container:{
+//             flex:1,
+//             alignItems:'center',
+//             justifyContent:'center',
+//             backgroundColor:'#606060'
+//         },
+//         text:{
+//             color:'#606060'
+//         }
+//     }
+// );
 
 AppRegistry.registerComponent('empWithNoParking',()=>empWithNoParking);
 

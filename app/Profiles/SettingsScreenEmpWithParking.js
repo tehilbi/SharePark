@@ -3,19 +3,18 @@ import{
     View,
     Text,
     StyleSheet,
-    AppRegistry,
+    AppRegistry
 }from "react-native";
 
 import{Icon,Button,Container,Header,Content,Right}from 'native-base'
-//import Icon from 'react-native-vector-icons/Ionicons';
 
-export default class HomeEmpWithNoParking extends Component{
+export default class SettingsScreenEmpWithParking extends Component{
     render(){
         return(
-            <Container >
+            <Container>
             <Header style={styles.header}>
                 <Right>
-                    <Icon name="menu" onPress={()=>
+                    <Icon name='menu' onPress={()=>
                     this.props.navigation.navigate('DrawerOpen')}/>
                 </Right>
             </Header>
@@ -24,12 +23,13 @@ export default class HomeEmpWithNoParking extends Component{
                     alignItems:'center',
                     justifyContent:'center'
                 }}>
-                    <Text>HomeScreen</Text>
+                    <Text>SettingsScreenEmpWithParking</Text>
                 </Content>
             </Container>
         );
     }
 }
+
 
 
 const styles=StyleSheet.create(
@@ -39,4 +39,6 @@ const styles=StyleSheet.create(
         }
     }
 )
- AppRegistry.registerComponent('HomeEmpWithNoParking',()=>HomeEmpWithNoParking);
+
+AppRegistry.registerComponent('SettingsScreenEmpWithParking',()=>SettingsScreenEmpWithParking);
+

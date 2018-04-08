@@ -9,7 +9,7 @@ import{
 import{Icon,Button,Container,Header,Content,Right}from 'native-base'
 //import Icon from 'react-native-vector-icons/Ionicons';
 
-export default class HomeEmpWithNoParking extends Component{
+export default class HomeEmpWithParking extends Component{
     render(){
         return(
             <Container >
@@ -39,4 +39,5 @@ const styles=StyleSheet.create(
         }
     }
 )
- AppRegistry.registerComponent('HomeEmpWithNoParking',()=>HomeEmpWithNoParking);
+
+ AppRegistry.registerComponent('HomeEmpWithParking',()=>HomeEmpWithParking);
