@@ -12,7 +12,7 @@ export default class SettingsScreenEmpWithNoParking extends Component{
     render(){
         return(
             <Container>
-            <Header>
+            <Header style={styles.header}>
                 <Right>
                     <Icon name='menu' onPress={()=>
                     this.props.navigation.navigate('DrawerOpen')}/>
@@ -29,6 +29,16 @@ export default class SettingsScreenEmpWithNoParking extends Component{
         );
     }
 }
+
+
+
+const styles=StyleSheet.create(
+    {
+        header:{
+            backgroundColor:'#0099FF'
+        }
+    }
+)
 
 AppRegistry.registerComponent('SettingsScreenEmpWithNoParking',()=>SettingsScreenEmpWithNoParking);
 

@@ -1,0 +1,68 @@
+Arguments: 
+  C:\Program Files\nodejs\node.exe C:\Users\tehil\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js install 'native-base'
+
+PATH: 
+  C:\oraclexe\app\oracle\product\11.2.0\server\bin;C:\ProgramData\Oracle\Java\javapath;C:\Program Files (x86)\Intel\iCLS Client\;C:\Program Files\Intel\iCLS Client\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;c:\Program Files\Intel\IntelSGXPSW\bin\x64\Release\;c:\Program Files\Intel\IntelSGXPSW\bin\win32\Release\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\110\Tools\Binn\;C:\Program Files (x86)\Microsoft SQL Server\120\Tools\Binn\;C:\Program Files\Microsoft SQL Server\120\Tools\Binn\;C:\Program Files\Microsoft SQL Server\120\DTS\Binn\;C:\Program Files (x86)\Microsoft SQL Server\120\Tools\Binn\ManagementStudio\;C:\Program Files (x86)\Microsoft SQL Server\120\DTS\Binn\;C:\Program Files\Microsoft SQL Server\110\Tools\Binn\;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;c:\Program Files (x86)\Microsoft SQL Server\110\Tools\Binn\;c:\Program Files\Microsoft SQL Server\110\DTS\Binn\;C:\Program Files (x86)\Skype\Phone\;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;C:\Program Files\Git\cmd;C:\Users\tehil\.dnx\bin;C:\Program Files\Microsoft DNX\Dnvm\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files (x86)\Windows Kits\8.1\Windows Performance Toolkit\;C:\Python33;C:\Program Files\nodejs\;C:\Program Files\Java\jdk1.8.0_73\bin;C:\Users\tehil\AppData\Local\Microsoft\WindowsApps;C:\Program Files\Microsoft VS Code\bin;C:\adb\platform-tools;C:\Users\tehil\AppData\Local\atom\bin;C:\Users\tehil\AppData\Roaming\npm
+
+Yarn version: 
+  1.5.1
+
+Node version: 
+  8.11.1
+
+Platform: 
+  win32 x64
+
+npm manifest: 
+  {
+    "name": "SharePark",
+    "version": "0.0.1",
+    "private": true,
+    "scripts": {
+      "start": "node node_modules/react-native/local-cli/cli.js start",
+      "test": "jest"
+    },
+    "devDependencies": {
+      "babel-jest": "22.4.1",
+      "babel-preset-react-native": "4.0.0",
+      "jest": "22.4.2",
+      "react-test-renderer": "16.2.0"
+    },
+    "jest": {
+      "preset": "react-native"
+    },
+    "main": "index.js",
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/tehilbi/SharePark.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+      "url": "https://github.com/tehilbi/SharePark/issues"
+    },
+    "homepage": "https://github.com/tehilbi/SharePark#readme",
+    "dependencies": {
+      "json-circular-stringify": "0.0.1",
+      "mongoose": "^5.0.10",
+      "react": "16.2.0",
+      "react-native": "0.53.3",
+      "react-navigation": "^1.5.11"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
+
+Trace: 
+  Error: `install` has been replaced with `add` to add new dependencies. Run "yarn add 'native-base'" instead.
+      at new MessageError (C:\Users\tehil\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:186:110)
+      at Object.<anonymous> (C:\Users\tehil\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:21987:13)
+      at Generator.next (<anonymous>)
+      at step (C:\Users\tehil\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:98:30)
+      at C:\Users\tehil\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:109:13
+      at <anonymous>

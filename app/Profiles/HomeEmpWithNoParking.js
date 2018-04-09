@@ -13,7 +13,7 @@ export default class HomeEmpWithNoParking extends Component{
     render(){
         return(
             <Container >
-            <Header>
+            <Header style={styles.header}>
                 <Right>
                     <Icon name="menu" onPress={()=>
                     this.props.navigation.navigate('DrawerOpen')}/>
@@ -31,4 +31,12 @@ export default class HomeEmpWithNoParking extends Component{
     }
 }
 
+
+const styles=StyleSheet.create(
+    {
+        header:{
+            backgroundColor:'#0099FF'
+        }
+    }
+)
  AppRegistry.registerComponent('HomeEmpWithNoParking',()=>HomeEmpWithNoParking);
