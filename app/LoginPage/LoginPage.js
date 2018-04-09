@@ -82,7 +82,7 @@ export default class LoginPage extends Component{
   login=()=>
   {
       //לשנות אייפי
-      fetch('http://172.20.5.68:3000/users',{
+      fetch('http://172.20.5.169:3000/users',{
         method:'POST',
         headers:{
             'Accept':'application/json',
@@ -174,8 +174,6 @@ var styles=StyleSheet.create({
         borderWidth:1,
         borderColor:'black',
        // backgroundColor:'rgba(255,255,255,0.6)',
-
-
     }
 });
 AppRegistry.registerComponent('LoginPage',()=>LoginPage);
