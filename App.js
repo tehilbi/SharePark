@@ -11,7 +11,7 @@ import empWithNoParking from './app/Profiles/empWithNoParking';
 
 const Application=StackNavigator(
   {
-    Home:{screen:LoginPage},
+    Home:{screen:ManagerProfile},/*{screen:LoginPage},*/
     ManagerProfile:{screen:ManagerProfile},
     empWithParking:{screen:empWithParking},
     empWithNoParking:{screen:empWithNoParking},
