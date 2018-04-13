@@ -1,72 +1,80 @@
 import React , {Component} from 'react';
-import {AppRegistry,Text,View,StyleSheet,TouchableOpacity,ScrollView,Image} from 'react-native';
-import{Icon,Button,Container,Header,Content,Right,Left}from 'native-base';
+import {AppRegistry,Text,View,StyleSheet,TouchableOpacity,ScrollView,Image,Navigator} from 'react-native';
+import{Header}from 'native-base';
+import ManagerPressParkingData from './ManagerPressParkingData';
+import {StackNavigator} from 'react-navigation';
 
-
+/*
+const ManagerProfileButtons=StackNavigator({
+    AddUser:{
+        screen:ManagerPressParkingData
+    },
+    
+});*/
 
 export default class ManagerProfile extends Component{
- 
-    button1() {
-        console.log('I was pressed');
+   
+    constructor(props)
+    { 
+        super(props);
     }
-  render(){
-    
-    return(
-        <ScrollView >
-        <Header style={styles.header} >
-           <Text style={styles.title}>Manager Menu</Text>
-        </Header>
-            <View style={styles.contentContainerStyle}>
-            
-                <TouchableOpacity onPress={this.button1} style={styles.buttonContainer}>
-                    <Image 
-                        source={require('./emp.png')}
-                        style={styles.ImageIconStyle} 
-                        />
-                    <Text textAlign='justify'>
-                         add employee
+    render()
+    {
+        return(  
+            <ScrollView >
+            <Header style={styles.header} >
+            <Text style={styles.title}>Manager Menu</Text>
+            </Header>
+                <View style={styles.contentContainerStyle}>
+                
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate('ManagerPressParkingData')}
+                     style={styles.buttonContainer}>
+                        <Image source={require('./add_user.png')}style={styles.ImageIconStyle} />
+                        <Text textAlign='justify'> add user</Text>
+                    </TouchableOpacity > 
+
+                    <TouchableOpacity onPress={this.EditMap} style={styles.buttonContainer}>
+                        <Image source={require('./log-icon.png')}style={styles.ImageIconStyle}/>
+                        <Text>
+                        Event Log
+                        </Text>
+                    </TouchableOpacity > 
+                    
+                    <TouchableOpacity onPress={this.EditMap} style={styles.buttonContainer}>
+                    <Image source={require('./map_icon.png')}style={styles.ImageIconStyle} />
+                        <Text>
+                        Edit map
+                        </Text>
+                    </TouchableOpacity > 
+                </View>
+
+                <View style={styles.contentContainerStyle}>
+                
+                <TouchableOpacity onPress={this.RemoveUser} style={styles.buttonContainer}>
+                <Image source={require('./remove_user.png')}style={styles.ImageIconStyle}  />
+                    <Text>
+                    Remove user
                     </Text>
                 </TouchableOpacity > 
 
-                <TouchableOpacity onPress={this.button2} style={styles.buttonContainer}>
-                    <Image 
-                        source={require('./log-icon.png')}
-                        style={styles.ImageIconStyle} 
-                        />
+                <TouchableOpacity onPress={this.GetDataMenu} style={styles.buttonContainer}>
+                <Image source={require('./data_icon.png')}style={styles.ImageIconStyle}  />
                     <Text>
-                     Event Log
+                    Parking Data
                     </Text>
                 </TouchableOpacity > 
                 
-                <TouchableOpacity onPress={this.button2} style={styles.buttonContainer}>
+                <TouchableOpacity onPress={this.LogOut} style={styles.buttonContainer}>
+                <Image source={require('./logout.png')}style={styles.ImageIconStyle}  />
                     <Text>
-                     Edit map
+                    LOG OUT
                     </Text>
                 </TouchableOpacity > 
-            </View>
-
-            <View style={styles.contentContainerStyle}>
+                </View>
+            </ScrollView>
             
-            <TouchableOpacity onPress={this.button1} style={styles.buttonContainer}>
-                <Text>
-                 Remove employee
-                </Text>
-            </TouchableOpacity > 
-
-            <TouchableOpacity onPress={this.button2} style={styles.buttonContainer}>
-                <Text>
-                 Parking Data
-                </Text>
-            </TouchableOpacity > 
-            
-            <TouchableOpacity onPress={this.button2} style={styles.buttonContainer}>
-                <Text>
-                 LOG OUT
-                </Text>
-            </TouchableOpacity > 
-             </View>
-        </ScrollView>
     );
+
   }
 }
 
@@ -87,10 +95,10 @@ const styles=StyleSheet.create(
            justifyContent: 'flex-end'
         },
         ImageIconStyle: {
-            padding: 40,
-            margin: 10,
-            height: 25,
-            width: 25,
+            padding: 20,
+            margin: 20,
+            height: 70,
+            width: 20,
             resizeMode : 'stretch',
           
          },
