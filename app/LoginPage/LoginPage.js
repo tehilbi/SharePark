@@ -15,24 +15,24 @@ export default class LoginPage extends Component{
     }
 
     //check if the user loged in priviously or not
-    componentDidMount(){
-        this._loadInitialState().done();
-    }
+    // componentDidMount(){
+    //     this._loadInitialState().done();
+    // }
 
-    _loadInitialState=async()=>{
-        var value=await AsyncStorage.getItem('user') ;
-        if(value!==null)
-        {
-            switch(this.state.permission){
-                case 1:this.props.navigation.navigate('ManagerProfile');
-                break;
-                case 2:this.props.navigation.navigate('empWithParking');
-                break;
-                case 3:this.props.navigation.navigate('empWithNoParking');
-                break;
-            }
-        }
-    }
+    // _loadInitialState=async()=>{
+    //     var value=await AsyncStorage.getItem('user') ;
+    //     if(value!==null)
+    //     {
+    //         switch(this.state.permission){
+    //             case 1:this.props.navigation.navigate('ManagerProfile');
+    //             break;
+    //             case 2:this.props.navigation.navigate('empWithParking');
+    //             break;
+    //             case 3:this.props.navigation.navigate('empWithNoParking');
+    //             break;
+    //         }
+    //     }
+    // }
  
   render(){
     return(
@@ -72,7 +72,7 @@ export default class LoginPage extends Component{
                         <Text style={styles.buttonText}>
                         LOGIN
                         </Text>
-                    </TouchableOpacity > 
+                    </TouchableOpacity> 
                    
             </View> 
         </ScrollView>   
@@ -82,7 +82,7 @@ export default class LoginPage extends Component{
   login=()=>
   {
       //לשנות אייפי
-      fetch('http://172.20.5.68:3000/users',{
+      fetch('http://192.168.1.62:3000/users',{
         method:'POST',
         headers:{
             'Accept':'application/json',
@@ -100,7 +100,7 @@ export default class LoginPage extends Component{
             if(res.success===true)
             {
                 AsyncStorage.setItem('user',res.user);
-                this.state.permission=res.user;
+               // this.state.permission=res.user;
                 if(res.user===1)
                     this.props.navigation.navigate('ManagerProfile');
                 else if(res.user===2)
@@ -174,8 +174,6 @@ var styles=StyleSheet.create({
         borderWidth:1,
         borderColor:'black',
        // backgroundColor:'rgba(255,255,255,0.6)',
-
-
     }
 });
 AppRegistry.registerComponent('LoginPage',()=>LoginPage);
