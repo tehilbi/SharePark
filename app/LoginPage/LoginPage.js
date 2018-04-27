@@ -8,9 +8,9 @@ export default class LoginPage extends Component{
         //note
         super(props);
         this.state={
-            username:'yul',
-            Password:'123',
-            permission:'1'
+            username:'',
+            Password:'',
+            permission:''
         }
     }
 
