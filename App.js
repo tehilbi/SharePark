@@ -7,16 +7,25 @@ import LoginPage from './app/LoginPage/LoginPage';
 import ManagerProfile from './app/Profiles/ManagerProfile';
 import empWithParking from './app/Profiles/empWithParking';
 import empWithNoParking from './app/Profiles/empWithNoParking';
-import ManagerPressParkingData from './app/Profiles/ManagerPressParkingData';
-import ManagerPressAddUser from './app/Profiles/ManagerPressAddUser';
+import AddUser from './app/AddUser/AddUser';
+import EventLog from './app/EventLog/EventLog';
+import LogOut from './app/LogOut/LogOut';
+import ParkingData from './app/ParkingData/ParkingData';
+import RemoveUser from './app/RemoveUser/RemoveUser';
+import EditMap from './app/EditMap/EditMap';
+
 const Application=StackNavigator(
   {
     Home:/*{screen:ManagerProfile},*/{screen:LoginPage},
     ManagerProfile:{screen:ManagerProfile},
     empWithParking:{screen:empWithParking},
     empWithNoParking:{screen:empWithNoParking},
-    ManagerPressAddUser:{screen:ManagerPressAddUser},
-    ManagerPressParkingData:{screen:ManagerPressParkingData},
+    AddUser:{screen:AddUser},
+    EventLog:{screen:EventLog},
+    LogOut:{screen:LogOut},
+    ParkingData:{screen:ParkingData},
+    RemoveUser:{screen:RemoveUser},
+    EditMap:{screen:EditMap},
   },
   {
     navigationOptions:

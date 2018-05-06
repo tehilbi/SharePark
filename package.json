@@ -13,6 +13,7 @@
     "jest-serialize": "0.0.0",
     "jest-serializer": "^22.4.3",
     "jest-serializer-html": "^5.0.0",
+    "react-native-select-lists": "^1.0.1",
     "react-test-renderer": "16.2.0"
   },
   "jest": {
@@ -38,7 +39,9 @@
     "react": "16.2.0",
     "react-native": "0.53.3",
     "react-native-dash": "0.0.8",
+    "react-native-material-dropdown": "^0.11.1",
     "react-native-vector-icons": "^4.6.0",
-    "react-navigation": "^1.5.11"
+    "react-navigation": "^1.5.11",
+    "util": "^0.10.3"
   }
 }

@@ -8,9 +8,9 @@ export default class LoginPage extends Component{
         //note
         super(props);
         this.state={
-            username:'',
-            Password:'',
-            permission:''
+            username:'yul',
+            Password:'123',
+            permission:'1'
         }
     }
 
@@ -24,11 +24,11 @@ export default class LoginPage extends Component{
         if(value!==null)
         {
             switch(this.state.permission){
-                case 1:this.props.navigation.navigate('ManagerProfile');
+                case '1':this.props.navigation.navigate('ManagerProfile');
                 break;
-                case 2:this.props.navigation.navigate('empWithParking');
+                case '2':this.props.navigation.navigate('empWithParking');
                 break;
-                case 3:this.props.navigation.navigate('empWithNoParking');
+                case '3':this.props.navigation.navigate('empWithNoParking');
                 break;
             }
         }
@@ -82,7 +82,7 @@ export default class LoginPage extends Component{
   login=()=>
   {
       //לשנות אייפי
-      fetch('http://192.168.1.86:3000/users',{
+      fetch('http:/172.20.3.102:3000/users',{
         method:'POST',
         headers:{
             'Accept':'application/json',
@@ -101,11 +101,12 @@ export default class LoginPage extends Component{
             {
                 AsyncStorage.setItem('user',res.user);
                 this.state.permission=res.user;
-                if(res.user===1)
+                
+                if(res.user==='1')
                     this.props.navigation.navigate('ManagerProfile');
-                else if(res.user===2)
+                else if(res.user==='2')
                     this.props.navigation.navigate('empWithParking');
-                else if(res.user===3)
+                else if(res.user==='3')
                     this.props.navigation.navigate('empWithNoParking');    
             }
             else
