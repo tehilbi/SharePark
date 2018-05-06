@@ -1,7 +1,7 @@
 import React , {Component} from 'react';
 import {AppRegistry,Text,View,StyleSheet,TouchableOpacity} from 'react-native';
 import{Icon,Button,Container,Header,Content,Right}from 'native-base';
-import AwesomeButton from 'react-native-awesome-button';
+//import AwesomeButton from 'react-native-awesome-button';
 
 
 

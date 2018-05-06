@@ -2,9 +2,11 @@ import React , {Component} from 'react';
 import {AppRegistry,Text,View,StyleSheet,TouchableOpacity,} from 'react-native';
 
 
-import HomeEmpWithParking from './HomeEmpWithParking';
+import HomeEmp from './HomeEmp';
 import SettingsScreenEmpWithParking from './SettingsScreenEmpWithParking';
 
+
+import {StackNavigator} from 'react-navigation';
 import {DrawerNavigator} from 'react-navigation'
 
 export default class empWithParking extends Component{
@@ -17,7 +19,7 @@ export default class empWithParking extends Component{
 
 const AppEmpWithParking=DrawerNavigator({
     Home:{
-        screen:HomeEmpWithParking
+        screen:HomeEmp
     },
     Settings:{
         screen:SettingsScreenEmpWithParking
