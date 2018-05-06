@@ -3,51 +3,71 @@ import {AppRegistry, Text,View,Image,StyleSheet} from 'react-native';
 import PropTypes from 'prop-types';
 
 export default class Parking2 extends Component{
-  constructor(){
-       super();
+  constructor(props){
+       super(props);
        this.state={
-         parkingSate:'o'
-      }
+        // parkingColor2:''
+       }       
    }
   
-   availableParking(){
-        this.setState({parkingSate:'g'});
-  }
+  // availableParking(){
+  //       this.setState({parkingColor2:'g'});
+  // }
 
-  notAvailableParking(){
-      this.setState({parkingSate:'r'});
-  }
+  // notAvailableParking(){
+  //     this.setState({parkingColor2:'r'});
+  // }
 
-   componentWillMount(){
-         this.availableParking();
-  }
+  // blueParking(){
+  //   this.setState({parkingColor2:'b'});
+  // }
+
+  // componentWillMount(){
+  //   if(this.props.parkingColor2==='g')
+  //        this.availableParking();
+  //   if(this.props.parkingColor2==='r')
+  //        this.notAvailableParking();
+  // }
 
    render(){
-    if(this.state.parkingSate=='o'){
+    if(this.props.parkingColor2=='orange'){
       return(
         <View>
           <Image source={require('./carOrange.png')}/>
           <Text style={styles.num}>2</Text>
         </View>
         )
-    }else if(this.state.parkingSate=='g'){
+    }else if(this.props.parkingColor2=='green'){
       return(
         <View>
           <Image source={require('./carGreen.png')}/>
           <Text style={styles.num}>2</Text>
         </View>
         )
-    }else if(this.state.parkingSate=='r'){
+    }else if(this.props.parkingColor2=='red'){
       return(
-        <View  style={{ borderWidth:1,borderColor:'grey'}}>
+        <View>
           <Image source={require('./carRed.png')}/>
           <Text style={styles.num}>2</Text>
         </View>
         )
-    }
+    }else if(this.props.parkingColor2=='blue'){
+      return(
+        <View  >
+          <Image source={require('./carBlue.png')}/>
+          <Text style={styles.num}>2</Text>
+        </View>
+        )
+    }else if(this.props.parkingColor2=='grey'){
+      return(
+        <View  >
+          <Image source={require('./carGrey.png')}/>
+          <Text style={styles.num}>2</Text>
+        </View>
+        )
+      }
   }
 }
-
 const styles=StyleSheet.create(
   {
     num:{
