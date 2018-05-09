@@ -1,13 +1,6 @@
 import React , {Component} from 'react';
-<<<<<<< HEAD
 import {AppRegistry,Text,View,StyleSheet,TouchableOpacity,ScrollView,Image,Navigator} from 'react-native';
 import{Header}from 'native-base';
-=======
-import {AppRegistry,Text,View,StyleSheet,TouchableOpacity} from 'react-native';
-import{Icon,Button,Container,Header,Content,Right}from 'native-base';
-//import AwesomeButton from 'react-native-awesome-button';
-
->>>>>>> 939ce39e4203547e933bebb1ec2a8887bb303de0
 
 import {StackNavigator} from 'react-navigation';
 

@@ -11,12 +11,12 @@ export default class AddUser extends Component{
         super(props);
        
         this.state={
-            username:'yu',
-            Password:'li',
-            permission:'1',
-            FirstName:'yu',
-            LastName:'zo',
-            Ocupation:'2',
+            username:'',
+            Password:'',
+            permission:'',
+            FirstName:'',
+            LastName:'',
+            Ocupation:'',
             PickerValueHolder : '',  
             isLoading: true,
             
@@ -24,7 +24,7 @@ export default class AddUser extends Component{
         
     }
     componentDidMount() {
-        return fetch('http://172.20.3.102:3000/FetchOcupations/')
+        return fetch('http:// 172.20.5.9:3000/FetchOcupations/')
         .then((response) => response.json())
         .then((responseJson) => {
             this.setState({
@@ -119,14 +119,10 @@ export default class AddUser extends Component{
                         data={data}
                         onChangeText={(Permission)=>this.setState({Permission})}
                     />
-
-                         
-                    
-
                 </View>
                 
                 <TouchableOpacity 
-                    onPress={this.AddUser}
+                    onPress={this.Modify}
                     style={styles.buttonContainer} >
                         <Text style={styles.buttonText}>
                         Add User
@@ -136,11 +132,50 @@ export default class AddUser extends Component{
         </ScrollView>   
     );
   }
+  Modify()
+  {
+    if(this.state.Ocupation=='Lecturer')
+    {
+        this.setState({
+            Ocupation:'1'
+        });
+    }
+    else if(this.state.Ocupation=='President')
+    {
+        this.setState({
+            Ocupation:'2'
+        });
+    }
+       
+
+    if(this.state.permission=='Manager')
+    {
+        this.setState({
+            permission:'1'
+        });
+    }
+       
+    else if(this.state.permission=='Employee with parking spot')
+    {
+        this.setState({
+            permission:'2'
+        });
+    }
+       
+    else if(this.state.permission=='Employee without parking spot')
+    {
+        this.setState({
+            permission:'3'
+        });
+    }
+    this.AddUser();
+
+  }
 
   AddUser=()=>
   {
       //לשנות אייפי
-      fetch('http://172.20.3.102:3000/AddEmployee',{
+      fetch('http:// 172.20.5.9:3000/AddEmployee',{
         method:'POST',
         headers:{
             'Accept':'application/json',

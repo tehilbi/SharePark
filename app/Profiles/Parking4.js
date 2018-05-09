@@ -2,7 +2,7 @@ import React ,{Component} from 'react';
 import {AppRegistry, Text,View,Image,StyleSheet} from 'react-native';
 import PropTypes from 'prop-types';
 
-export default class Parking2 extends Component{
+export default class Parking4 extends Component{
   constructor(props){
        super(props);
        this.state={

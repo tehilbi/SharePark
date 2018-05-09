@@ -26,6 +26,7 @@ const Application=StackNavigator(
     ParkingData:{screen:ParkingData},
     RemoveUser:{screen:RemoveUser},
     EditMap:{screen:EditMap},
+
   },
   {
     navigationOptions:

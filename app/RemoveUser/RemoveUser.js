@@ -24,7 +24,7 @@ export default class RemoveUser extends Component{
 
     fetchEmps()
     {
-        fetch('http://192.168.1.102:3000/Employees/')
+        fetch('http:// 172.20.5.9:3000/Employees/')
             .then((response)=>response.json())
             .then((response)=>{          
                 this.setState({
@@ -69,7 +69,7 @@ export default class RemoveUser extends Component{
                    value={this.state.checkedBoxCheck}
                     onChange={() => this.h(rowId)}
             />
-                    <Text style={styles.text}>{emp.EmpId}) {emp.FirstName} {emp.LastName}</Text>
+                    <Text style={styles.text}>{emp.EmpId} {emp.FirstName} {emp.LastName}</Text>
                 </View>
             </TouchableHighlight>
         );
@@ -103,7 +103,7 @@ export default class RemoveUser extends Component{
   DeleteEmployee=()=>
 {
     //לשנות אייפי
-        fetch('http://172.20.4.65:3000/RemoveEmployee/',{
+        fetch('http:// 172.20.5.9:3000/RemoveEmployee/',{
           method: 'POST',
           headers: {
           'Accept': 'application/json',
