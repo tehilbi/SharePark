@@ -8,10 +8,11 @@ import{
     TouchableOpacity, 
     Alert,
     AsyncStorage,
+    ActivityIndicator
 }from "react-native";
 
 import {StackNavigator} from 'react-navigation';
-import{Icon,Button,Container,Header,Content,Left,Right,Center,Body,Title}from 'native-base'
+import{IconToggle,Icon,Button,Container,Header,Content,Left,Right,Center,Body,Title}from 'native-base'
 
 import Parking1 from './Parking1';
 import Parking2 from './Parking2';
@@ -23,11 +24,11 @@ export default class HomeEmp extends Component{
     {        
         super(props);
         this.state={
-              color1:'o',
-              color2:'o',
-              color3:'o',
-              color4:'o',
-              loaded1: false,
+              color1:'orange',
+              color2:'orange',
+              color3:'orange',
+              color4:'orange',
+              loaded1:false,
               loaded2:false,
               loaded3:false,
               loaded4:false
@@ -42,7 +43,7 @@ export default class HomeEmp extends Component{
     }
 
     async parking1(){
-        const res = await fetch('http://172.20.3.102:3000/parkingSpots1',{
+        const res = await fetch('http://172.20.5.9:3000/parkingSpots1',{
             method:'POST',
             headers:{
                 'Accept':'application/json',
@@ -54,7 +55,7 @@ export default class HomeEmp extends Component{
     }
 
     async parking2(){
-        const res = await fetch('http://172.20.3.102:3000/parkingSpots2',{
+        const res = await fetch('http://172.20.5.9:3000/parkingSpots2',{
             method:'POST',
             headers:{
                 'Accept':'application/json',
@@ -66,7 +67,7 @@ export default class HomeEmp extends Component{
     }
 
     async parking3(){
-        const res = await fetch('http://172.20.3.102:3000/parkingSpots3',{
+        const res = await fetch('http://172.20.5.9:3000/parkingSpots3',{
             method:'POST',
             headers:{
                 'Accept':'application/json',
@@ -78,7 +79,7 @@ export default class HomeEmp extends Component{
     }
 
     async parking4(){
-        const res = await fetch('http://172.20.3.102:3000/parkingSpots4',{
+        const res = await fetch('http://172.20.5.9:3000/parkingSpots4',{
             method:'POST',
             headers:{
                 'Accept':'application/json',
@@ -92,7 +93,8 @@ export default class HomeEmp extends Component{
     render(){
         if (this.state.loaded1==false|| this.state.loaded2==false || this.state.loaded3==false || this.state.loaded4==false) {
             return(
-                <View><Text>Loading...</Text></View>
+                <ActivityIndicator style={{padding: 300}} size="large" color="#C71585" />
+
             );
          }
         return(
@@ -146,15 +148,16 @@ const styles=StyleSheet.create(
             fontWeight:'bold',
             textShadowColor:'black',
             textShadowOffset:{width:1,height:1},
-            textAlign: 'center', alignSelf: 'center', fontWeight: 'normal'        },
-        cars:{
-            flexDirection:'row',
-            justifyContent:'space-between',
-            top: 40,
-            borderWidth:2,
-            borderColor:'grey'
+            textAlign: 'center', alignSelf: 'center', fontWeight: 'normal'
+        }
+        // cars:{
+        //     flexDirection:'row',
+        //     justifyContent:'space-between',
+        //     top: 40,
+        //     borderWidth:2,
+        //     borderColor:'grey'
           
-        },
+        // },
         // button:{
         //     alignSelf: 'center',
         //     bottom:0

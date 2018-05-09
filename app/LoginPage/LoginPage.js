@@ -23,10 +23,11 @@ export default class LoginPage extends Component{
         var value=await AsyncStorage.getItem('user') ;
         if(value!==null)
         {
+            console.log("666666666666666666666666666666666666666666666666666666666");
             switch(this.state.permission){
                 case '1':this.props.navigation.navigate('ManagerProfile');
                 break;
-                case '2':this.props.navigation.navigate('empWithParking');
+                case '2':{this.props.navigation.navigate('empWithParking');}
                 break;
                 case '3':this.props.navigation.navigate('empWithNoParking');
                 break;
@@ -35,6 +36,7 @@ export default class LoginPage extends Component{
     }
  
   render(){
+   
     return(
         <ScrollView >
             <Image 
@@ -105,7 +107,8 @@ export default class LoginPage extends Component{
                 if(res.user==='1')
                     this.props.navigation.navigate('ManagerProfile');
                 else if(res.user==='2')
-                    this.props.navigation.navigate('empWithParking');
+                     this.props.navigation.navigate('empWithParking');
+                    //  ,{ id: '2' });
                 else if(res.user==='3')
                     this.props.navigation.navigate('empWithNoParking');    
             }
