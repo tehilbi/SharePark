@@ -24,7 +24,7 @@ export default class RemoveUser extends Component{
 
     fetchEmps()
     {
-        fetch('http://192.168.1.102:3000/Employees/')
+        fetch('http://172.20.2.234:3000/Employees/')
             .then((response)=>response.json())
             .then((response)=>{          
                 this.setState({

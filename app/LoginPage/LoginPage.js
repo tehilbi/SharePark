@@ -8,9 +8,11 @@ export default class LoginPage extends Component{
         //note
         super(props);
         this.state={
-            username:'yul',
-            Password:'123',
-            permission:'1'
+            username:'pil',
+            Password:'pil',
+            permission:'2',
+            // id:'2'
+
         }
     }
 
@@ -23,10 +25,11 @@ export default class LoginPage extends Component{
         var value=await AsyncStorage.getItem('user') ;
         if(value!==null)
         {
+            console.log("666666666666666666666666666666666666666666666666666666666");
             switch(this.state.permission){
                 case '1':this.props.navigation.navigate('ManagerProfile');
                 break;
-                case '2':this.props.navigation.navigate('empWithParking');
+                case '2':{this.props.navigation.navigate('empWithParking');}
                 break;
                 case '3':this.props.navigation.navigate('empWithNoParking');
                 break;
@@ -35,6 +38,7 @@ export default class LoginPage extends Component{
     }
  
   render(){
+   
     return(
         <ScrollView >
             <Image 
@@ -82,11 +86,7 @@ export default class LoginPage extends Component{
   login=()=>
   {
       //לשנות אייפי
-<<<<<<< HEAD
-      fetch('http:/172.20.3.102:3000/users',{
-=======
-      fetch('http://172.20.2.234:3000/users',{
->>>>>>> 939ce39e4203547e933bebb1ec2a8887bb303de0
+      fetch('http://172.20.4.94:3000/users',{
         method:'POST',
         headers:{
             'Accept':'application/json',
@@ -109,7 +109,8 @@ export default class LoginPage extends Component{
                 if(res.user==='1')
                     this.props.navigation.navigate('ManagerProfile');
                 else if(res.user==='2')
-                    this.props.navigation.navigate('empWithParking');
+                     this.props.navigation.navigate('empWithParking');
+                    //  ,{ id: '2' });
                 else if(res.user==='3')
                     this.props.navigation.navigate('empWithNoParking');    
             }
