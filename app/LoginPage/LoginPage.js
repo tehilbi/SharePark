@@ -8,9 +8,9 @@ export default class LoginPage extends Component{
         //note
         super(props);
         this.state={
-            username:'',
-            Password:'',
-            permission:''
+            username:'yul',
+            Password:'123',
+            permission:'1'
         }
     }
 
@@ -23,7 +23,6 @@ export default class LoginPage extends Component{
         var value=await AsyncStorage.getItem('user') ;
         if(value!==null)
         {
-            console.log("666666666666666666666666666666666666666666666666666666666");
             switch(this.state.permission){
                 case '1':this.props.navigation.navigate('ManagerProfile');
                 break;
@@ -84,7 +83,7 @@ export default class LoginPage extends Component{
   login=()=>
   {
       //לשנות אייפי
-      fetch('http:// 172.20.5.9:3000/users',{
+      fetch('localhost:3000/users',{
         method:'POST',
         headers:{
             'Accept':'application/json',

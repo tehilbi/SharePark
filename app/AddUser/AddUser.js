@@ -24,7 +24,8 @@ export default class AddUser extends Component{
         
     }
     componentDidMount() {
-        return fetch('http:// 172.20.5.9:3000/FetchOcupations/')
+        //return fetch('https://share-park-back-end.herokuapp.com/FetchOcupations/')
+        return fetch('http://192.168.1.118:3000/FetchOcupations/')
         .then((response) => response.json())
         .then((responseJson) => {
             this.setState({
@@ -134,7 +135,7 @@ export default class AddUser extends Component{
   }
   Modify()
   {
-    if(this.state.Ocupation=='Lecturer')
+    if(this.state.Ocupation==='Lecturer')
     {
         this.setState({
             Ocupation:'1'
@@ -175,7 +176,7 @@ export default class AddUser extends Component{
   AddUser=()=>
   {
       //לשנות אייפי
-      fetch('http:// 172.20.5.9:3000/AddEmployee',{
+      fetch('http://192.168.1.118:3000/AddEmployee',{
         method:'POST',
         headers:{
             'Accept':'application/json',

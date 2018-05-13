@@ -30,7 +30,7 @@ export default class SettingsScreenEmpWithParking extends Component{
     }
 
     async parking1(){
-        const res = await fetch('http://172.20.4.94:3000/parkingSpots1',{
+        const res = await fetch('http://172.20.5.9:3000/parkingSpots1',{
             method:'POST',
             headers:{
                 'Accept':'application/json',
@@ -98,7 +98,7 @@ export default class SettingsScreenEmpWithParking extends Component{
 
     release=()=>
     {
-        fetch('http://172.20.4.94:3000/updateParkingSpot',{
+        fetch('http://172.20.5.9:3000/updateParkingSpot',{
         method:'POST',
         headers:{
             'Accept':'application/json',
@@ -130,7 +130,7 @@ export default class SettingsScreenEmpWithParking extends Component{
    
     block=()=>
     {
-        fetch('http://172.20.4.94:3000/updateParkingSpot',{
+        fetch('http://172.20.5.9:3000/updateParkingSpot',{
             method:'POST',
             headers:{
                 'Accept':'application/json',
@@ -161,7 +161,7 @@ export default class SettingsScreenEmpWithParking extends Component{
     
     reset=()=>
     {
-        fetch('http://172.20.4.94:3000/updateParkingSpot',{
+        fetch('http://172.20.5.9:3000/updateParkingSpot',{
         method:'POST',
         headers:{
             'Accept':'application/json',

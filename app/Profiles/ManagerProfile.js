@@ -1,13 +1,6 @@
 import React , {Component} from 'react';
-<<<<<<< HEAD
 import {AppRegistry,Text,View,StyleSheet,TouchableOpacity,ScrollView,Image,Navigator} from 'react-native';
 import{Header}from 'native-base';
-=======
-import {AppRegistry,Text,View,StyleSheet,TouchableOpacity,ScrollView,Image} from 'react-native';
-import{Icon,Button,Container,Header,Content,Right}from 'native-base';
-//import AwesomeButton from 'react-native-awesome-button';
-
->>>>>>> 301e7044d39dc07f051730b1c9737aac7d2e582e
 
 import {StackNavigator} from 'react-navigation';
 
@@ -49,7 +42,7 @@ export default class ManagerProfile extends Component{
 
                 <View style={styles.contentContainerStyle}>
                 
-                <TouchableOpacity onPress={() => this.props.navigation.navigate('RemoveUser')} style={styles.buttonContainer}>
+                <TouchableOpacity onPress={() => this.props.navigation.navigate('test')} style={styles.buttonContainer}>
                 <Image source={require('./remove_user.png')}style={styles.ImageIconStyle}  />
                     <Text>
                     Remove user
