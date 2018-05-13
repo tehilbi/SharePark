@@ -135,7 +135,7 @@ export default class AddUser extends Component{
   }
   Modify()
   {
-    if(this.state.Ocupation==='Lecturer')
+    if(this.state.Ocupation=='Lecturer')
     {
         this.setState({
             Ocupation:'1'

@@ -75,7 +75,7 @@ parking=()=>
 
    //Alert.alert("jhgd");
     //לשנות אייפי
-    fetch('http://172.20.3.102:3000/parkingSpots',{
+    fetch('http://192.168.1.118:3000/parkingSpots',{
       method:'POST',
       headers:{
           'Accept':'application/json',
