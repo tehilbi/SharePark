@@ -19,18 +19,26 @@ export default class SettingsScreenEmpWithParking extends Component{
     {        
         super(props);
         this.state={
-            color1:'orange',
-            loaded1:false,
-            // id:''
+            color:'orange',
+            loaded:false,
+            id:this.props.id
         }
     }
 
     async componentWillMount(){
+        if(this.state.id=='1')
         await this.parking1();
+        else if(this.state.id=='2')
+            await this.parking2();
+        else if(this.state.id=='3')
+            await this.parking3();
+        else if(this.state.id=='4')
+            await this.parking4();
+
     }
 
     async parking1(){
-        const res = await fetch('http://172.20.4.94:3000/parkingSpots1',{
+        const res = await fetch('http://172.20.4.235:3000/parkingSpots1',{
             method:'POST',
             headers:{
                 'Accept':'application/json',
@@ -38,14 +46,50 @@ export default class SettingsScreenEmpWithParking extends Component{
             }   
           })
         const result =await res.json()
-        this.setState({color1:result.color, loaded1: true });
+        this.setState({color:result.color, loaded: true });
+    }
+
+    async parking2(){
+        const res = await fetch('http://172.20.4.235:3000/parkingSpots2',{
+            method:'POST',
+            headers:{
+                'Accept':'application/json',
+                'Content-Type':'application/json',
+            }   
+          })
+        const result =await res.json()
+        this.setState({color:result.color, loaded: true });
+    }
+
+    async parking3(){
+        const res = await fetch('http://172.20.4.235:3000/parkingSpots3',{
+            method:'POST',
+            headers:{
+                'Accept':'application/json',
+                'Content-Type':'application/json',
+            }   
+          })
+        const result =await res.json()
+        this.setState({color:result.color, loaded: true });
+    }
+
+    async parking4(){
+        const res = await fetch('http://172.20.4.235:3000/parkingSpots4',{
+            method:'POST',
+            headers:{
+                'Accept':'application/json',
+                'Content-Type':'application/json',
+            }   
+          })
+        const result =await res.json()
+        this.setState({color:result.color, loaded: true });
     }
 
     render(){
         // console.log("1111111111111111111111111111111111111111111111111111111");
         // console.log(this.props.id);
         // console.log(this.props.navigation.state.params.id);
-        if (this.state.loaded1==false) {
+        if (this.state.loaded==false) {
             return(
                 <ActivityIndicator style={{padding: 300}} size="large" color="#C71585" />
             );
@@ -69,7 +113,7 @@ export default class SettingsScreenEmpWithParking extends Component{
                     alignItems: 'center',
                     top:40
                 }}>
-                    <Parking parkingColor={color1=this.state.color1}/>  
+                    <Parking parkingColor={color=this.state.color}/>  
 
                     <TouchableOpacity onPress={this.release} 
                         style={styles.buttonGreen} >
@@ -98,7 +142,7 @@ export default class SettingsScreenEmpWithParking extends Component{
 
     release=()=>
     {
-        fetch('http://172.20.4.94:3000/updateParkingSpot',{
+        fetch('http://172.20.4.235:3000/updateParkingSpot',{
         method:'POST',
         headers:{
             'Accept':'application/json',
@@ -107,7 +151,7 @@ export default class SettingsScreenEmpWithParking extends Component{
         body: JSON.stringify({
             // username:
             color:'green',
-            id:'1'
+            id:this.state.id
         })
       })
         .then((response)=>response.json())
@@ -115,7 +159,7 @@ export default class SettingsScreenEmpWithParking extends Component{
         {
             if(res.success===true)
             {
-                this.setState({color:'green'});
+                // this.setState({color:'green'});
                 this.componentWillMount();
                 alert("Update successful");
             }
@@ -130,7 +174,7 @@ export default class SettingsScreenEmpWithParking extends Component{
    
     block=()=>
     {
-        fetch('http://172.20.4.94:3000/updateParkingSpot',{
+        fetch('http://172.20.4.235:3000/updateParkingSpot',{
             method:'POST',
             headers:{
                 'Accept':'application/json',
@@ -139,7 +183,7 @@ export default class SettingsScreenEmpWithParking extends Component{
             body: JSON.stringify({
                 // username:
                 color:'red',
-                id:'1'
+                id:this.state.id
             })
           })
             .then((response)=>response.json())
@@ -147,7 +191,7 @@ export default class SettingsScreenEmpWithParking extends Component{
             {
                 if(res.success===true)
                 {
-                    this.setState({color:'red'});
+                    // this.setState({color:'red'});
                     this.componentWillMount();
                     alert("Update successful");
                 }
@@ -161,7 +205,7 @@ export default class SettingsScreenEmpWithParking extends Component{
     
     reset=()=>
     {
-        fetch('http://172.20.4.94:3000/updateParkingSpot',{
+        fetch('http://172.20.4.235:3000/updateParkingSpot',{
         method:'POST',
         headers:{
             'Accept':'application/json',
@@ -170,7 +214,7 @@ export default class SettingsScreenEmpWithParking extends Component{
         body: JSON.stringify({
             // username:
             color:'orange',
-            id:'1'
+            id:this.state.id
         })
       })
         .then((response)=>response.json())
@@ -178,7 +222,7 @@ export default class SettingsScreenEmpWithParking extends Component{
         {
             if(res.success===true)
             {
-                this.setState({color:'orange'});
+                // this.setState({color:'orange'});
                 this.componentWillMount();
                 alert("Update successful");
             }
