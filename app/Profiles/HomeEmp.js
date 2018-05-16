@@ -124,7 +124,13 @@ export default class HomeEmp extends Component{
                         <Parking3 parkingColor3={color3=this.state.color3}/>
                         <Image source={require('./lines.png')}/>
                         <Parking4 parkingColor4={color4=this.state.color4}/>
-                    </Content>        
+                    </Content>      
+                    <TouchableOpacity style={styles.button} >
+                        <Text 
+                            style={styles.logo}>
+                            SharePark
+                        </Text>
+                    </TouchableOpacity> 
             </Container>         
         );     
     }
@@ -149,6 +155,41 @@ const styles=StyleSheet.create(
             textShadowColor:'black',
             textShadowOffset:{width:1,height:1},
             textAlign: 'center', alignSelf: 'center', fontWeight: 'normal'
+        },
+        button:{
+            alignSelf:'stretch',
+            margin:20,
+            padding:20,
+            backgroundColor:'green',//'#0099FF',
+            borderWidth:1,
+            borderColor:'black',
+            // height: 200,
+            // width: 200,
+            // // borderRadius: 200,
+            // backgroundColor:'green',//'#0099FF',
+            // alignSelf:'center',
+            // alignItems: 'center',
+            // marginBottom:30,
+            // borderColor:'white'
+
+            // alignSelf:'stretch',
+            // margin:30,
+            // padding:40,
+            // backgroundColor:'green',//'#0099FF',
+            // borderWidth:1,
+            // borderColor:'black',
+        },
+        logo:{
+            // flex: 1,
+            fontSize: 20,
+            marginBottom:10,
+            justifyContent: 'center',
+            textAlign:'center',
+            alignSelf:'center',
+            alignItems: 'center',
+            fontFamily: 'Cochin',
+            fontWeight: 'bold',
+            color:'black'
         }
     });
 
