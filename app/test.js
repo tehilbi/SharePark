@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
+//import { connect } from 'react-redux';
 import {
     Container, Header, Title, Content, Text,
     Button, Icon, Left, Right, Body, Badge,
@@ -111,4 +111,4 @@ export default class test extends Component{
 }
 
 
-AppRegistry.registerComponent('test',()=>test);
+//AppRegistry.registerComponent('test',()=>test);

@@ -43,7 +43,7 @@ export default class HomeEmp extends Component{
     }
 
     async parking1(){
-        const res = await fetch('http://192.168.1.118:3000/parkingSpots1',{
+        const res = await fetch('http://172.20.3.209:3000/parkingSpots1',{
             method:'POST',
             headers:{
                 'Accept':'application/json',
@@ -55,7 +55,7 @@ export default class HomeEmp extends Component{
     }
 
     async parking2(){
-        const res = await fetch('http://192.168.1.118:3000/parkingSpots2',{
+        const res = await fetch('http://172.20.3.209:3000/parkingSpots2',{
             method:'POST',
             headers:{
                 'Accept':'application/json',
@@ -67,7 +67,7 @@ export default class HomeEmp extends Component{
     }
 
     async parking3(){
-        const res = await fetch('http://192.168.1.118:3000/parkingSpots3',{
+        const res = await fetch('http://172.20.3.209:3000/parkingSpots3',{
             method:'POST',
             headers:{
                 'Accept':'application/json',
@@ -79,7 +79,7 @@ export default class HomeEmp extends Component{
     }
 
     async parking4(){
-        const res = await fetch('http://192.168.1.118:3000/parkingSpots4',{
+        const res = await fetch('http://172.20.3.209:3000/parkingSpots4',{
             method:'POST',
             headers:{
                 'Accept':'application/json',
