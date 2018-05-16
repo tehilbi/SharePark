@@ -8,11 +8,9 @@ export default class LoginPage extends Component{
         //note
         super(props);
         this.state={
-            username:'',
-            Password:'',
-            permission:'',
-            id:''
-
+            username:'yul',
+            Password:'123',
+            permission:'1'
         }
     }
 
@@ -85,7 +83,7 @@ export default class LoginPage extends Component{
   login=()=>
   {
       //לשנות אייפי
-      fetch('http://172.20.4.235:3000/users',{
+      fetch('localhost:3000/users',{
         method:'POST',
         headers:{
             'Accept':'application/json',
