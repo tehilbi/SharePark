@@ -82,7 +82,7 @@ export default class LoginPage extends Component{
   login=()=>
   {
       //לשנות אייפי
-      fetch('http://192.168.1.86:3000/users',{
+      fetch('http://192.168.1.9:3000/users',{
         method:'POST',
         headers:{
             'Accept':'application/json',
