@@ -2,25 +2,46 @@ import React , {Component} from 'react';
 import {AppRegistry,Text,View,StyleSheet,TouchableOpacity,} from 'react-native';
 
 
-import HomeEmpWithParking from './HomeEmpWithParking';
+import HomeEmp from './HomeEmp';
 import SettingsScreenEmpWithParking from './SettingsScreenEmpWithParking';
 
+
+import {StackNavigator} from 'react-navigation';
 import {DrawerNavigator} from 'react-navigation'
 
 export default class empWithParking extends Component{
+    constructor(props)
+    {        
+        super(props);
+        this.state=
+        {
+            id:this.props.navigation.state.params.id
+        }
+    }
   render(){
+       console.log("2222222222222222222222222222222222222222222222222222222222222222222222")
+    //    console.log(this);
+    //    console.log(this.props);
+    //    console.log(this.props.navigation);
+    //    console.log(this.props.navigation.state);
+    //    console.log(this.props.navigation.state.params);
+       console.log(this.props.navigation.state.params.id);
     return(
-       <AppEmpWithParking/> 
+       <AppEmpWithParking id={id=this.state.id}/>   
+      
     );
   }
 }
+// screen: (props) => <MyNotificationsScreen {...props.navigation.state.params} propName={val1} />
 
 const AppEmpWithParking=DrawerNavigator({
     Home:{
-        screen:HomeEmpWithParking
+        screen:HomeEmp
     },
     Settings:{
-        screen:SettingsScreenEmpWithParking
+        screen:props => <SettingsScreenEmpWithParking {...props} id={id} /> 
+        //props => <StaticWebView {...props} url="...." /> 
+
     }
 })
 

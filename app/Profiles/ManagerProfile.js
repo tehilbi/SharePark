@@ -1,16 +1,8 @@
 import React , {Component} from 'react';
 import {AppRegistry,Text,View,StyleSheet,TouchableOpacity,ScrollView,Image,Navigator} from 'react-native';
 import{Header}from 'native-base';
-import ManagerPressParkingData from './ManagerPressParkingData';
-import {StackNavigator} from 'react-navigation';
 
-/*
-const ManagerProfileButtons=StackNavigator({
-    AddUser:{
-        screen:ManagerPressParkingData
-    },
-    
-});*/
+import {StackNavigator} from 'react-navigation';
 
 export default class ManagerProfile extends Component{
    
@@ -27,20 +19,20 @@ export default class ManagerProfile extends Component{
             </Header>
                 <View style={styles.contentContainerStyle}>
                 
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate('ManagerPressParkingData')}
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate('AddUser')}
                      style={styles.buttonContainer}>
                         <Image source={require('./add_user.png')}style={styles.ImageIconStyle} />
                         <Text textAlign='justify'> add user</Text>
                     </TouchableOpacity > 
 
-                    <TouchableOpacity onPress={this.EditMap} style={styles.buttonContainer}>
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate('EventLog')} style={styles.buttonContainer}>
                         <Image source={require('./log-icon.png')}style={styles.ImageIconStyle}/>
                         <Text>
                         Event Log
                         </Text>
                     </TouchableOpacity > 
                     
-                    <TouchableOpacity onPress={this.EditMap} style={styles.buttonContainer}>
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate('EditMap')} style={styles.buttonContainer}>
                     <Image source={require('./map_icon.png')}style={styles.ImageIconStyle} />
                         <Text>
                         Edit map
@@ -50,21 +42,21 @@ export default class ManagerProfile extends Component{
 
                 <View style={styles.contentContainerStyle}>
                 
-                <TouchableOpacity onPress={this.RemoveUser} style={styles.buttonContainer}>
+                <TouchableOpacity onPress={() => this.props.navigation.navigate('test')} style={styles.buttonContainer}>
                 <Image source={require('./remove_user.png')}style={styles.ImageIconStyle}  />
                     <Text>
                     Remove user
                     </Text>
                 </TouchableOpacity > 
 
-                <TouchableOpacity onPress={this.GetDataMenu} style={styles.buttonContainer}>
+                <TouchableOpacity onPress={() => this.props.navigation.navigate('ParkingData')} style={styles.buttonContainer}>
                 <Image source={require('./data_icon.png')}style={styles.ImageIconStyle}  />
                     <Text>
                     Parking Data
                     </Text>
                 </TouchableOpacity > 
                 
-                <TouchableOpacity onPress={this.LogOut} style={styles.buttonContainer}>
+                <TouchableOpacity onPress={() => this.props.navigation.navigate('LogOut')} style={styles.buttonContainer}>
                 <Image source={require('./logout.png')}style={styles.ImageIconStyle}  />
                     <Text>
                     LOG OUT

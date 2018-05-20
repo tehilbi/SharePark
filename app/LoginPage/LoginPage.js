@@ -8,9 +8,10 @@ export default class LoginPage extends Component{
         //note
         super(props);
         this.state={
-            username:'yul',
-            Password:'123',
-            permission:'1'
+            username:'',
+            Password:'',
+            permission:'',
+            id:''
         }
     }
 
@@ -24,17 +25,18 @@ export default class LoginPage extends Component{
         if(value!==null)
         {
             switch(this.state.permission){
-                case 1:this.props.navigation.navigate('ManagerProfile');
+                case '1':this.props.navigation.navigate('ManagerProfile');
                 break;
-                case 2:this.props.navigation.navigate('empWithParking');
+                case '2':{this.props.navigation.navigate('empWithParking');}
                 break;
-                case 3:this.props.navigation.navigate('empWithNoParking');
+                case '3':this.props.navigation.navigate('empWithNoParking');
                 break;
             }
         }
     }
  
   render(){
+   
     return(
         <ScrollView >
             <Image 
@@ -101,11 +103,13 @@ export default class LoginPage extends Component{
             {
                 AsyncStorage.setItem('user',res.user);
                 this.state.permission=res.user;
-                if(res.user===1)
+                this.state.id=res.id;
+                
+                if(res.user==='1')
                     this.props.navigation.navigate('ManagerProfile');
-                else if(res.user===2)
-                    this.props.navigation.navigate('empWithParking');
-                else if(res.user===3)
+                else if(res.user==='2')
+                     this.props.navigation.navigate('empWithParking' ,{ id: this.state.id });  
+                else if(res.user==='3')
                     this.props.navigation.navigate('empWithNoParking');    
             }
             else
