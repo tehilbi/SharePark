@@ -3,7 +3,7 @@ import {AppRegistry,Text,View,StyleSheet,TouchableOpacity,ScrollView,Image} from
 import{Icon,Button,Container,Header,Content,Right,Left}from 'native-base';
 
 
-export default class ManagerPressParkingData extends Component{
+export default class ManagerPressAddUser extends Component{
  
     render()
     {
