@@ -84,7 +84,7 @@ export default class LoginPage extends Component{
   login=()=>
   {
       //לשנות אייפי
-      fetch('http://192.168.1.9:3000/users',{
+      fetch('http://192.168.1.38:3000/users',{
         method:'POST',
         headers:{
             'Accept':'application/json',
@@ -108,7 +108,7 @@ export default class LoginPage extends Component{
                 if(res.user==='1')
                     this.props.navigation.navigate('ManagerProfile');
                 else if(res.user==='2')
-                     this.props.navigation.navigate('empWithParking' ,{ id: this.state.id });  
+                    this.props.navigation.navigate('empWithParking' ,{ id: this.state.id });  
                 else if(res.user==='3')
                     this.props.navigation.navigate('empWithNoParking');    
             }

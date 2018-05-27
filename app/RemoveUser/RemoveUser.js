@@ -1,189 +1,182 @@
-import React , {Component} from 'react';
-import {CheckBox,AppRegistry,StyleSheet,Text,View, ScrollView,TouchableOpacity,ListView,TouchableHighlight} from 'react-native';
-import{Header}from 'native-base';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import {Container, Header, Title, Content,Text,Button, Left, Right, Body,List, ListItem,AppRegistry} from 'native-base';
+import { Animated,View, ScrollView ,ListView,TouchableOpacity,Alert} from 'react-native';
+import Swipeout from 'react-native-swipeout';
+import styles from './styles';
+
+
+var taskArray = [];
 
 export default class RemoveUser extends Component{
-    constructor()
-    {
-        super();
-        const ds=new ListView.DataSource({rowHasChanged:(r1,r2)=>r1!==r2});
-        this.state=
-        {
-            empsDataSource:ds,
-            checkedBoxCheck: false,
-            selectedItems:[],
+    constructor(props) {
+        super(props);
+        var dataSource = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1.Id != r2.Id });
+        this.state = {
+            tasks: taskArray,
+            dataSource: dataSource.cloneWithRows(taskArray),
+            isLoading: true,
+            activeRowKey:null,
+        };
+    }
+
+    componentDidMount() {
+        this.getTaskList();
+    }
+
+    async getTaskList() {
+        try {
+            this.getTheData(function (json) {
+            taskArray = json;    
+            this.setState({
+                tasks: taskArray,
+                dataSource: this.state.dataSource.cloneWithRows(taskArray),
+                isLoading: false
+            })
+        }.bind(this));
+            
+        } catch (error) {
+            console.log("There was an error getting the tasks");
         }
-        this.pressRow=this.pressRow.bind(this);
-        this.renderRow=this.renderRow.bind(this);
     }
 
-    componentDidMount()
-    {
-        this.fetchEmps();
+    getTheData(callback) {
+        var url = "http://192.168.1.38:3000/Employees/";
+        fetch(url).then(response => response.json())
+            .then(json => callback(json))
+            .catch(error => console.log(error));
     }
 
-    fetchEmps()
-    {
-        fetch('http://192.168.1.118:3000/Employees/')
-            .then((response)=>response.json())
-            .then((response)=>{          
-                this.setState({
-                        empsDataSource:this.state.empsDataSource.cloneWithRows(response)
-                    });  
-            })  
-    }
-    pressRow(rowId)
-    {
-        console.log('Row '+rowId+' Pressed..');  
-      
-           
-    }
+	_deleteRow(rowId) {
+         // the list is updated with the new task array
+         this.state.tasks.splice(rowId, 1);
+         this.setState({
+           dataSource: this.state.dataSource.cloneWithRows(this.state.tasks)
+         })         
+        }
+	
+    
 
-    onItemSelect(row){
-        this.setState({
-            selectedItems: [{row}],
-            checkedBoxCheck: true,
-        });
-        let myitem = this.state.selectedItems.concat({row});
-        console.log(myitem);
-    }
-    h(rowId)
-    {
-        this.setState({
-            checkedBoxCheck:!this.state.checkedBoxCheck
-        })
-        
-    }
-      
-    renderRow(emp,sectionId,rowId,highlightRow)
-    {  
-        return(
-           
-            <TouchableHighlight onPress={()=>
+    renderRow(rowData, sectionId, rowId) {     
+        const SwipeSettings={
+            autoClose:true,
+            onClose:(sectionId,rowId,direction)=>{
+               /* if(this.state.activeRowKey!=null){
+                    this.setState({activeRowKey:null});
+            }*/
+
+            },
+            onOpen:(sectionId,rowId,direction)=>{               
+              this.setState({activeRowKey:rowData.id});
+            },
+            right:[
                 {
-                    this.pressRow(rowId);
-                    highlightRow(sectionId,rowId)
-                }}>
-                <View style={styles.row}>
-                <CheckBox 
-                   value={this.state.checkedBoxCheck}
-                    onChange={() => this.h(rowId)}
-            />
-                    <Text style={styles.text}> {emp.FirstName} {emp.LastName}</Text>
-                </View>
-            </TouchableHighlight>
+                     onPress:()=>{
+                        Alert.alert(
+                            'Alert',
+                            'Are you sure you want to delete?',
+                            [
+                                {text:'No',onPress:()=>console.log('Cancel Pressed'),style:'cancel'},
+                                {text:'Yes',onPress:()=>{
+                                    this._deleteRow(rowId);
+                                    this.DeleteEmployee();    
+                                }},
+                            ],
+                            {cancelable:true}
+                        );
+                        
+                    },
+                    text:'Delete',type:'delete'
+                },
+                {
+                    onPress:()=>{
+
+                    },
+                    text:'Edit',type:'edit'
+                }
+            ],
+            rowId:this.props.index,
+            sectionId:1
+        }      
+        return (
+            <ListItem >
+                <Body>
+                    <Swipeout {...SwipeSettings}>
+                        <Text>{rowData.FirstName} {rowData.LastName}</Text>
+                        <Text style={styles.taskDate}>Ocupation:{rowData.OcupationId}</Text>
+                    </Swipeout>
+                </Body>
+            </ListItem >
         );
     }
-    render(){
-        return(
 
-            <ScrollView>
+    render() {
+        let currentView = <View />;
+        if (this.state.isLoading)
+         {
+            currentView = <View />;
+        } else {
+            currentView = <ListView style={styles.taskListView}
+                dataSource={this.state.dataSource} renderRow={this.renderRow.bind(this)}
+                enableEmptySections={true}
+            />;
+        }
+
+        return (
+            <Container style={{...styles.container}}>
+                <Header style={{...styles.header}}>
+                    <Left>
+                        <Text style={{...styles.title}}>Users</Text>   
+                    </Left>
+                </Header>
                
-            <Header style={styles.header} >
-            <Text style={styles.title}>RemoveUser</Text>
-            </Header>
-                <View style={styles.contentContainerStyle}>
-                   <ListView
-                    dataSource={this.state.empsDataSource}
-                    renderRow={this.renderRow}
-                    />
-                </View>
-                <TouchableOpacity 
-                        onPress={this.DeleteEmployee}
-                        style={styles.buttonContainer} >
-                        <Text style={styles.buttonText}>
-                            Delete Employee
-                        </Text>
-                    </TouchableOpacity >
-            </ScrollView>
-    );
-  }
+                <Content>
+                    {currentView}
+                </Content>
 
-
-  DeleteEmployee=()=>
-{
-    //לשנות אייפי
-        fetch('http://192.168.1.118:3000/Employees/',{
-          method: 'POST',
-          headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            empId : this.state.empId
-          })
+                    <View >
+                        <TouchableOpacity 
+                        onPress={() => this.props.navigation.navigate('AddUser')}
+                        style={{...styles.buttonContainer}} >
+                            <Text style={{...styles.buttonText}}>
+                            Add User
+                            </Text>
+                        </TouchableOpacity >
+                    </View>
+            </Container>
+        );
+    }
+    DeleteEmployee=()=>
+    {
+        //לשנות אייפי
+        fetch('http://192.168.1.9:3000/RemoveEmployee',{
+            method: 'POST',
+            headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                emp : this.state.activeRowKey
+                
+            })
         
-          }).then((response) => response.json())
-          .then((responseJson) => {
-        
-            // Showing response message coming from server after inserting records.
-            alert(responseJson);
-        
-          }).catch((error) => {
-             console.error(error);
-          });
-  }
-} 
+            }).then((response) => response.json())
+            .then((responseJson) => {
 
-var styles=StyleSheet.create({
-    row:{
-        flexDirection:'row',
-        justifyContent:'center',
-        padding:12,
-        backgroundColor:'#f6f6f6',
-        marginBottom:3
-    },
-    text:{
-        flex:1,
-    },
-    
-    content:{
-        alignItems: 'center'
-    },
-    header:{
-        backgroundColor:'#0099FF'
-    },
-    container:{
-        flex:1,
-        backgroundColor:'white',
-        padding: 70,
-    },
-    
-    buttonText:{
-        fontSize: 16,
-        fontWeight:'bold',
-        textAlign:'center',
-    },
-    buttonContainer:{
-        //alignSelf:'stretch',
-        margin:20,
-        padding:20,
-        backgroundColor:'#0099FF',//'#0099FF',
-        borderWidth:1,
-        borderColor:'black',
-       // backgroundColor:'rgba(255,255,255,0.6)',
-    },
-    header:{
-        backgroundColor:'#0099FF'
-    },
-
-    title:{
-        flex:1,
-        alignItems:'center',
-        color:'white',
-        alignSelf:'center',
-        padding: 110,
-        fontSize: 15,
-        fontWeight: 'bold'
-    },
-    contentContainerStyle:{
-        flex:1,
-        flexDirection:'row',
-        flexWrap: 'wrap',
-        backgroundColor:'white'
-    },
-  
-});
-AppRegistry.registerComponent('RemoveUser',()=>RemoveUser);
+            if(responseJson.success===true)
+            {
+                alert(responseJson.message);
+            }
+            else
+            {
+                alert(responseJson.message);
+            }  
+            }).catch((error) => {
+                console.error(error);
+            });
+            
+      }
+}
 
 
+//AppRegistry.registerComponent('test',()=>test);

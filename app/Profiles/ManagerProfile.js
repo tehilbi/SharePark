@@ -19,7 +19,7 @@ export default class ManagerProfile extends Component{
             </Header>
                 <View style={styles.contentContainerStyle}>
                 
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate('AddUser')}
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate('test1')}
                      style={styles.buttonContainer}>
                         <Image source={require('./add_user.png')}style={styles.ImageIconStyle} />
                         <Text textAlign='justify'> add user</Text>
@@ -42,7 +42,7 @@ export default class ManagerProfile extends Component{
 
                 <View style={styles.contentContainerStyle}>
                 
-                <TouchableOpacity onPress={() => this.props.navigation.navigate('test')} style={styles.buttonContainer}>
+                <TouchableOpacity onPress={() => this.props.navigation.navigate('RemoveUser')} style={styles.buttonContainer}>
                 <Image source={require('./remove_user.png')}style={styles.ImageIconStyle}  />
                     <Text>
                     Remove user

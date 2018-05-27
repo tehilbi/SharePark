@@ -42,6 +42,34 @@ export default class AddUser extends Component{
             console.log(error);
           });
     }
+
+    componentDidMount() {
+        this.getOcupationList();
+    }
+
+    async getOcupationList() {
+        try {
+            this.getTheData(function (json) {
+            taskArray = json;    
+            this.setState({
+                tasks: OcupationArray,
+                dataSource: this.state.dataSource.cloneWithRows(OcupationArray),
+                isLoading: false
+            })
+        }.bind(this));
+            
+        } catch (error) {
+            console.log("There was an error getting the tasks");
+        }
+    }
+
+    getTheData(callback) {
+        var url = "http://192.168.1.38:3000/FetchOcupations/";
+        fetch(url).then(response => response.json())
+            .then(json => callback(json))
+            .catch(error => console.log(error));
+    }
+
   
     onValueChange(key,value){
         console.log(key+':'+value);

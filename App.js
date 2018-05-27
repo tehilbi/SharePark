@@ -13,7 +13,7 @@ import LogOut from './app/LogOut/LogOut';
 import ParkingData from './app/ParkingData/ParkingData';
 import RemoveUser from './app/RemoveUser/RemoveUser';
 import EditMap from './app/EditMap/EditMap';
-import test from './app/test';
+import test1 from './app/test1';
 
 const Application=StackNavigator(
   {
@@ -27,7 +27,7 @@ const Application=StackNavigator(
     ParkingData:{screen:ParkingData},
     RemoveUser:{screen:RemoveUser},
     EditMap:{screen:EditMap},
-    test:{screen:test},
+    test1:{screen:test1},
 
   },
   {
