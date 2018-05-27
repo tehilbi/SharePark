@@ -1,7 +1,9 @@
 import React , {Component} from 'react';
-import {AppRegistry,Text,View,TextInput,Image,StyleSheet,ScrollView,Button,TouchableOpacity,AsyncStorage,} from 'react-native';
+import {Platform,AppRegistry,Text,View,TextInput,Image,StyleSheet,ScrollView,Button,TouchableOpacity,AsyncStorage,} from 'react-native';
 import {StackNavigator} from 'react-navigation';
 
+
+  
 export default class LoginPage extends Component{
     constructor(props)
     {
@@ -34,7 +36,7 @@ export default class LoginPage extends Component{
             }
         }
     }
- 
+    
   render(){
    
     return(
@@ -80,6 +82,7 @@ export default class LoginPage extends Component{
         </ScrollView>   
     );
   }
+
 
   login=()=>
   {
