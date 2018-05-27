@@ -1,7 +1,9 @@
 import React , {Component} from 'react';
-import {AppRegistry,Text,View,TextInput,Image,StyleSheet,ScrollView,Button,TouchableOpacity,AsyncStorage,} from 'react-native';
+import {Platform,AppRegistry,Text,View,TextInput,Image,StyleSheet,ScrollView,Button,TouchableOpacity,AsyncStorage,} from 'react-native';
 import {StackNavigator} from 'react-navigation';
 
+
+  
 export default class LoginPage extends Component{
     constructor(props)
     {
@@ -34,7 +36,7 @@ export default class LoginPage extends Component{
             }
         }
     }
- 
+    
   render(){
    
     return(
@@ -81,10 +83,11 @@ export default class LoginPage extends Component{
     );
   }
 
+
   login=()=>
   {
       //לשנות אייפי
-      fetch('http://172.20.3.209:3000/users',{
+      fetch('http://192.168.1.11:3000/users',{
         method:'POST',
         headers:{
             'Accept':'application/json',
