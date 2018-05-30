@@ -1,8 +1,9 @@
 import React , {Component} from 'react';
-import {Picker,Select,AppRegistry,Text,View,TextInput,Image,StyleSheet,ScrollView,ActivityIndicator,Button,TouchableOpacity,AsyncStorage,Alert} from 'react-native';
+import {Picker,Select,AppRegistry,Text,View,TextInput,Image,StyleSheet,ScrollView,ActivityIndicator,Button,TouchableOpacity,AsyncStorage,Alert,ListView,} from 'react-native';
 import{Header}from 'native-base';
 import { Dropdown } from 'react-native-material-dropdown';
 var OcupationArray = [];
+import {StackNavigator} from 'react-navigation';
 
 export default class AddUser extends Component{
  
@@ -10,13 +11,13 @@ export default class AddUser extends Component{
     {
         //note
         super(props);
-       
+        var dataSource = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1.Id != r2.Id });
         this.state={
-            username:'',
-            Password:'',
+            username:'yulia',
+            Password:'234',
             permission:'',
-            FirstName:'',
-            LastName:'',
+            FirstName:'yu',
+            LastName:'lia',
             Ocupation:'',
             PickerValueHolder : '',  
             isLoading: true,
@@ -26,22 +27,10 @@ export default class AddUser extends Component{
         }
         
     }
-    componentDidMount() {
-        //return fetch('https://share-park-back-end.herokuapp.com/FetchOcupations/')
-        return fetch('http://192.168.1.38:3000/FetchOcupations/')
-        .then((response) => response.json())
-        .then((responseJson) => {
-            this.setState({
-                isLoading: false,
-              dataSource: responseJson
-            }, function() {
-              // In this block you can do something with new state.
-            });
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-    }
+
+    //return fetch('https://share-park-back-end.herokuapp.com/FetchOcupations/')
+      
+    
 
     componentDidMount() {
         this.getOcupationList();
@@ -50,16 +39,16 @@ export default class AddUser extends Component{
     async getOcupationList() {
         try {
             this.getTheData(function (json) {
-            taskArray = json;    
+            OcupationArray = json;    
             this.setState({
-                tasks: OcupationArray,
+                Ocupations: OcupationArray,
                 dataSource: this.state.dataSource.cloneWithRows(OcupationArray),
                 isLoading: false
             })
         }.bind(this));
             
         } catch (error) {
-            console.log("There was an error getting the tasks");
+            console.log("There was an error getting the ocupations");
         }
     }
 
@@ -86,13 +75,39 @@ export default class AddUser extends Component{
           </View>
         );
       }
-      let data = [{
-        value: 'Manager',
-      }, {
-        value: 'Employee with parking spot',
-      }, {
-        value: 'Employee without parking spot',
-      }];
+      let data = 
+      [
+        {
+            value: 'Manager',
+            key:'1'
+        }, 
+        {
+            value: 'Employee with parking spot',
+            key:'1'
+        },
+        {
+            value: 'Employee without parking spot',
+            key:'1'
+        }
+    ];
+
+      let data2 = 
+      [
+        {
+            value: 'Lecturer',
+            key:'1'
+        }, 
+        {
+            value: 'President',
+            key:'2'
+        },
+       
+    ];
+
+    //   let ocupations = this.state.ocupations;
+    //     let optionItems = ocupations.map((Ocupation) =>
+    //             <option key={Ocupation.Ocupation}>{Ocupation.Ocupation}</option>
+    //         );
    
     return(
         <ScrollView > 
@@ -135,25 +150,27 @@ export default class AddUser extends Component{
                     </TextInput>
 
                     <Picker
-                        label=''
-                        selectedValue={this.state.Ocupation}
-                        onValueChange={(itemValue, itemIndex) => this.setState({PickerValueHolder: itemValue})} 
-                        mode="dropdown">
+                            style={{width:'80%'}}
+                            selectedValue={this.state.permission}
+                            onValueChange={(itemValue,itemIndex) => this.setState({permission:itemValue})}
+                            >                           
+                            <Picker.Item label="Manager" value="1" />
+                            <Picker.Item label="Employee with parking spot" value="2"/>
+                            <Picker.Item label="Employee without parking spot" value="3"/>
+                    </Picker>
 
-                        { this.state.dataSource.map((item, key)=>(
-                        <Picker.Item label={item.Ocupation} value={item.Ocupation} key={key} />)
-                        )}
-                        </Picker>
-
-                    <Dropdown
-                        label='Permission'
-                        data={data}
-                        onChangeText={(Permission)=>this.setState({Permission})}
-                    />
+                    <Picker
+                            style={{width:'80%'}}
+                            selectedValue={this.state.Ocupation}
+                            onValueChange={(itemValue,itemIndex) => this.setState({Ocupation:itemValue})}
+                            >
+                            <Picker.Item label="Lecturer" value="1" />
+                            <Picker.Item label="President" value="2"/>                          
+                    </Picker>
                 </View>
                 
                 <TouchableOpacity 
-                    onPress={this.Modify}
+                    onPress={this.AddUser}
                     style={styles.buttonContainer} >
                         <Text style={styles.buttonText}>
                         Add User
@@ -163,45 +180,8 @@ export default class AddUser extends Component{
         </ScrollView>   
     );
   }
-  Modify()
-  {
-    if(this.state.Ocupation=='Lecturer')
-    {
-        this.setState({
-            Ocupation:'1'
-        });
-    }
-    else if(this.state.Ocupation=='President')
-    {
-        this.setState({
-            Ocupation:'2'
-        });
-    }
-       
+  
 
-    if(this.state.permission=='Manager')
-    {
-        this.setState({
-            permission:'1'
-        });
-    }
-       
-    else if(this.state.permission=='Employee with parking spot')
-    {
-        this.setState({
-            permission:'2'
-        });
-    }
-       
-    else if(this.state.permission=='Employee without parking spot')
-    {
-        this.setState({
-            permission:'3'
-        });
-    }
-    this.AddUser();
-
-  }
 
   AddUser=()=>
   {
@@ -227,7 +207,8 @@ export default class AddUser extends Component{
         {
             if(res.success===true)
             {
-                //alert(FirstName+' '+LastName+' is added to the system!')     
+                alert(this.state.FirstName+' '+this.state.LastName+' is added to the system!');  
+                this.props.navigation.navigate('ManagerProfile');   
             }
             else
             {

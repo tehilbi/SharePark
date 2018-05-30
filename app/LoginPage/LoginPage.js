@@ -13,7 +13,8 @@ export default class LoginPage extends Component{
             username:'',
             Password:'',
             permission:'',
-            id:''
+            id:'',
+            user:''
         }
     }
 
@@ -87,7 +88,7 @@ export default class LoginPage extends Component{
   login=()=>
   {
       //לשנות אייפי
-      fetch('http://192.168.1.10:3000/users',{
+      fetch('http://share-park-back-end.herokuapp.com/users',{
         method:'POST',
         headers:{
             'Accept':'application/json',
@@ -107,11 +108,12 @@ export default class LoginPage extends Component{
                 AsyncStorage.setItem('user',res.user);
                 this.state.permission=res.user;
                 this.state.id=res.id;
+                this.state.user=res.test;
                 
                 if(res.user==='1')
                     this.props.navigation.navigate('ManagerProfile');
                 else if(res.user==='2')
-                    this.props.navigation.navigate('empWithParking' ,{ id: this.state.id });  
+                    this.props.navigation.navigate('empWithParking' ,{ /*id: this.state.id ,*/user:this.state.user});  
                 else if(res.user==='3')
                     this.props.navigation.navigate('empWithNoParking');    
             }
