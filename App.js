@@ -2,6 +2,7 @@
 import React , {Component} from 'react';
 import {Platform,AppRegistry,Text,View,TextInput} from 'react-native';
 import {StackNavigator} from 'react-navigation';
+// import type { RemoteMessage } from 'react-native-firebase';
 
 import LoginPage from './app/LoginPage/LoginPage';
 import ManagerProfile from './app/Profiles/ManagerProfile';
@@ -14,6 +15,7 @@ import ParkingData from './app/ParkingData/ParkingData';
 import RemoveUser from './app/RemoveUser/RemoveUser';
 import EditMap from './app/EditMap/EditMap';
 import test1 from './app/test1';
+
 
 import FCM, {FCMEvent, RemoteNotificationResult, WillPresentNotificationResult, NotificationType} from 'react-native-fcm'
 // this shall be called regardless of app state: running, background or not running. Won't be called when app is killed by user in iOS
@@ -29,7 +31,7 @@ FCM.on(FCMEvent.Notification, async (notif) => {
       //Android: app is open/resumed because user clicked banner or tapped app icon
       console.log("opened_from_tray");
   }
-  // await someAsyncCall();
+  await someAsyncCall();
 
   if(Platform.OS ==='ios'){
     //optional
@@ -84,10 +86,13 @@ export default class SharePark extends Component{
     this.notificationListener = FCM.on(FCMEvent.Notification, async (notif) => {
     //
     });
-
+    // this.messageListener = firebase.messaging().onMessage((message:RemoteMessage) => {
+    //   // Process your message as required
+    // });
     FCM.getInitialNotification().then(notif => {
       console.log(notif)
   });
+  
 }
   render(){
     return(
