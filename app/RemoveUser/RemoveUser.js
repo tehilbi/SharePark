@@ -41,7 +41,7 @@ export default class RemoveUser extends Component{
     }
 
     getTheData(callback) {
-        var url = "http://192.168.1.38:3000/Employees/";
+        var url = "http://172.20.4.13:3000/Employees/";
         fetch(url).then(response => response.json())
             .then(json => callback(json))
             .catch(error => console.log(error));
@@ -149,7 +149,7 @@ export default class RemoveUser extends Component{
     DeleteEmployee=()=>
     {
         //לשנות אייפי
-        fetch('http://192.168.1.9:3000/RemoveEmployee',{
+        fetch('http://172.20.4.13:3000/RemoveEmployee',{
             method: 'POST',
             headers: {
             'Accept': 'application/json',
@@ -179,4 +179,4 @@ export default class RemoveUser extends Component{
 }
 
 
-//AppRegistry.registerComponent('test',()=>test);
+// AppRegistry.registerComponent('test',()=>test);

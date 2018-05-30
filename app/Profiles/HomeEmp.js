@@ -14,47 +14,13 @@ import{
 
 import {StackNavigator} from 'react-navigation';
 import{IconToggle,Icon,Button,Container,Header,Content,Left,Right,Center,Body,Title}from 'native-base'
-// import FCM, {FCMEvent, RemoteNotificationResult, WillPresentNotificationResult, NotificationType} from 'react-native-fcm'
 
 import Parking1 from './Parking1';
 import Parking2 from './Parking2';
 import Parking3 from './Parking3';
 import Parking4 from './Parking4';
 
-// FCM.on(FCMEvent.Notification, async (notif) => {
-//     // there are two parts of notif. notif.notification contains the notification payload, notif.data contains data payload
-//     if(notif.local_notification){
-//         //this is a local notification
-//         console.log("local notification");
-//     }
-//     if(notif.opened_from_tray){
-//         //iOS: app is open/resumed because user clicked banner
-//         //Android: app is open/resumed because user clicked banner or tapped app icon
-//         console.log("opened_from_trayyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
-//     }
-//     // await someAsyncCall();
-  
-//     if(Platform.OS ==='ios'){
-//       //optional
-//       //iOS requires developers to call completionHandler to end notification process. If you do not call it your background remote notifications could be throttled, to read more about it see https://developer.apple.com/documentation/uikit/uiapplicationdelegate/1623013-application.
-//       //This library handles it for you automatically with default behavior (for remote notification, finish with NoData; for WillPresent, finish depend on "show_in_foreground"). However if you want to return different result, follow the following code to override
-//       //notif._notificationType is available for iOS platfrom
-//       switch(notif._notificationType){
-//         case NotificationType.Remote:
-//           notif.finish(RemoteNotificationResult.NewData); //other types available: RemoteNotificationResult.NewData, RemoteNotificationResult.ResultFailed
-//           break;
-//         case NotificationType.NotificationResponse:
-//           notif.finish();
-//           break;
-//         case NotificationType.WillPresent:
-//           notif.finish(WillPresentNotificationResult.All); //other types available: WillPresentNotificationResult.None
-//           break;
-//       }
-//     }
-//   });
-//   FCM.on(FCMEvent.RefreshToken,(token)=>{
-//     console.log(token)
-//   });
+
 export default class HomeEmp extends Component{
     constructor(props)
     {        
@@ -79,7 +45,7 @@ export default class HomeEmp extends Component{
     }
 
     async parking1(){
-        const res = await fetch('http://192.168.1.38:3000/parkingSpots1',{
+        const res = await fetch('http://192.168.43.55:3000/parkingSpots1',{
             method:'POST',
             headers:{
                 'Accept':'application/json',
@@ -91,7 +57,7 @@ export default class HomeEmp extends Component{
     }
 
     async parking2(){
-        const res = await fetch('http://192.168.1.38:3000/parkingSpots2',{
+        const res = await fetch('http://192.168.43.55:3000/parkingSpots2',{
             method:'POST',
             headers:{
                 'Accept':'application/json',
@@ -103,7 +69,7 @@ export default class HomeEmp extends Component{
     }
 
     async parking3(){
-        const res = await fetch('http://192.168.1.38:3000/parkingSpots3',{
+        const res = await fetch('http://192.168.43.55:3000/parkingSpots3',{
             method:'POST',
             headers:{
                 'Accept':'application/json',
@@ -115,7 +81,7 @@ export default class HomeEmp extends Component{
     }
 
     async parking4(){
-        const res = await fetch('http://192.168.1.38:3000/parkingSpots4',{
+        const res = await fetch('http://192.168.43.55:3000/parkingSpots4',{
             method:'POST',
             headers:{
                 'Accept':'application/json',
@@ -173,12 +139,12 @@ export default class HomeEmp extends Component{
                         <Image source={require('./lines.png')}/>
                         <Parking4 parkingColor4={color4=this.state.color4}/>
                     </Content>      
-                    <TouchableOpacity onPress={this.test} style={styles.button} >
-                        <Text 
-                            style={styles.logo}>
-                            SharePark
-                        </Text>
-                    </TouchableOpacity> 
+                    <TouchableOpacity onPress={this.test}>
+                        <Image
+                        style={styles.button}
+                        source={require('./BUTTON.png')}
+                        />
+                    </TouchableOpacity>
             </Container>         
         );     
     }
@@ -187,7 +153,7 @@ export default class HomeEmp extends Component{
     {
         console.log("333333333333333333333333333333333333333333333333333");
 
-        fetch('http://192.168.1.11:3000/noti',{
+        fetch('http://192.168.43.55:3000/noti',{
             method:'GET',
             headers:{
                 'Accept':'application/json',
@@ -215,16 +181,15 @@ const styles=StyleSheet.create(
         },
         button:{
             alignSelf:'stretch',
-            margin:20,
+            margin:10,
             padding:20,
-            backgroundColor:'green',//'#0099FF',
+            //backgroundColor:'green',//'#0099FF',
             borderWidth:1,
             borderColor:'black',
             // height: 200,
             // width: 200,
-            // // borderRadius: 200,
-            // backgroundColor:'green',//'#0099FF',
-            // alignSelf:'center',
+            
+            alignSelf:'center',
             // alignItems: 'center',
             // marginBottom:30,
             // borderColor:'white'
