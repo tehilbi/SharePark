@@ -75,7 +75,7 @@ parking=()=>
 
    //Alert.alert("jhgd");
     //לשנות אייפי
-    fetch('http://192.168.43.56:3000/parkingSpots',{
+    fetch('http://share-park-back-end.herokuapp.com/parkingSpots',{
       method:'POST',
       headers:{
           'Accept':'application/json',

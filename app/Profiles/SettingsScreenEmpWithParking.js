@@ -41,7 +41,7 @@ export default class SettingsScreenEmpWithParking extends Component{
     }
 
     async parking1(){
-        const res = await fetch('http://192.168.43.56:3000/parkingSpots1',{
+        const res = await fetch('http://share-park-back-end.herokuapp.com/parkingSpots1',{
             method:'POST',
             headers:{
                 'Accept':'application/json',
@@ -53,7 +53,7 @@ export default class SettingsScreenEmpWithParking extends Component{
     }
 
     async parking2(){
-        const res = await fetch('http://192.168.43.56:3000/parkingSpots2',{
+        const res = await fetch('http://share-park-back-end.herokuapp.com/parkingSpots2',{
             method:'POST',
             headers:{
                 'Accept':'application/json',
@@ -65,7 +65,7 @@ export default class SettingsScreenEmpWithParking extends Component{
     }
 
     async parking3(){
-        const res = await fetch('http://192.168.43.56:3000/parkingSpots3',{
+        const res = await fetch('http://share-park-back-end.herokuapp.com/parkingSpots3',{
             method:'POST',
             headers:{
                 'Accept':'application/json',
@@ -77,7 +77,7 @@ export default class SettingsScreenEmpWithParking extends Component{
     }
 
     async parking4(){
-        const res = await fetch('http://192.168.43.56:3000/parkingSpots4',{
+        const res = await fetch('http://share-park-back-end.herokuapp.com/parkingSpots4',{
             method:'POST',
             headers:{
                 'Accept':'application/json',
@@ -146,7 +146,7 @@ export default class SettingsScreenEmpWithParking extends Component{
     release=()=>
     {
         this.setState({event:this.state.user.FirstName+" "+ this.state.user.LastName+" realesed his parking spot"});
-        fetch('http://192.168.43.56:3000/updateParkingSpot',{
+        fetch('http://share-park-back-end.herokuapp.com/updateParkingSpot',{
         method:'POST',
         headers:{
             'Accept':'application/json',
@@ -182,7 +182,7 @@ export default class SettingsScreenEmpWithParking extends Component{
         this.setState({
             event:this.state.user.FirstName+" "+ this.state.user.LastName+" blocked his parking spot"
         });
-        fetch('http://192.168.43.56:3000/updateParkingSpot',{
+        fetch('http://share-park-back-end.herokuapp.com/updateParkingSpot',{
             method:'POST',
             headers:{
                 'Accept':'application/json',
@@ -217,7 +217,7 @@ export default class SettingsScreenEmpWithParking extends Component{
         this.setState({
             event:this.state.user.FirstName+" "+ this.state.user.LastName+" reseted his parking spot"
         });
-        fetch('http://192.168.43.56:3000/updateParkingSpot',{
+        fetch('http://share-park-back-end.herokuapp.com/updateParkingSpot',{
         method:'POST',
         headers:{
             'Accept':'application/json',
@@ -261,7 +261,7 @@ export default class SettingsScreenEmpWithParking extends Component{
     {
         this.SetCurrentDate();
       //לשנות אייפי
-      fetch('http://192.168.43.56:3000/AddEvent',{
+      fetch('http://share-park-back-end.herokuapp.com/AddEvent',{
         method:'POST',
         headers:{
             'Accept':'application/json',

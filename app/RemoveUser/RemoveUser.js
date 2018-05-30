@@ -45,7 +45,7 @@ export default class RemoveUser extends Component{
     }
 
     getTheData(callback) {
-        var url = "http://192.168.43.56:3000/Employees/";
+        var url = "http://share-park-back-end.herokuapp.com/Employees/";
         fetch(url).then(response => response.json())
             .then(json => callback(json))
             .catch(error => console.log(error));
@@ -157,7 +157,7 @@ export default class RemoveUser extends Component{
     DeleteEmployee=()=>
     {
         //לשנות אייפי
-        fetch('http://192.168.43.56:3000/RemoveEmployee',{
+        fetch('http://share-park-back-end.herokuapp.com/RemoveEmployee',{
             method: 'POST',
             headers: {
             'Accept': 'application/json',
@@ -201,7 +201,7 @@ export default class RemoveUser extends Component{
     {
         this.SetCurrentDate();
       //לשנות אייפי
-      fetch('http://192.168.43.56:3000/AddEvent',{
+      fetch('http://share-park-back-end.herokuapp.com/AddEvent',{
         method:'POST',
         headers:{
             'Accept':'application/json',
