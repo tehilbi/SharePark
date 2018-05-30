@@ -219,4 +219,4 @@ export default class RemoveUser extends Component{
 }
 
 
-//AppRegistry.registerComponent('test',()=>test);
+// AppRegistry.registerComponent('test',()=>test);
