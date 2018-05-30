@@ -13,7 +13,7 @@ import LogOut from './app/LogOut/LogOut';
 import ParkingData from './app/ParkingData/ParkingData';
 import RemoveUser from './app/RemoveUser/RemoveUser';
 import EditMap from './app/EditMap/EditMap';
-import test1 from './app/test1';
+import test2 from './app/test2';
 
 import FCM, {FCMEvent, RemoteNotificationResult, WillPresentNotificationResult, NotificationType} from 'react-native-fcm'
 // this shall be called regardless of app state: running, background or not running. Won't be called when app is killed by user in iOS
@@ -65,7 +65,7 @@ const Application=StackNavigator(
     ParkingData:{screen:ParkingData},
     RemoveUser:{screen:RemoveUser},
     EditMap:{screen:EditMap},
-    test1:{screen:test1},
+    //test2:{screen:test2},
 
   },
   {

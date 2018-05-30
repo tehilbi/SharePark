@@ -1,47 +1,67 @@
 import React , {Component} from 'react';
-import {Picker,Select,AppRegistry,Text,View,TextInput,Image,StyleSheet,ScrollView,ActivityIndicator,Button,TouchableOpacity,AsyncStorage,Alert} from 'react-native';
+import {Picker,Select,AppRegistry,Text,View,TextInput,Image,StyleSheet,ScrollView,ActivityIndicator,Button,TouchableOpacity,AsyncStorage,Alert,ListView,} from 'react-native';
 import{Header}from 'native-base';
 import { Dropdown } from 'react-native-material-dropdown';
 var OcupationArray = [];
+import {StackNavigator} from 'react-navigation';
+import 'moment-timezone';
 
+const dateToFormat = '1976-04-19T12:59-0500';
 export default class AddUser extends Component{
  
     constructor(props)
     {
         //note
         super(props);
-       
+        var dataSource = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1.Id != r2.Id });
         this.state={
-            username:'',
-            Password:'',
+            username:'yulia',
+            Password:'234',
             permission:'',
-            FirstName:'',
-            LastName:'',
+            FirstName:'yu',
+            LastName:'lia',
             Ocupation:'',
             PickerValueHolder : '',  
             isLoading: true,
             Ocupations: OcupationArray,
             dataSource: dataSource.cloneWithRows(OcupationArray),
-            
+            event:"",
+            time:""
         }
         
     }
+
+    //return fetch('https://share-park-back-end.herokuapp.com/FetchOcupations/')
+      
+    
+
     componentDidMount() {
-        //return fetch('https://share-park-back-end.herokuapp.com/FetchOcupations/')
-        return fetch('http://192.168.1.38:3000/FetchOcupations/')
-        .then((response) => response.json())
-        .then((responseJson) => {
-            this.setState({
-                isLoading: false,
-              dataSource: responseJson
-            }, function() {
-              // In this block you can do something with new state.
-            });
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+        this.getOcupationList();
     }
+
+    async getOcupationList() {
+        try {
+            this.getTheData(function (json) {
+            OcupationArray = json;    
+            this.setState({
+                Ocupations: OcupationArray,
+                dataSource: this.state.dataSource.cloneWithRows(OcupationArray),
+                isLoading: false
+            })
+        }.bind(this));
+            
+        } catch (error) {
+            console.log("There was an error getting the ocupations");
+        }
+    }
+
+    getTheData(callback) {
+        var url = "http://192.168.43.56:3000/FetchOcupations/";
+        fetch(url).then(response => response.json())
+            .then(json => callback(json))
+            .catch(error => console.log(error));
+    }
+
   
     onValueChange(key,value){
         console.log(key+':'+value);
@@ -58,13 +78,6 @@ export default class AddUser extends Component{
           </View>
         );
       }
-      let data = [{
-        value: 'Manager',
-      }, {
-        value: 'Employee with parking spot',
-      }, {
-        value: 'Employee without parking spot',
-      }];
    
     return(
         <ScrollView > 
@@ -107,25 +120,31 @@ export default class AddUser extends Component{
                     </TextInput>
 
                     <Picker
-                        label=''
-                        selectedValue={this.state.Ocupation}
-                        onValueChange={(itemValue, itemIndex) => this.setState({PickerValueHolder: itemValue})} 
-                        mode="dropdown">
+                            label="Permission"
+                            style={{width:'100%'}}
+                            selectedValue={this.state.permission}
+                            onValueChange={(itemValue,itemIndex) => this.setState({permission:itemValue})}
+                            >                 
+                            <Picker.Item label='Please select an option...' value='0' />          
+                            <Picker.Item label="Manager" value="1" />
+                            <Picker.Item label="Employee with parking spot" value="2"/>
+                            <Picker.Item label="Employee without parking spot" value="3"/>
+                    </Picker>
 
-                        { this.state.dataSource.map((item, key)=>(
-                        <Picker.Item label={item.Ocupation} value={item.Ocupation} key={key} />)
-                        )}
-                        </Picker>
-
-                    <Dropdown
-                        label='Permission'
-                        data={data}
-                        onChangeText={(Permission)=>this.setState({Permission})}
-                    />
+                    <Picker
+                            label="Ocipation"
+                            style={{width:'100%'}}
+                            selectedValue={this.state.Ocupation}
+                            onValueChange={(itemValue,itemIndex) => this.setState({Ocupation:itemValue})}
+                            >
+                            <Picker.Item label='Please select an option...' value='0' />
+                            <Picker.Item label="Lecturer" value="1" />
+                            <Picker.Item label="President" value="2"/>                          
+                    </Picker>
                 </View>
                 
                 <TouchableOpacity 
-                    onPress={this.Modify}
+                    onPress={this.AddUser}
                     style={styles.buttonContainer} >
                         <Text style={styles.buttonText}>
                         Add User
@@ -135,50 +154,13 @@ export default class AddUser extends Component{
         </ScrollView>   
     );
   }
-  Modify()
-  {
-    if(this.state.Ocupation=='Lecturer')
-    {
-        this.setState({
-            Ocupation:'1'
-        });
-    }
-    else if(this.state.Ocupation=='President')
-    {
-        this.setState({
-            Ocupation:'2'
-        });
-    }
-       
+  
 
-    if(this.state.permission=='Manager')
-    {
-        this.setState({
-            permission:'1'
-        });
-    }
-       
-    else if(this.state.permission=='Employee with parking spot')
-    {
-        this.setState({
-            permission:'2'
-        });
-    }
-       
-    else if(this.state.permission=='Employee without parking spot')
-    {
-        this.setState({
-            permission:'3'
-        });
-    }
-    this.AddUser();
-
-  }
 
   AddUser=()=>
   {
       //לשנות אייפי
-      fetch('http://192.168.1.38:3000/AddEmployee',{
+      fetch('http://192.168.43.56:3000/AddEmployee',{
         method:'POST',
         headers:{
             'Accept':'application/json',
@@ -199,13 +181,46 @@ export default class AddUser extends Component{
         {
             if(res.success===true)
             {
-                //alert(FirstName+' '+LastName+' is added to the system!')     
+                alert(this.state.FirstName+' '+this.state.LastName+' is added to the system!');  
+                this.props.navigation.navigate('ManagerProfile');   
             }
             else
             {
                 alert(res.message);
             }
         })
+        .done();
+        this.AddEvent();
+    }
+
+    SetCurrentDate()
+    {
+        var date = new Date().getDate();
+        var month = new Date().getMonth() + 1;
+        var year = new Date().getFullYear();
+        var hour=new Date().getHours();
+        var minute=new Date().getMinutes();
+        this.setState({
+            time:date + '-' + month + '-' + year+' '+hour+":"+minute
+        });
+    }
+
+    AddEvent=()=>
+    {
+        this.SetCurrentDate();   
+      //לשנות אייפי
+      fetch('http://192.168.43.56:3000/AddEvent',{
+        method:'POST',
+        headers:{
+            'Accept':'application/json',
+            'Content-Type':'application/json',
+        },
+        body: JSON.stringify({
+            event:"New user added to the system: "+this.state.FirstName+" "+this.state.LastName+ " successfully",
+            time:this.state.time
+        })
+      })
+        .then((response)=>response.json())
         .done();
     }
 }

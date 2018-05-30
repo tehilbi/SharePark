@@ -15,7 +15,8 @@ export default class empWithParking extends Component{
         super(props);
         this.state=
         {
-            id:this.props.navigation.state.params.id
+           // id:this.props.navigation.state.params.id,
+            user:this.props.navigation.state.params.user
         }
     }
   render(){
@@ -25,9 +26,10 @@ export default class empWithParking extends Component{
     //    console.log(this.props.navigation);
     //    console.log(this.props.navigation.state);
     //    console.log(this.props.navigation.state.params);
-       console.log(this.props.navigation.state.params.id);
+      // console.log(this.props.navigation.state.params.id);
+       console.log( this.props.navigation.state.params.user);
     return(
-       <AppEmpWithParking id={id=this.state.id}/>   
+       <AppEmpWithParking /*id={id=this.state.id}*/ user={user=this.state.user}/>   
       
     );
   }
@@ -39,7 +41,7 @@ const AppEmpWithParking=DrawerNavigator({
         screen:HomeEmp
     },
     Settings:{
-        screen:props => <SettingsScreenEmpWithParking {...props} id={id} /> 
+        screen:props => <SettingsScreenEmpWithParking {...props}/* id={id}*/ user={user}  /> //im here
         //props => <StaticWebView {...props} url="...." /> 
 
     }

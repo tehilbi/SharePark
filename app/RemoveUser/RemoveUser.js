@@ -4,6 +4,7 @@ import {Container, Header, Title, Content,Text,Button, Left, Right, Body,List, L
 import { Animated,View, ScrollView ,ListView,TouchableOpacity,Alert} from 'react-native';
 import Swipeout from 'react-native-swipeout';
 import styles from './styles';
+import 'moment-timezone';
 
 
 var taskArray = [];
@@ -17,6 +18,9 @@ export default class RemoveUser extends Component{
             dataSource: dataSource.cloneWithRows(taskArray),
             isLoading: true,
             activeRowKey:null,
+            fname:'',
+            lname:'',
+            time:""
         };
     }
 
@@ -36,12 +40,12 @@ export default class RemoveUser extends Component{
         }.bind(this));
             
         } catch (error) {
-            console.log("There was an error getting the tasks");
+            console.log("There was an error getting the employees");
         }
     }
 
     getTheData(callback) {
-        var url = "http://192.168.1.38:3000/Employees/";
+        var url = "http://192.168.43.56:3000/Employees/";
         fetch(url).then(response => response.json())
             .then(json => callback(json))
             .catch(error => console.log(error));
@@ -78,6 +82,10 @@ export default class RemoveUser extends Component{
                             [
                                 {text:'No',onPress:()=>console.log('Cancel Pressed'),style:'cancel'},
                                 {text:'Yes',onPress:()=>{
+                                    this.setState({
+                                        fname:rowData.FirstName,
+                                        lname:rowData.LastName
+                                    });
                                     this._deleteRow(rowId);
                                     this.DeleteEmployee();    
                                 }},
@@ -149,7 +157,7 @@ export default class RemoveUser extends Component{
     DeleteEmployee=()=>
     {
         //לשנות אייפי
-        fetch('http://192.168.1.9:3000/RemoveEmployee',{
+        fetch('http://192.168.43.56:3000/RemoveEmployee',{
             method: 'POST',
             headers: {
             'Accept': 'application/json',
@@ -173,9 +181,41 @@ export default class RemoveUser extends Component{
             }  
             }).catch((error) => {
                 console.error(error);
-            });
-            
+            });  
+            this.AddEvent();         
       }
+
+    SetCurrentDate()
+    {
+        var date = new Date().getDate();
+        var month = new Date().getMonth() + 1;
+        var year = new Date().getFullYear();
+        var hour=new Date().getHours();
+        var minute=new Date().getMinutes();
+        this.setState({
+            time:date + '-' + month + '-' + year+' '+hour+":"+minute
+        });
+    }
+
+    AddEvent=()=>
+    {
+        this.SetCurrentDate();
+      //לשנות אייפי
+      fetch('http://192.168.43.56:3000/AddEvent',{
+        method:'POST',
+        headers:{
+            'Accept':'application/json',
+            'Content-Type':'application/json',
+        },
+        body: JSON.stringify({
+            event:this.state.fname+" "+this.state.lname+" removed from the system.",
+            time:this.state.time
+            
+        })
+      })
+        .then((response)=>response.json())
+        .done();
+    }   
 }
 
 

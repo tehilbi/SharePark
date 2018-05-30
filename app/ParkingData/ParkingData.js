@@ -1,37 +1,138 @@
 import React , {Component} from 'react';
-import {AppRegistry,Text,View,StyleSheet,TouchableOpacity,ScrollView,Image} from 'react-native';
-import{Icon,Button,Container,Header,Content,Right,Left}from 'native-base';
+import {AppRegistry,Text,View,StyleSheet,TouchableOpacity,ScrollView,Image,Navigator} from 'react-native';
+import{Header}from 'native-base';
 
+import {StackNavigator} from 'react-navigation';
 
-export default class ParkingData extends Component{
- 
+var dataArray = [];
+export default class ManagerProfile extends Component{
+   
+    constructor(props)
+    { 
+        super(props);
+        this.state = {
+        
+           AvalibleGeneral:"3",
+           OcupiedGeneral:"3",
+           ReservedAvalibleParkingSpots:"2",
+           ReservedOcupiedParkingSpots:"2",
+           UnReservedAvalibleParkingSpots:"1",
+           UnReservedOcupiedParkingSpots:"",
+           data:dataArray
+
+        };
+    }
+
+    componentDidMount() {
+        this.getData();
+    }
+
+    async getData() {
+        try {
+            
+            this.getTheData(function (json) {
+                dataArray = json;
+            this.setState({
+                data: dataArray
+               /* AvalibleGeneral:json.Avalible_General,
+                OcupiedGeneral:json.Ocupied_General,
+                ReservedAvalibleParkingSpots:json.Reserved_Avalible,
+                ReservedOcupiedParkingSpots:json.Reserved_Ocupied,
+                UnReservedAvalibleParkingSpots:json.UnReserved_Avalible,
+                UnReservedOcupiedParkingSpots:json.UnReserved_Ocupied,*/
+               
+            })
+        }.bind(this));
+            
+        } catch (error) {
+            console.log("There was an error getting the data");
+        }
+    }
+
+    getTheData(callback) {
+        var url = "http://192.168.43.56:3000/fetchParkingData/";
+        fetch(url).then(response => response.json())
+            .then(json => callback(json))
+            .catch(error => console.log(error));
+    }
+
     render()
     {
-        return(
+        return(  
             <ScrollView >
             <Header style={styles.header} >
-            <Text style={styles.title}>ParkingData</Text>
+            <Text style={styles.title}>Parking Data</Text>
             </Header>
                 <View style={styles.contentContainerStyle}>
-                
-                   
-                        <Text textAlign='justify'>
-                        ParkingData
-                        </Text>
-                    
 
+                    <TouchableOpacity style={styles.buttonContainer}>
+                        <Text style={styles.textInside}> Avalible Parking Spots:{this.state.AvalibleGeneral}</Text>
+                    </TouchableOpacity > 
+
+                    <TouchableOpacity style={styles.buttonContainer}>
+                        <Text style={styles.textInside}>Ocupied Parking Spots:{this.state.OcupiedGeneral}</Text>
+                    </TouchableOpacity >
+                    </View>
+                <View style={styles.contentContainerStyle}>
+                    <TouchableOpacity style={styles.buttonContainer}>
+                        <Text style={styles.textInside}>Reserved Avalible Parking Spots:{this.state.ReservedAvalibleParkingSpots}</Text>
+                    </TouchableOpacity >
+                    <TouchableOpacity style={styles.buttonContainer}>
+                        <Text style={styles.textInside}>Reserved Ocupied Parking Spots:{this.state.ReservedOcupiedParkingSpots}</Text>
+                    </TouchableOpacity >
+                    
+                </View>
+
+                <View style={styles.contentContainerStyle}>
+                    <TouchableOpacity style={styles.buttonContainer}>
+                        <Text style={styles.textInside}>UnReserved Avalible Parking Spots:{this.state.UnReservedAvalibleParkingSpots}</Text>
+                    </TouchableOpacity >
+                    <TouchableOpacity style={styles.buttonContainer}>
+                        <Text style={styles.textInside}>UnReserved Ocupied Parking Spots:{this.state.UnReservedOcupiedParkingSpots}</Text>
+                    </TouchableOpacity >
+                    
                 </View>
             </ScrollView>
+            
     );
+
   }
 }
 
 const styles=StyleSheet.create(
     {
+        buttonContainer:{
+            left:10,
+            right:10,
+            flex:1,
+            height:250,
+            width:200,
+            padding:20,
+            backgroundColor:'white',//'#0099FF',
+            borderWidth:0.25,
+            borderColor:'black',
+           // backgroundColor:'rgba(255,255,255,0.6)',
+           position: 'relative',
+           justifyContent: 'flex-end'
+        },
+        ImageIconStyle: {
+            padding: 20,
+            margin: 20,
+            height: 70,
+            width: 20,
+            resizeMode : 'stretch',
+          
+         },
+       
         header:{
             backgroundColor:'#0099FF'
         },
-
+        container:{
+            flex:1,
+            alignItems:'center',
+            justifyContent:'center',
+            //backgroundColor:'#2896d3'
+        },
         title:{
             flex:1,
             alignItems:'center',
@@ -51,10 +152,23 @@ const styles=StyleSheet.create(
           //  justifyContent:'center',
             backgroundColor:'white'
         },
-      
+        container1: {
+            flex: 1,
+            flexDirection: 'column',
+            margin: 30,
+            marginTop: 560
+          },
+          textInside:{
+            flex: 1,
+            justifyContent: 'center',
+            alignSelf: 'center',
+            textAlign: 'center',
+            fontSize:20,
+
+          }
         
     }
 );
-AppRegistry.registerComponent('ParkingData',()=>ParkingData);
+AppRegistry.registerComponent('ManagerProfile',()=>ManagerProfile);
 
 

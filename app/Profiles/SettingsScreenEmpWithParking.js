@@ -21,24 +21,27 @@ export default class SettingsScreenEmpWithParking extends Component{
         this.state={
             color:'orange',
             loaded:false,
-            id:this.props.id
+            //id:this.props.id,
+            user:this.props.user,
+            event:"",
+            time:""
         }
     }
 
     async componentWillMount(){
-        if(this.state.id=='1')
+        if(/*this.state.id*/this.state.user.id=='1')
         await this.parking1();
-        else if(this.state.id=='2')
+        else if(/*this.state.id*/this.state.user.id=='2')
             await this.parking2();
-        else if(this.state.id=='3')
+        else if(/*this.state.id*/this.state.user.id=='3')
             await this.parking3();
-        else if(this.state.id=='4')
+        else if(/*this.state.id*/this.state.user.id=='4')
             await this.parking4();
 
     }
 
     async parking1(){
-        const res = await fetch('http://192.168.1.38:3000/parkingSpots1',{
+        const res = await fetch('http://192.168.43.56:3000/parkingSpots1',{
             method:'POST',
             headers:{
                 'Accept':'application/json',
@@ -50,7 +53,7 @@ export default class SettingsScreenEmpWithParking extends Component{
     }
 
     async parking2(){
-        const res = await fetch('http://192.168.1.38:3000/parkingSpots2',{
+        const res = await fetch('http://192.168.43.56:3000/parkingSpots2',{
             method:'POST',
             headers:{
                 'Accept':'application/json',
@@ -62,7 +65,7 @@ export default class SettingsScreenEmpWithParking extends Component{
     }
 
     async parking3(){
-        const res = await fetch('http://192.168.1.38:3000/parkingSpots3',{
+        const res = await fetch('http://192.168.43.56:3000/parkingSpots3',{
             method:'POST',
             headers:{
                 'Accept':'application/json',
@@ -74,7 +77,7 @@ export default class SettingsScreenEmpWithParking extends Component{
     }
 
     async parking4(){
-        const res = await fetch('http://192.168.1.38:3000/parkingSpots4',{
+        const res = await fetch('http://192.168.43.56:3000/parkingSpots4',{
             method:'POST',
             headers:{
                 'Accept':'application/json',
@@ -87,8 +90,8 @@ export default class SettingsScreenEmpWithParking extends Component{
 
     render(){
         // console.log("1111111111111111111111111111111111111111111111111111111");
-        // console.log(this.props.id);
-        // console.log(this.props.navigation.state.params.id);
+        // console.log("1 "+ /*this.props.id*/this.state.user.id);
+        // console.log("2 "+ /*this.props.navigation.state.params.id*/this.state.user.id);
         if (this.state.loaded==false) {
             return(
                 <ActivityIndicator style={{padding: 300}} size="large" color="#C71585" />
@@ -142,7 +145,8 @@ export default class SettingsScreenEmpWithParking extends Component{
 
     release=()=>
     {
-        fetch('http://192.168.1.38:3000/updateParkingSpot',{
+        this.setState({event:this.state.user.FirstName+" "+ this.state.user.LastName+" realesed his parking spot"});
+        fetch('http://192.168.43.56:3000/updateParkingSpot',{
         method:'POST',
         headers:{
             'Accept':'application/json',
@@ -151,7 +155,7 @@ export default class SettingsScreenEmpWithParking extends Component{
         body: JSON.stringify({
             // username:
             color:'green',
-            id:this.state.id
+            id:/*this.state.id*/this.state.user.id
         })
       })
         .then((response)=>response.json())
@@ -169,12 +173,16 @@ export default class SettingsScreenEmpWithParking extends Component{
             }
         })
         .done();
+        this.AddEvent();    
     }
 
    
     block=()=>
     {
-        fetch('http://192.168.1.38:3000/updateParkingSpot',{
+        this.setState({
+            event:this.state.user.FirstName+" "+ this.state.user.LastName+" blocked his parking spot"
+        });
+        fetch('http://192.168.43.56:3000/updateParkingSpot',{
             method:'POST',
             headers:{
                 'Accept':'application/json',
@@ -183,7 +191,7 @@ export default class SettingsScreenEmpWithParking extends Component{
             body: JSON.stringify({
                 // username:
                 color:'red',
-                id:this.state.id
+                id:/*this.state.id*/this.state.user.id
             })
           })
             .then((response)=>response.json())
@@ -201,11 +209,15 @@ export default class SettingsScreenEmpWithParking extends Component{
                 }
             })
             .done();
+            this.AddEvent();    
         }
     
     reset=()=>
     {
-        fetch('http://192.168.1.38:3000/updateParkingSpot',{
+        this.setState({
+            event:this.state.user.FirstName+" "+ this.state.user.LastName+" reseted his parking spot"
+        });
+        fetch('http://192.168.43.56:3000/updateParkingSpot',{
         method:'POST',
         headers:{
             'Accept':'application/json',
@@ -214,7 +226,7 @@ export default class SettingsScreenEmpWithParking extends Component{
         body: JSON.stringify({
             // username:
             color:'orange',
-            id:this.state.id
+            id:/*this.state.id*/this.state.user.id
         })
       })
         .then((response)=>response.json())
@@ -232,7 +244,37 @@ export default class SettingsScreenEmpWithParking extends Component{
             }
         })
         .done();
+        this.AddEvent();    
     }
+    SetCurrentDate()
+    {
+        var date = new Date().getDate();
+        var month = new Date().getMonth() + 1;
+        var year = new Date().getFullYear();
+        var hour=new Date().getHours();
+        var minute=new Date().getMinutes();
+        this.setState({
+            time:date + '-' + month + '-' + year+' '+hour+":"+minute
+        });
+    }
+    AddEvent=()=>
+    {
+        this.SetCurrentDate();
+      //לשנות אייפי
+      fetch('http://192.168.43.56:3000/AddEvent',{
+        method:'POST',
+        headers:{
+            'Accept':'application/json',
+            'Content-Type':'application/json',
+        },
+        body: JSON.stringify({
+            event:this.state.event,
+            time:this.state.time
+        })
+      })
+        .then((response)=>response.json())
+        .done();
+    }   
 }
 const styles=StyleSheet.create(
     {
