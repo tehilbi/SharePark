@@ -7,7 +7,7 @@ import {StackNavigator} from 'react-navigation';
 export default class LoginPage extends Component{
     constructor(props)
     {
-        //note
+        //note//test
         super(props);
         this.state={
             username:'',
