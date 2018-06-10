@@ -9,7 +9,9 @@ import{
     TouchableOpacity, 
     Alert,
     AsyncStorage,
-    ActivityIndicator
+    ActivityIndicator,
+    BackHandler,
+    ToastAndroid
 }from "react-native";
 
 import {StackNavigator} from 'react-navigation';
@@ -37,11 +39,26 @@ export default class HomeEmp extends Component{
         }
     }
 
+    componentDidMount() {
+        BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
+      }
+    
+      componentWillUnmount() {
+          BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+      }
+    
+      handleBackButton() {
+          ToastAndroid.show('Can not press the button!! for logout you have to go to setting page', ToastAndroid.SHORT);
+          return true;
+      }
+
     async componentWillMount(){
+     
         await this.parking1();
         await this.parking2();
         await this.parking3();
         await this.parking4();
+        
     }
 
     async parking1(){
@@ -139,7 +156,7 @@ export default class HomeEmp extends Component{
                         <Image source={require('./lines.png')}/>
                         <Parking4 parkingColor4={color4=this.state.color4}/>
                     </Content>      
-                    <TouchableOpacity onPress={this.test}>
+                    <TouchableOpacity onPress={this.reqParkingSpot}>
                         <Image
                         style={styles.button}
                         source={require('./BUTTON.png')}
@@ -148,8 +165,31 @@ export default class HomeEmp extends Component{
             </Container>         
         );     
     }
+    reqParkingSpot=()=>
+    {
+        if(this.state.color1==='green')
+        {
+            alert('Park in parking Spot number 1!!');
+        }
+        else if(this.state.color2==='green')
+        {
+            alert('Park in parking Spot number 2!!');
+        }
+        else if(this.state.color3==='green')
+        {
+            alert('Park in parking Spot number 3!!');
+        }
+        else if(this.state.color4==='green')
+        {
+            alert('Park in parking Spot number 4!!');
+        }
+        else
+        {
+            this.notificationReq();
+        }
+    }
 
-    test=()=>
+    notificationReq=()=>
     {
         console.log("333333333333333333333333333333333333333333333333333");
 

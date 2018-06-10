@@ -2,7 +2,7 @@ import React , {Component} from 'react';
 import {Platform,AppRegistry,Text,View,TextInput,Image,StyleSheet,ScrollView,Button,TouchableOpacity,AsyncStorage,} from 'react-native';
 import {StackNavigator} from 'react-navigation';
 
-
+import FCM, {FCMEvent, RemoteNotificationResult, WillPresentNotificationResult, NotificationType} from 'react-native-fcm'
   
 export default class LoginPage extends Component{
     constructor(props)
@@ -14,13 +14,66 @@ export default class LoginPage extends Component{
             Password:'',
             permission:'',
             id:'',
-            user:''
+            user:'',
+            flag:false
         }
     }
 
-    //check if the user loged in priviously or not
-    componentDidMount(){
-        this._loadInitialState().done();
+     //check if the user loged in priviously or not
+    //  componentDidMount(){
+    
+    //     // this._loadInitialState().done();
+    //     FCM.requestPermissions().then(()=>console.log('grantedddddddddddddddddddddddddddd')).catch(()=>console.log('noti'));
+       
+       
+    //     FCM.deleteInstanceId()
+    //     .then( () => {
+    //     FCM.getFCMToken().then(token => { console.log(token);});//this.saveToken(token);
+    //     })
+    //     FCM.on(FCMEvent.RefreshToken, (token) =>{
+    //         console.log("hhhhhhhhhhhhhhhhhhhhhhhhhhhhh")
+    //         this.setState({userToken:token});
+    //         console.log(token)
+    //     });
+    //     this.notificationListener = FCM.on(FCMEvent.Notification, async (notif) => {
+    //       if (notif.fcm && notif.fcm.body) { // A new notification was received 
+    //         FCM.presentLocalNotification({ 
+    //         title:"You have a new message!", body: notif.fcm.body, big_text: notif.fcm.body, show_in_foreground: true }) 
+    //       }
+    //     });
+      
+
+    //     FCM.getInitialNotification().then(notif => {
+    //       console.log(notif)
+    //     });
+    //     // this.getToken();
+    // }
+    async componentWillMount(){
+        // this._loadInitialState().done();
+        FCM.requestPermissions().then(()=>console.log('grantedddddddddddddddddddddddddddd')).catch(()=>console.log('noti'));
+       
+       
+        FCM.deleteInstanceId()
+        .then( () => {
+        FCM.getFCMToken().then(token => { console.log(token);});//this.saveToken(token);
+        })
+        FCM.on(FCMEvent.RefreshToken, (token) =>{
+            console.log("hhhhhhhhhhhhhhhhhhhhhhhhhhhhh")
+            this.setState({userToken:token});
+            console.log(token)
+        });
+        this.notificationListener = FCM.on(FCMEvent.Notification, async (notif) => {
+          if (notif.fcm && notif.fcm.body) { // A new notification was received 
+            FCM.presentLocalNotification({ 
+            title:"You have a new message!", body: notif.fcm.body, big_text: notif.fcm.body, show_in_foreground: true }) 
+          }
+        });
+      
+
+        FCM.getInitialNotification().then(notif => {
+          console.log(notif)
+        });
+        // this.getToken();
     }
 
     _loadInitialState=async()=>{
@@ -39,7 +92,6 @@ export default class LoginPage extends Component{
     }
     
   render(){
-   
     return(
         <ScrollView >
             <Image 
@@ -77,7 +129,7 @@ export default class LoginPage extends Component{
                         <Text style={styles.buttonText}>
                         LOGIN
                         </Text>
-                    </TouchableOpacity > 
+                    </TouchableOpacity> 
                    
             </View> 
         </ScrollView>   
@@ -87,43 +139,54 @@ export default class LoginPage extends Component{
 
   login=()=>
   {
-      //לשנות אייפי
-      fetch('http://share-park-back-end.herokuapp.com/users',{
-        method:'POST',
-        headers:{
-            'Accept':'application/json',
-            'Content-Type':'application/json',
-        },
-        body: JSON.stringify({
-            username:this.state.username,
-            Password:this.state.Password,
-         
-        })
+    // this.componentDidMount();
+    //לשנות אייפי
+    fetch('http://share-park-back-end.herokuapp.com/users',{
+      method:'POST',
+      headers:{
+          'Accept':'application/json',
+          'Content-Type':'application/json',
+      },
+      body: JSON.stringify({
+          username:this.state.username,
+          Password:this.state.Password
+       
       })
-        .then((response)=>response.json())
-        .then((res)=>
-        {
-            if(res.success===true)
-            {
-                AsyncStorage.setItem('user',res.user);
-                this.state.permission=res.user;
-                this.state.id=res.id;
-                this.state.user=res.test;
-                
-                if(res.user==='1')
-                    this.props.navigation.navigate('ManagerProfile');
-                else if(res.user==='2')
-                    this.props.navigation.navigate('empWithParking' ,{ /*id: this.state.id ,*/user:this.state.user});  
-                else if(res.user==='3')
-                    this.props.navigation.navigate('empWithNoParking');    
-            }
-            else
-            {
-                alert(res.message);
-            }
-        })
-        .done();
-    }
+    })
+      .then((response)=>response.json())
+      .then((res)=>
+      {
+          if(res.success===true)
+          {
+              AsyncStorage.setItem('user',res.user);
+              this.state.permission=res.user;
+              this.state.id=res.id;
+              this.state.user=res.test;
+              fetch('http://share-park-back-end.herokuapp.com/updateToken',{
+                  method:'POST',
+                  headers:{
+                      'Accept':'application/json',
+                      'Content-Type':'application/json',
+                  },
+                  body: JSON.stringify({
+                      userToken:this.state.userToken,
+                      id:this.state.id
+                  })
+                })
+              if(res.user==='1')
+                  this.props.navigation.navigate('ManagerProfile');
+              else if(res.user==='2')
+                  this.props.navigation.navigate('empWithParking' ,{ /*id: this.state.id ,*/user:this.state.user});  
+              else if(res.user==='3')
+                  this.props.navigation.navigate('empWithNoParking');    
+          }
+          else
+          {
+              alert(res.message);
+          }
+      })
+      .done();
+  }
 }
 
 var styles=StyleSheet.create({
