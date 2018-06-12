@@ -109,18 +109,6 @@ export default class HomeEmp extends Component{
         this.setState({color4:result.color, loaded4: true });
     }
 
-    // componentDidMount(){
-    //     FCM.requestPermissions().then(()=>console.log('grantedddddddddddddddddddddddddddddddddddddddd')).catch(()=>console.log('noti'));
-    
-    //     FCM.getFCMToken().then(token => { console.log(token); });
-    //     this.notificationListener = FCM.on(FCMEvent.Notification, async (notif) => {
-    //     //
-    //     });
-    
-    //     FCM.getInitialNotification().then(notif => {
-    //       console.log(notif)
-    //   });
-    // }
     render(){
         if (this.state.loaded1==false|| this.state.loaded2==false || this.state.loaded3==false || this.state.loaded4==false) {
             return(

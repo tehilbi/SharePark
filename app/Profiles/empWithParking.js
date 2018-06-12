@@ -20,7 +20,6 @@ export default class empWithParking extends Component{
         }
     }
   render(){
-       console.log("2222222222222222222222222222222222222222222222222222222222222222222222")
     //    console.log(this);
     //    console.log(this.props);
     //    console.log(this.props.navigation);

@@ -14,40 +14,9 @@ export default class LoginPage extends Component{
             Password:'',
             permission:'',
             id:'',
-            user:'',
-            flag:false
+            user:''
         }
     }
-
-     //check if the user loged in priviously or not
-    //  componentDidMount(){
-    
-    //     // this._loadInitialState().done();
-    //     FCM.requestPermissions().then(()=>console.log('grantedddddddddddddddddddddddddddd')).catch(()=>console.log('noti'));
-       
-       
-    //     FCM.deleteInstanceId()
-    //     .then( () => {
-    //     FCM.getFCMToken().then(token => { console.log(token);});//this.saveToken(token);
-    //     })
-    //     FCM.on(FCMEvent.RefreshToken, (token) =>{
-    //         console.log("hhhhhhhhhhhhhhhhhhhhhhhhhhhhh")
-    //         this.setState({userToken:token});
-    //         console.log(token)
-    //     });
-    //     this.notificationListener = FCM.on(FCMEvent.Notification, async (notif) => {
-    //       if (notif.fcm && notif.fcm.body) { // A new notification was received 
-    //         FCM.presentLocalNotification({ 
-    //         title:"You have a new message!", body: notif.fcm.body, big_text: notif.fcm.body, show_in_foreground: true }) 
-    //       }
-    //     });
-      
-
-    //     FCM.getInitialNotification().then(notif => {
-    //       console.log(notif)
-    //     });
-    //     // this.getToken();
-    // }
     async componentWillMount(){
         // this._loadInitialState().done();
         FCM.requestPermissions().then(()=>console.log('grantedddddddddddddddddddddddddddd')).catch(()=>console.log('noti'));
@@ -139,7 +108,6 @@ export default class LoginPage extends Component{
 
   login=()=>
   {
-    // this.componentDidMount();
     //לשנות אייפי
     fetch('http://share-park-back-end.herokuapp.com/users',{
       method:'POST',
