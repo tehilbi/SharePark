@@ -1,17 +1,15 @@
 import React , {Component} from 'react';
-import {Picker,Select,AppRegistry,Text,View,TextInput,Image,StyleSheet,ScrollView,ActivityIndicator,Button,TouchableOpacity,AsyncStorage,Alert,ListView,} from 'react-native';
+import { connect } from 'react-redux';
+import {Picker,Select,AppRegistry,Text,View,TextInput,Image,StyleSheet,ScrollView,ActivityIndicator,Button,TouchableOpacity,AsyncStorage,Alert,ListView,ToastAndroid} from 'react-native';
 import{Header}from 'native-base';
 import { Dropdown } from 'react-native-material-dropdown';
 var OcupationArray = [];
 import {StackNavigator} from 'react-navigation';
 import 'moment-timezone';
 
-const dateToFormat = '1976-04-19T12:59-0500';
 export default class AddUser extends Component{
- 
     constructor(props)
     {
-        //note
         super(props);
         var dataSource = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1.Id != r2.Id });
         this.state={
@@ -26,14 +24,10 @@ export default class AddUser extends Component{
             Ocupations: OcupationArray,
             dataSource: dataSource.cloneWithRows(OcupationArray),
             event:"",
-            time:""
-        }
-        
+            time:"",
+            user:this.props.navigation.state.params.user,
+        }        
     }
-
-    //return fetch('https://share-park-back-end.herokuapp.com/FetchOcupations/')
-      
-    
 
     componentDidMount() {
         this.getOcupationList();
@@ -78,7 +72,6 @@ export default class AddUser extends Component{
           </View>
         );
       }
-   
     return(
         <ScrollView > 
             <Header style={styles.header} >
@@ -132,7 +125,7 @@ export default class AddUser extends Component{
                     </Picker>
 
                     <Picker
-                            label="Ocipation"
+                            label="Ocupation"
                             style={{width:'100%'}}
                             selectedValue={this.state.Ocupation}
                             onValueChange={(itemValue,itemIndex) => this.setState({Ocupation:itemValue})}
@@ -154,13 +147,10 @@ export default class AddUser extends Component{
         </ScrollView>   
     );
   }
-  
-
 
   AddUser=()=>
   {
-      //לשנות אייפי
-      fetch('http://share-park-back-end.herokuapp.com/AddEmployee',{
+        fetch('http://share-park-back-end.herokuapp.com/AddEmployee',{
         method:'POST',
         headers:{
             'Accept':'application/json',
@@ -172,8 +162,7 @@ export default class AddUser extends Component{
             permission:this.state.permission,
             FirstName:this.state.FirstName,
             LastName:this.state.LastName,
-            Ocupation:this.state.Ocupation,
-         
+            Ocupation:this.state.Ocupation, 
         })
       })
         .then((response)=>response.json())
@@ -181,19 +170,18 @@ export default class AddUser extends Component{
         {
             if(res.success===true)
             {
-                alert(this.state.FirstName+' '+this.state.LastName+' is added to the system!');  
-                this.props.navigation.navigate('ManagerProfile');   
+                this.AddEvent();
+                ToastAndroid.show(this.state.FirstName+" "+this.state.LastName+" added to the system successfully.", ToastAndroid.SHORT);
             }
             else
             {
                 alert(res.message);
             }
         })
-        .done();
-        this.AddEvent();
+        .done();    
     }
 
-    SetCurrentDate()
+    SetCurrentTime()
     {
         var date = new Date().getDate();
         var month = new Date().getMonth() + 1;
@@ -207,21 +195,21 @@ export default class AddUser extends Component{
 
     AddEvent=()=>
     {
-        this.SetCurrentDate();   
-      //לשנות אייפי
-      fetch('http://share-park-back-end.herokuapp.com/AddEvent',{
+        this.SetCurrentTime();
+        fetch('http://share-park-back-end.herokuapp.com/AddEvent',{
         method:'POST',
         headers:{
             'Accept':'application/json',
             'Content-Type':'application/json',
         },
         body: JSON.stringify({
-            event:"New user added to the system: "+this.state.FirstName+" "+this.state.LastName+ " successfully",
+            event:this.state.user.FirstName+" "+this.state.user.LastName+" added "+this.state.FirstName+" "+this.state.LastName+"  successfully to the system.",
             time:this.state.time
         })
       })
         .then((response)=>response.json())
         .done();
+         this.props.navigation.navigate('ManagerProfile',{user:this.state.user});
     }
 }
 
@@ -229,7 +217,6 @@ var styles=StyleSheet.create({
     header:{
         backgroundColor:'#0099FF'
     },
-   
     inputContainer:{
         marginBottom:0,
         padding:20,
@@ -268,6 +255,6 @@ var styles=StyleSheet.create({
 });
 
 
-AppRegistry.registerComponent('AddUser',()=>AddUser);
+// AppRegistry.registerComponent('AddUser',()=>AddUser);
 
 

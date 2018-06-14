@@ -44,7 +44,8 @@ const AppEmpWithParking=DrawerNavigator({
         screen:props => <SettingsScreenEmpWithParking {...props}/* id={id}*/ user={user}  /> //im here
         //props => <StaticWebView {...props} url="...." /> 
 
-    }
+    },
+    
 })
 
 // const styles=StyleSheet.create(

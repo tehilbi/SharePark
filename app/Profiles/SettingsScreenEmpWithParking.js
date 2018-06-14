@@ -7,13 +7,15 @@ import{
     Image,
     TouchableOpacity,
     Alert,
-    ActivityIndicator
+    ActivityIndicator,
+    ToastAndroid
 }from "react-native";
-
+import 'moment-timezone';
 import{Icon,Button,Container,Header,Content,Left,Title,Right}from 'native-base'
 // import Parking1 from './Parking1';
 import Parking from './Parking';
 
+let c;
 export default class SettingsScreenEmpWithParking extends Component{
     constructor(props)
     {        
@@ -143,9 +145,28 @@ export default class SettingsScreenEmpWithParking extends Component{
         );
     }
 
+    change_state(c){
+        if(c=='1')
+        {
+            this.setState({event:this.state.user.FirstName+" "+ this.state.user.LastName+" realesed his parking spot"});
+        }
+        if(c=='2')
+        {
+            this.setState({
+                event:this.state.user.FirstName+" "+ this.state.user.LastName+" blocked his parking spot"
+            });
+        }
+        if(c=='3')
+        {
+            this.setState({
+                event:this.state.user.FirstName+" "+ this.state.user.LastName+" reseted his parking spot"
+            });
+        }
+    }
+
     release=()=>
     {
-        this.setState({event:this.state.user.FirstName+" "+ this.state.user.LastName+" realesed his parking spot"});
+        this.change_state('1');
         fetch('http://share-park-back-end.herokuapp.com/updateParkingSpot',{
         method:'POST',
         headers:{
@@ -153,7 +174,6 @@ export default class SettingsScreenEmpWithParking extends Component{
             'Content-Type':'application/json',
         },
         body: JSON.stringify({
-            // username:
             color:'green',
             id:/*this.state.id*/this.state.user.id
         })
@@ -163,25 +183,23 @@ export default class SettingsScreenEmpWithParking extends Component{
         {
             if(res.success===true)
             {
-                // this.setState({color:'green'});
                 this.componentWillMount();
-                alert("Update successful");
+                this.AddEvent();
+                ToastAndroid.show('Update successful', ToastAndroid.SHORT);
             }
             else
             {
                 alert(res.message);
             }
         })
-        .done();
-        this.AddEvent();    
+        .done();    
     }
 
    
     block=()=>
     {
-        this.setState({
-            event:this.state.user.FirstName+" "+ this.state.user.LastName+" blocked his parking spot"
-        });
+        this.change_state('2');
+       
         fetch('http://share-park-back-end.herokuapp.com/updateParkingSpot',{
             method:'POST',
             headers:{
@@ -189,7 +207,6 @@ export default class SettingsScreenEmpWithParking extends Component{
                 'Content-Type':'application/json',
             },
             body: JSON.stringify({
-                // username:
                 color:'red',
                 id:/*this.state.id*/this.state.user.id
             })
@@ -199,9 +216,9 @@ export default class SettingsScreenEmpWithParking extends Component{
             {
                 if(res.success===true)
                 {
-                    // this.setState({color:'red'});
                     this.componentWillMount();
-                    alert("Update successful");
+                    this.AddEvent(); 
+                    ToastAndroid.show('Update successful', ToastAndroid.SHORT);
                 }
                 else
                 {
@@ -209,14 +226,12 @@ export default class SettingsScreenEmpWithParking extends Component{
                 }
             })
             .done();
-            this.AddEvent();    
+               
         }
     
     reset=()=>
     {
-        this.setState({
-            event:this.state.user.FirstName+" "+ this.state.user.LastName+" reseted his parking spot"
-        });
+        this.change_state('3');
         fetch('http://share-park-back-end.herokuapp.com/updateParkingSpot',{
         method:'POST',
         headers:{
@@ -224,7 +239,6 @@ export default class SettingsScreenEmpWithParking extends Component{
             'Content-Type':'application/json',
         },
         body: JSON.stringify({
-            // username:
             color:'orange',
             id:/*this.state.id*/this.state.user.id
         })
@@ -234,9 +248,9 @@ export default class SettingsScreenEmpWithParking extends Component{
         {
             if(res.success===true)
             {
-                // this.setState({color:'orange'});
                 this.componentWillMount();
-                alert("Update successful");
+                this.AddEvent();    
+                ToastAndroid.show('Update successful', ToastAndroid.SHORT);
             }
             else
             {
@@ -244,7 +258,6 @@ export default class SettingsScreenEmpWithParking extends Component{
             }
         })
         .done();
-        this.AddEvent();    
     }
     SetCurrentDate()
     {
@@ -260,8 +273,7 @@ export default class SettingsScreenEmpWithParking extends Component{
     AddEvent=()=>
     {
         this.SetCurrentDate();
-      //לשנות אייפי
-      fetch('http://share-park-back-end.herokuapp.com/AddEvent',{
+        fetch('http://share-park-back-end.herokuapp.com/AddEvent',{
         method:'POST',
         headers:{
             'Accept':'application/json',

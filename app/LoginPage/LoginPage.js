@@ -3,7 +3,8 @@ import {Platform,AppRegistry,Text,View,TextInput,Image,StyleSheet,ScrollView,But
 import {StackNavigator} from 'react-navigation';
 
 
-  
+const ACCESS_TOKEN = 'access_token';
+
 export default class LoginPage extends Component{
     constructor(props)
     {
@@ -20,32 +21,21 @@ export default class LoginPage extends Component{
 
     //check if the user loged in priviously or not
     componentDidMount(){
-        this._loadInitialState().done();
+        //this._loadInitialState().done();
     }
 
-    _loadInitialState=async()=>{
-        var value=await AsyncStorage.getItem('user') ;
-        if(value!==null)
-        {
-            switch(this.state.permission){
-                case '1':this.props.navigation.navigate('ManagerProfile');
-                break;
-                case '2':{this.props.navigation.navigate('empWithParking');}
-                break;
-                case '3':this.props.navigation.navigate('empWithNoParking');
-                break;
-            }
-        }
-    }
+    // _loadInitialState=async()=>{
+    //     const userToken = await AsyncStorage.getItem('userToken');
+    //     this.props.navigation.navigate(userToken ? 'App' : 'Auth');
+    // }
     
   render(){
    
     return(
         <ScrollView >
             <Image 
-            
             style={styles.myPic}
-            source={require('./Login.png')}
+            source={require('./login.png')}
             />
             <View>
                 <Text 
@@ -61,7 +51,7 @@ export default class LoginPage extends Component{
                         placeholder='Username'>
                     </TextInput>
 
-                    <TextInput 
+                    <TextInput
                         secureTextEntry={true} 
                         underlineColorAndroid='transparent' 
                         style={styles.input}
@@ -84,11 +74,22 @@ export default class LoginPage extends Component{
     );
   }
 
+  storeToken(accessToken){
+    console.log("in storeToken");
+    AsyncStorage.setItem(ACCESS_TOKEN, accessToken, (err)=> {
+      if(err){
+        console.log("an error");
+        throw err;
+      }
+      console.log("success to store ACCESS_TOKEN");
+    }).catch((err)=> {
+        console.log("error is: " + err);
+    });
+  }
 
   login=()=>
   {
-      //לשנות אייפי
-      fetch('http://share-park-back-end.herokuapp.com/users',{
+    fetch('http://share-park-back-end.herokuapp.com/users',{
         method:'POST',
         headers:{
             'Accept':'application/json',
@@ -96,8 +97,7 @@ export default class LoginPage extends Component{
         },
         body: JSON.stringify({
             username:this.state.username,
-            Password:this.state.Password,
-         
+            Password:this.state.Password,    
         })
       })
         .then((response)=>response.json())
@@ -105,13 +105,23 @@ export default class LoginPage extends Component{
         {
             if(res.success===true)
             {
-                AsyncStorage.setItem('user',res.user);
-                this.state.permission=res.user;
-                this.state.id=res.id;
-                this.state.user=res.test;
-                
+                //AsyncStorage.setItem('user',res.user);
+                this.setState({
+                    permission: res.user,
+                    id:res.id,
+                    user:res.test
+                  });
+                // this.state.permission=res.user;
+                // this.state.id=res.id;
+                // this.state.user=res.test;
+
+                let accessToken = res.test.userToken;
+                console.log("user Token");
+                console.log(accessToken);
+                this.storeToken(accessToken);
+
                 if(res.user==='1')
-                    this.props.navigation.navigate('ManagerProfile');
+                    this.props.navigation.navigate('ManagerProfile',{user:this.state.user});
                 else if(res.user==='2')
                     this.props.navigation.navigate('empWithParking' ,{ /*id: this.state.id ,*/user:this.state.user});  
                 else if(res.user==='3')
