@@ -1,6 +1,7 @@
 import React , {Component} from 'react';
 import {Platform,AppRegistry,Text,View,TextInput,Image,StyleSheet,ScrollView,Button,TouchableOpacity,AsyncStorage,} from 'react-native';
 import {StackNavigator} from 'react-navigation';
+import 'moment-timezone';
 
 
 const ACCESS_TOKEN = 'access_token';
@@ -17,14 +18,12 @@ export default class LoginPage extends Component{
             Password:'',
             permission:'',
             id:'',
-            user:''
+            user:'',
+            time:"",
         }
     }
     async componentWillMount(){
-        // this._loadInitialState().done();
         FCM.requestPermissions().then(()=>console.log('grantedddddddddddddddddddddddddddd')).catch(()=>console.log('noti'));
-       
-       
         FCM.deleteInstanceId()
         .then( () => {
         FCM.getFCMToken().then(token => { console.log(token);});//this.saveToken(token);
@@ -42,14 +41,12 @@ export default class LoginPage extends Component{
         });
       
     }
-    //check if the user loged in priviously or not
     componentDidMount(){
         FCM.getInitialNotification().then(notif => {
           console.log(notif)
         });
     }
 
-    
   render(){
     return(
         <ScrollView >
@@ -87,8 +84,7 @@ export default class LoginPage extends Component{
                         <Text style={styles.buttonText}>
                         LOGIN
                         </Text>
-                    </TouchableOpacity> 
-                   
+                    </TouchableOpacity>             
             </View> 
         </ScrollView>   
     );
@@ -109,7 +105,6 @@ export default class LoginPage extends Component{
 
   login=()=>
   {
-    //לשנות אייפי
     fetch('http://share-park-back-end.herokuapp.com/users',{
       method:'POST',
       headers:{
@@ -143,17 +138,54 @@ export default class LoginPage extends Component{
                   })
                 })
               if(res.user==='1')
+              {
                   this.props.navigation.navigate('ManagerProfile');
+              }
               else if(res.user==='2')
-                  this.props.navigation.navigate('empWithParking' ,{ /*id: this.state.id ,*/user:this.state.user});  
+              {
+                  this.props.navigation.navigate('empWithParking' ,{ /*id: this.state.id ,*/user:this.state.user});
+              }  
               else if(res.user==='3')
+              {
                   this.props.navigation.navigate('empWithNoParking');    
+              }
+              this.AddEvent();
           }
           else
           {
               alert(res.message);
           }
       })
+      .done();
+  }
+    SetCurrentDate()
+    {
+        var date = new Date().getDate();
+        var month = new Date().getMonth() + 1;
+        var year = new Date().getFullYear();
+        var hour=new Date().getHours();
+        var minute=new Date().getMinutes();
+        this.setState({
+            time:date + '-' + month + '-' + year+' '+hour+":"+minute
+        });
+    }
+  AddEvent=()=>
+  {
+      const { FirstName, LastName } = this.state.user;
+      this.SetCurrentDate();
+      fetch('http://share-park-back-end.herokuapp.com/AddEvent',{
+      method:'POST',
+      headers:{
+          'Accept':'application/json',
+          'Content-Type':'application/json',
+      },
+      body: JSON.stringify({
+         // event:`${FirstName} ${LastName} removed ${fname} ${lname} from the system.`,
+          event:FirstName+" "+LastName+" logged in to the system.",
+          time:this.state.time   
+      })
+    })
+      .then((response)=>response.json())
       .done();
   }
 }

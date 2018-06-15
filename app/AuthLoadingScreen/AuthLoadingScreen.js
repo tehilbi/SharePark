@@ -40,15 +40,12 @@ export default class AuthLoadingScreen extends Component {
         console.log("getToken");
         try{
             token =  await AsyncStorage.getItem(ACCESS_TOKEN);    
-            console.log("token is: "+token);
+            //console.log("token is: "+token);
             if(token!==null)
             {
                 this.getPermission(); 
             }
             else{
-                console.log("inside else")
-                console.log("this = ")
-                console.log(this)
                 this.props.navigation.navigate('LoginPage');
             }
         }
@@ -61,7 +58,6 @@ export default class AuthLoadingScreen extends Component {
     }
      getPermission()
     {
-        console.log("getPermission");
         fetch('http://share-park-back-end.herokuapp.com/FetchToken',{
         method:'POST',
         headers:{
@@ -77,13 +73,9 @@ export default class AuthLoadingScreen extends Component {
         {
             if(res.success===true)
             {
-                console.log("res = ");
-                console.log(res.user);
                 this.setState({
                     user:res.user
                   });
-                console.log("this.state.user = ");
-                console.log(this.state.user);
                 if(this.state.user.PermissionId!=null)
                 {
                     if(this.state.user.PermissionId==='1')
