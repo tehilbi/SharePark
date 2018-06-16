@@ -1,5 +1,5 @@
 import React , {Component} from 'react';
-import {AppRegistry,Text,View,StyleSheet,TouchableOpacity,ScrollView,Image,Navigator} from 'react-native';
+import {AppRegistry,Text,View,StyleSheet,TouchableOpacity,ScrollView,Image,Navigator,BackHandler,ToastAndroid} from 'react-native';
 import{Header}from 'native-base';
 
 import {StackNavigator} from 'react-navigation';
@@ -10,6 +10,19 @@ export default class ManagerProfile extends Component{
     { 
         super(props);
     }
+    
+    componentDidMount() {
+        BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
+      }
+    
+      componentWillUnmount() {
+          BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+      }
+    
+      handleBackButton() {
+          ToastAndroid.show('Can not press the button!! for logout you have to go to setting page', ToastAndroid.SHORT);
+          return true;
+      }
     render()
     {
         return(  

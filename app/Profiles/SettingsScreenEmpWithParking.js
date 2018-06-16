@@ -13,6 +13,7 @@ import{
 import{Icon,Button,Container,Header,Content,Left,Title,Right}from 'native-base'
 // import Parking1 from './Parking1';
 import Parking from './Parking';
+import DateTimePicker from 'react-native-modal-datetime-picker';
 
 export default class SettingsScreenEmpWithParking extends Component{
     constructor(props)
@@ -24,8 +25,10 @@ export default class SettingsScreenEmpWithParking extends Component{
             //id:this.props.id,
             user:this.props.user,
             event:"",
-            time:""
-        }
+            time:"",
+            isDateTimePickerVisible: false
+        };
+        
     }
 
     async componentWillMount(){
@@ -172,6 +175,7 @@ export default class SettingsScreenEmpWithParking extends Component{
             }
         })
         .done();
+
         this.AddEvent();    
     }
 
