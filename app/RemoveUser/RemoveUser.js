@@ -118,13 +118,14 @@ export default class RemoveUser extends Component{
     render() {
         let currentView = <View />;
         if (this.state.isLoading)
-         {
+        {
             currentView = <View />;
-        } else {
+        } 
+        else 
+        {
             currentView = <ListView style={styles.taskListView}
                 dataSource={this.state.dataSource} renderRow={this.renderRow.bind(this)}
-                enableEmptySections={true}
-            />;
+                enableEmptySections={true}/>;
         }
         return (
             <Container style={{...styles.container}}>
@@ -140,9 +141,7 @@ export default class RemoveUser extends Component{
                         <TouchableOpacity 
                         onPress={() => this.props.navigation.navigate('AddUser',{user:this.state.user})}
                         style={{...styles.buttonContainer}} >
-                            <Text style={{...styles.buttonText}}>
-                            Add User
-                            </Text>
+                            <Text style={{...styles.buttonText}}>Add User</Text>
                         </TouchableOpacity >
                     </View>
             </Container>

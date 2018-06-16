@@ -23,7 +23,6 @@ export default class SettingsScreenEmpWithParking extends Component{
         this.state={
             color:'orange',
             loaded:false,
-            //id:this.props.id,
             user:this.props.user,
             event:"",
             time:""
@@ -31,13 +30,13 @@ export default class SettingsScreenEmpWithParking extends Component{
     }
 
     async componentWillMount(){
-        if(/*this.state.id*/this.state.user.parkingNum=='1')
+        if(this.state.user.parkingNum=='1')
         await this.parking1();
-        else if(/*this.state.id*/this.state.user.parkingNum=='2')
+        else if(this.state.user.parkingNum=='2')
             await this.parking2();
-        else if(/*this.state.id*/this.state.user.parkingNum=='3')
+        else if(this.state.user.parkingNum=='3')
             await this.parking3();
-        else if(/*this.state.id*/this.state.user.parkingNum=='4')
+        else if(this.state.user.parkingNum=='4')
             await this.parking4();
 
     }
@@ -91,8 +90,6 @@ export default class SettingsScreenEmpWithParking extends Component{
     }
 
     render(){
-        // console.log("1 "+ /*this.props.id*/this.state.user.id);
-        // console.log("2 "+ /*this.props.navigation.state.params.id*/this.state.user.id);
         if (this.state.loaded==false) {
             return(
                 <ActivityIndicator style={{padding: 300}} size="large" color="#C71585" />
@@ -109,8 +106,7 @@ export default class SettingsScreenEmpWithParking extends Component{
                     <Right>
                         <Icon name="refresh" onPress={() => {this.componentWillMount()}}/>
                     </Right>
-                </Header>       
-                    
+                </Header>           
                 <Content contentContainerStyle={{
                     // flexDirection:'row',
                     justifyContent: 'center',
@@ -174,7 +170,7 @@ export default class SettingsScreenEmpWithParking extends Component{
         },
         body: JSON.stringify({
             color:'green',
-            parkingNum:/*this.state.id*/this.state.user.parkingNum
+            parkingNum:this.state.user.parkingNum
         })
       })
         .then((response)=>response.json())
@@ -198,7 +194,6 @@ export default class SettingsScreenEmpWithParking extends Component{
     block=()=>
     {
         this.change_state('2');
-       
         fetch('http://share-park-back-end.herokuapp.com/updateParkingSpot',{
             method:'POST',
             headers:{
@@ -207,7 +202,7 @@ export default class SettingsScreenEmpWithParking extends Component{
             },
             body: JSON.stringify({
                 color:'red',
-                parkingNum:/*this.state.id*/this.state.user.parkingNum
+                parkingNum:this.state.user.parkingNum
             })
           })
             .then((response)=>response.json())
@@ -224,8 +219,7 @@ export default class SettingsScreenEmpWithParking extends Component{
                     alert(res.message);
                 }
             })
-            .done();
-               
+            .done();   
         }
     
     reset=()=>

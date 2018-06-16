@@ -22,9 +22,7 @@ export default class SettingsScreenEmpWithNoParking extends Component{
                     <Icon name="information-circle"/>
                 </Right>
             </Header>         
-               
                 <Content >
-                    
                 </Content>        
         </Container>        
         );

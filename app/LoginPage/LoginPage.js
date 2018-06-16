@@ -24,14 +24,14 @@ export default class LoginPage extends Component{
         }
     }
     async componentWillMount(){
-        console.log("componentWillMount");
+        // console.log("componentWillMount");
         FCM.requestPermissions().then(()=>console.log('grantedddddddddddddddddddddddddddd')).catch(()=>console.log('noti'));
         FCM.deleteInstanceId()
         .then( () => {
         FCM.getFCMToken().then(token => { console.log(token);});//this.saveToken(token);
         })
         FCM.on(FCMEvent.RefreshToken, (token) =>{
-            console.log("hhhhhhhhhhhhhhhhhhhhhhhhhhhhh")
+            // console.log("hhhhhhhhhhhhhhhhhhhhhhhhhhhhh")
             this.setState({userToken:token});
             console.log(token)
         });
@@ -94,7 +94,7 @@ export default class LoginPage extends Component{
     
     login=()=>
     {
-        console.log("in login");
+        // console.log("in login");
         fetch('http://share-park-back-end.herokuapp.com/users',{
         method:'POST',
         headers:{
@@ -111,8 +111,8 @@ export default class LoginPage extends Component{
         {
             if(res.success===true)
             {
-                console.log("in success :");
-                console.log(res);
+                // console.log("in success :");
+                // console.log(res);
                 this.setState({id:res.user.id});
                 this.setState({permission:res.user.PermissionId});
                 this.setState({user:res.user});
@@ -123,8 +123,8 @@ export default class LoginPage extends Component{
     }
     async updateToken()
     {
-        console.log("token:")
-        console.log(this.state.userToken);
+        // console.log("token:")
+        // console.log(this.state.userToken);
     
         fetch('http://share-park-back-end.herokuapp.com/updateToken',{
             method:'POST',
@@ -147,7 +147,7 @@ export default class LoginPage extends Component{
 
                 if(this.state.user.PermissionId==='1')
                 {
-                    console.log("go to manager");
+                    // console.log("go to manager");
                     this.props.navigation.navigate('ManagerProfile',{ user:this.state.user});
                 }
                 else if(this.state.user.PermissionId==='2')
@@ -168,13 +168,13 @@ export default class LoginPage extends Component{
         .done();
     }
     async storeToken(accessToken){
-        console.log("in storeToken");
+        // console.log("in storeToken");
         await AsyncStorage.setItem(ACCESS_TOKEN, this.state.userToken, (err)=> {
         if(err){
             console.log("an error");
             throw err;
         }
-        console.log("success to store ACCESS_TOKEN");
+        // console.log("success to store ACCESS_TOKEN");
         }).catch((err)=> {
             console.log("error is: " + err);
         });

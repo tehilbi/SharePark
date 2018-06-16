@@ -15,25 +15,15 @@ export default class empWithParking extends Component{
         super(props);
         this.state=
         {
-           // id:this.props.navigation.state.params.id,
             user:this.props.navigation.state.params.user
         }
     }
   render(){
-    //    console.log(this);
-    //    console.log(this.props);
-    //    console.log(this.props.navigation);
-    //    console.log(this.props.navigation.state);
-    //    console.log(this.props.navigation.state.params);
-      // console.log(this.props.navigation.state.params.id);
-       console.log( this.props.navigation.state.params.user);
     return(
-       <AppEmpWithParking /*id={id=this.state.id}*/ user={user=this.state.user}/>   
-      
+       <AppEmpWithParking  user={user=this.state.user}/>   
     );
   }
 }
-// screen: (props) => <MyNotificationsScreen {...props.navigation.state.params} propName={val1} />
 
 const AppEmpWithParking=DrawerNavigator({
     Home:{
@@ -41,25 +31,9 @@ const AppEmpWithParking=DrawerNavigator({
     },
     Settings:{
         screen:props => <SettingsScreenEmpWithParking {...props}/* id={id}*/ user={user}  /> //im here
-        //props => <StaticWebView {...props} url="...." /> 
-
     },
-    
-})
 
-// const styles=StyleSheet.create(
-//     {
-//         container:{
-//             flex:1,
-//             alignItems:'center',
-//             justifyContent:'center',
-//             backgroundColor:'#0099FF'
-//         },
-//         text:{
-//             color:'#fff'
-//         }
-//     }
-// );
+})
 
 AppRegistry.registerComponent('empWithParking',()=>empWithParking);
 

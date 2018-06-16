@@ -35,7 +35,7 @@ export default class ManagerProfile extends Component{
                         </Text>
                     </TouchableOpacity > 
                     
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate('EditMap')} style={styles.buttonContainer}>
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate('EditMap',{user:this.state.user})} style={styles.buttonContainer}>
                     <Image source={require('./map_icon.png')}style={styles.ImageIconStyle} />
                         <Text>
                         Edit map
