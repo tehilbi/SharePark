@@ -20,9 +20,11 @@ export default class LoginPage extends Component{
             id:'',
             user:'',
             time:"",
+            userToken:""
         }
     }
     async componentWillMount(){
+        console.log("componentWillMount");
         FCM.requestPermissions().then(()=>console.log('grantedddddddddddddddddddddddddddd')).catch(()=>console.log('noti'));
         FCM.deleteInstanceId()
         .then( () => {
@@ -47,117 +49,137 @@ export default class LoginPage extends Component{
         });
     }
 
-  render(){
-    return(
-        <ScrollView >
-            <Image 
-            style={styles.myPic}
-            source={require('./login.png')}
-            />
-            <View>
-                <Text 
-                    style={styles.logo}>
-                    Welcome to SharePark
-                </Text>
-                <View style={styles.inputContainer}>
-                    <TextInput 
-                        underlineColorAndroid='transparent' 
-                        style={styles.input}
-                        onChangeText={(username)=>this.setState({username})}
-                       // value={this.state.username}
-                        placeholder='Username'>
-                    </TextInput>
+    render(){
+        return(
+            <ScrollView >
+                <Image 
+                style={styles.myPic}
+                source={require('./login.png')}
+                />
+                <View>
+                    <Text 
+                        style={styles.logo}>
+                        Welcome to SharePark
+                    </Text>
+                    <View style={styles.inputContainer}>
+                        <TextInput 
+                            underlineColorAndroid='transparent' 
+                            style={styles.input}
+                            onChangeText={(username)=>this.setState({username})}
+                        // value={this.state.username}
+                            placeholder='Username'>
+                        </TextInput>
 
-                    <TextInput
-                        secureTextEntry={true} 
-                        underlineColorAndroid='transparent' 
-                        style={styles.input}
-                        onChangeText={(Password)=>this.setState({Password})}
-                       // value={this.state.Password}
-                        placeholder='Password'>
-                    </TextInput>
-                </View>
-                
-                <TouchableOpacity 
-                    onPress={this.login}
-                    style={styles.buttonContainer} >
-                        <Text style={styles.buttonText}>
-                        LOGIN
-                        </Text>
-                    </TouchableOpacity>             
-            </View> 
-        </ScrollView>   
-    );
-  }
+                        <TextInput
+                            secureTextEntry={true} 
+                            underlineColorAndroid='transparent' 
+                            style={styles.input}
+                            onChangeText={(Password)=>this.setState({Password})}
+                        // value={this.state.Password}
+                            placeholder='Password'>
+                        </TextInput>
+                    </View>
+                    
+                    <TouchableOpacity 
+                        onPress={this.login}
+                        style={styles.buttonContainer} >
+                            <Text style={styles.buttonText}>
+                            LOGIN
+                            </Text>
+                        </TouchableOpacity>             
+                </View> 
+            </ScrollView>   
+        );
+    }
+    
+    login=()=>
+    {
+        console.log("in login");
+        fetch('http://share-park-back-end.herokuapp.com/users',{
+        method:'POST',
+        headers:{
+            'Accept':'application/json',
+            'Content-Type':'application/json',
+        },
+        body: JSON.stringify({
+            username:this.state.username,
+            Password:this.state.Password  
+            })
+        })
+        .then((response)=>response.json())
+        .then((res)=>
+        {
+            if(res.success===true)
+            {
+                console.log("in success :");
+                console.log(res);
+                this.setState({id:res.user.id});
+                this.setState({permission:res.user.PermissionId});
+                this.setState({user:res.user});
+                this.updateToken();
+            }
+        })
+        .done();
+    }
+    async updateToken()
+    {
+        console.log("token:")
+        console.log(this.state.userToken);
+    
+        fetch('http://share-park-back-end.herokuapp.com/updateToken',{
+            method:'POST',
+            headers:{
+                'Accept':'application/json',
+                'Content-Type':'application/json',
+            },
+            body: JSON.stringify({
+                userToken:this.state.userToken,
+                id:this.state.id
+            })
+        })
+        .then((response)=>response.json())
+        .then((res)=>
+        {
+            if(res.success===true)
+            {
+                AsyncStorage.setItem('user',res.user);
+                this.storeToken();
 
-  storeToken(accessToken){
-    console.log("in storeToken");
-    AsyncStorage.setItem(ACCESS_TOKEN, accessToken, (err)=> {
-      if(err){
-        console.log("an error");
-        throw err;
-      }
-      console.log("success to store ACCESS_TOKEN");
-    }).catch((err)=> {
-        console.log("error is: " + err);
-    });
-  }
+                if(this.state.user.PermissionId==='1')
+                {
+                    console.log("go to manager");
+                    this.props.navigation.navigate('ManagerProfile',{ user:this.state.user});
+                }
+                else if(this.state.user.PermissionId==='2')
+                {
+                    this.props.navigation.navigate('empWithParking' ,{ /*id: this.state.id ,*/user:this.state.user});
+                }  
+                else if(this.state.user.PermissionId==='3')
+                {
+                    this.props.navigation.navigate('empWithNoParking');    
+                }
+                this.AddEvent();
+            }
+            else
+            {
+                alert(res.message);
+            }
+        })
+        .done();
+    }
+    async storeToken(accessToken){
+        console.log("in storeToken");
+        await AsyncStorage.setItem(ACCESS_TOKEN, this.state.userToken, (err)=> {
+        if(err){
+            console.log("an error");
+            throw err;
+        }
+        console.log("success to store ACCESS_TOKEN");
+        }).catch((err)=> {
+            console.log("error is: " + err);
+        });
+    }
 
-  login=()=>
-  {
-    fetch('http://share-park-back-end.herokuapp.com/users',{
-      method:'POST',
-      headers:{
-          'Accept':'application/json',
-          'Content-Type':'application/json',
-      },
-      body: JSON.stringify({
-          username:this.state.username,
-          Password:this.state.Password
-       
-      })
-    })
-      .then((response)=>response.json())
-      .then((res)=>
-      {
-          if(res.success===true)
-          {
-              AsyncStorage.setItem('user',res.user);
-              this.state.permission=res.user;
-              this.state.id=res.id;
-              this.state.user=res.test;
-              fetch('http://share-park-back-end.herokuapp.com/updateToken',{
-                  method:'POST',
-                  headers:{
-                      'Accept':'application/json',
-                      'Content-Type':'application/json',
-                  },
-                  body: JSON.stringify({
-                      userToken:this.state.userToken,
-                      id:this.state.id
-                  })
-                })
-              if(res.user==='1')
-              {
-                  this.props.navigation.navigate('ManagerProfile');
-              }
-              else if(res.user==='2')
-              {
-                  this.props.navigation.navigate('empWithParking' ,{ /*id: this.state.id ,*/user:this.state.user});
-              }  
-              else if(res.user==='3')
-              {
-                  this.props.navigation.navigate('empWithNoParking');    
-              }
-              this.AddEvent();
-          }
-          else
-          {
-              alert(res.message);
-          }
-      })
-      .done();
-  }
     SetCurrentDate()
     {
         var date = new Date().getDate();

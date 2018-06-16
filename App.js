@@ -38,9 +38,9 @@ const Application=StackNavigator(
       header:false,
     }
   },
-  // {
-  //   initialRouteName: 'AuthLoadingScreen',
-  // }   
+  {
+    initialRouteName: 'AuthLoadingScreen',
+  }   
 );
 
 export default class SharePark extends Component{

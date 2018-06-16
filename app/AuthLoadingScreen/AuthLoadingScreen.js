@@ -40,7 +40,7 @@ export default class AuthLoadingScreen extends Component {
         console.log("getToken");
         try{
             token =  await AsyncStorage.getItem(ACCESS_TOKEN);    
-            //console.log("token is: "+token);
+            console.log("token is: "+token);
             if(token!==null)
             {
                 this.getPermission(); 
