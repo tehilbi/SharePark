@@ -1,6 +1,10 @@
 import React , {Component} from 'react';
 import {Platform,AppRegistry,Text,View,TextInput,Image,StyleSheet,ScrollView,Button,TouchableOpacity,AsyncStorage,} from 'react-native';
 import {StackNavigator} from 'react-navigation';
+import 'moment-timezone';
+
+
+const ACCESS_TOKEN = 'access_token';
 
 import FCM, {FCMEvent, RemoteNotificationResult, WillPresentNotificationResult, NotificationType} from 'react-native-fcm'
   
@@ -14,14 +18,14 @@ export default class LoginPage extends Component{
             Password:'',
             permission:'',
             id:'',
-            user:''
+            user:'',
+            time:"",
+            userToken:""
         }
     }
     async componentWillMount(){
-        // this._loadInitialState().done();
+        console.log("componentWillMount");
         FCM.requestPermissions().then(()=>console.log('grantedddddddddddddddddddddddddddd')).catch(()=>console.log('noti'));
-       
-       
         FCM.deleteInstanceId()
         .then( () => {
         FCM.getFCMToken().then(token => { console.log(token);});//this.saveToken(token);
@@ -38,121 +42,172 @@ export default class LoginPage extends Component{
           }
         });
       
-
+    }
+    componentDidMount(){
         FCM.getInitialNotification().then(notif => {
           console.log(notif)
         });
-        // this.getToken();
     }
 
-    _loadInitialState=async()=>{
-        var value=await AsyncStorage.getItem('user') ;
-        if(value!==null)
-        {
-            switch(this.state.permission){
-                case '1':this.props.navigation.navigate('ManagerProfile');
-                break;
-                case '2':{this.props.navigation.navigate('empWithParking');}
-                break;
-                case '3':this.props.navigation.navigate('empWithNoParking');
-                break;
-            }
-        }
+    render(){
+        return(
+            <ScrollView >
+                <Image 
+                style={styles.myPic}
+                source={require('./login.png')}
+                />
+                <View>
+                    <Text 
+                        style={styles.logo}>
+                        Welcome to SharePark
+                    </Text>
+                    <View style={styles.inputContainer}>
+                        <TextInput 
+                            underlineColorAndroid='transparent' 
+                            style={styles.input}
+                            onChangeText={(username)=>this.setState({username})}
+                        // value={this.state.username}
+                            placeholder='Username'>
+                        </TextInput>
+
+                        <TextInput
+                            secureTextEntry={true} 
+                            underlineColorAndroid='transparent' 
+                            style={styles.input}
+                            onChangeText={(Password)=>this.setState({Password})}
+                        // value={this.state.Password}
+                            placeholder='Password'>
+                        </TextInput>
+                    </View>
+                    
+                    <TouchableOpacity 
+                        onPress={this.login}
+                        style={styles.buttonContainer} >
+                            <Text style={styles.buttonText}>
+                            LOGIN
+                            </Text>
+                        </TouchableOpacity>             
+                </View> 
+            </ScrollView>   
+        );
     }
     
-  render(){
-    return(
-        <ScrollView >
-            <Image 
-            
-            style={styles.myPic}
-            source={require('./Login.png')}
-            />
-            <View>
-                <Text 
-                    style={styles.logo}>
-                    Welcome to SharePark
-                </Text>
-                <View style={styles.inputContainer}>
-                    <TextInput 
-                        underlineColorAndroid='transparent' 
-                        style={styles.input}
-                        onChangeText={(username)=>this.setState({username})}
-                       // value={this.state.username}
-                        placeholder='Username'>
-                    </TextInput>
+    login=()=>
+    {
+        console.log("in login");
+        fetch('http://share-park-back-end.herokuapp.com/users',{
+        method:'POST',
+        headers:{
+            'Accept':'application/json',
+            'Content-Type':'application/json',
+        },
+        body: JSON.stringify({
+            username:this.state.username,
+            Password:this.state.Password  
+            })
+        })
+        .then((response)=>response.json())
+        .then((res)=>
+        {
+            if(res.success===true)
+            {
+                console.log("in success :");
+                console.log(res);
+                this.setState({id:res.user.id});
+                this.setState({permission:res.user.PermissionId});
+                this.setState({user:res.user});
+                this.updateToken();
+            }
+        })
+        .done();
+    }
+    async updateToken()
+    {
+        console.log("token:")
+        console.log(this.state.userToken);
+    
+        fetch('http://share-park-back-end.herokuapp.com/updateToken',{
+            method:'POST',
+            headers:{
+                'Accept':'application/json',
+                'Content-Type':'application/json',
+            },
+            body: JSON.stringify({
+                userToken:this.state.userToken,
+                id:this.state.id
+            })
+        })
+        .then((response)=>response.json())
+        .then((res)=>
+        {
+            if(res.success===true)
+            {
+                AsyncStorage.setItem('user',res.user);
+                this.storeToken();
 
-                    <TextInput 
-                        secureTextEntry={true} 
-                        underlineColorAndroid='transparent' 
-                        style={styles.input}
-                        onChangeText={(Password)=>this.setState({Password})}
-                       // value={this.state.Password}
-                        placeholder='Password'>
-                    </TextInput>
-                </View>
-                
-                <TouchableOpacity 
-                    onPress={this.login}
-                    style={styles.buttonContainer} >
-                        <Text style={styles.buttonText}>
-                        LOGIN
-                        </Text>
-                    </TouchableOpacity> 
-                   
-            </View> 
-        </ScrollView>   
-    );
-  }
+                if(this.state.user.PermissionId==='1')
+                {
+                    console.log("go to manager");
+                    this.props.navigation.navigate('ManagerProfile',{ user:this.state.user});
+                }
+                else if(this.state.user.PermissionId==='2')
+                {
+                    this.props.navigation.navigate('empWithParking' ,{ /*id: this.state.id ,*/user:this.state.user});
+                }  
+                else if(this.state.user.PermissionId==='3')
+                {
+                    this.props.navigation.navigate('empWithNoParking');    
+                }
+                this.AddEvent();
+            }
+            else
+            {
+                alert(res.message);
+            }
+        })
+        .done();
+    }
+    async storeToken(accessToken){
+        console.log("in storeToken");
+        await AsyncStorage.setItem(ACCESS_TOKEN, this.state.userToken, (err)=> {
+        if(err){
+            console.log("an error");
+            throw err;
+        }
+        console.log("success to store ACCESS_TOKEN");
+        }).catch((err)=> {
+            console.log("error is: " + err);
+        });
+    }
 
-
-  login=()=>
+    SetCurrentDate()
+    {
+        var date = new Date().getDate();
+        var month = new Date().getMonth() + 1;
+        var year = new Date().getFullYear();
+        var hour=new Date().getHours();
+        var minute=new Date().getMinutes();
+        this.setState({
+            time:date + '-' + month + '-' + year+' '+hour+":"+minute
+        });
+    }
+  AddEvent=()=>
   {
-    //לשנות אייפי
-    fetch('http://share-park-back-end.herokuapp.com/users',{
+      const { FirstName, LastName } = this.state.user;
+      this.SetCurrentDate();
+      fetch('http://share-park-back-end.herokuapp.com/AddEvent',{
       method:'POST',
       headers:{
           'Accept':'application/json',
           'Content-Type':'application/json',
       },
       body: JSON.stringify({
-          username:this.state.username,
-          Password:this.state.Password
-       
+         // event:`${FirstName} ${LastName} removed ${fname} ${lname} from the system.`,
+          event:FirstName+" "+LastName+" logged in to the system.",
+          time:this.state.time   
       })
     })
       .then((response)=>response.json())
-      .then((res)=>
-      {
-          if(res.success===true)
-          {
-              AsyncStorage.setItem('user',res.user);
-              this.state.permission=res.user;
-              this.state.id=res.id;
-              this.state.user=res.test;
-              fetch('http://share-park-back-end.herokuapp.com/updateToken',{
-                  method:'POST',
-                  headers:{
-                      'Accept':'application/json',
-                      'Content-Type':'application/json',
-                  },
-                  body: JSON.stringify({
-                      userToken:this.state.userToken,
-                      id:this.state.id
-                  })
-                })
-              if(res.user==='1')
-                  this.props.navigation.navigate('ManagerProfile');
-              else if(res.user==='2')
-                  this.props.navigation.navigate('empWithParking' ,{ /*id: this.state.id ,*/user:this.state.user});  
-              else if(res.user==='3')
-                  this.props.navigation.navigate('empWithNoParking');    
-          }
-          else
-          {
-              alert(res.message);
-          }
-      })
       .done();
   }
 }

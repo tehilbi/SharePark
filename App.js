@@ -1,7 +1,10 @@
 
 import React , {Component} from 'react';
+
 import {Platform,AppRegistry,Text,View,TextInput} from 'react-native';
 import {StackNavigator} from 'react-navigation';
+
+import AuthLoadingScreen from './app/AuthLoadingScreen/AuthLoadingScreen';
 // import type { RemoteMessage } from 'react-native-firebase';
 console.disableYellowBox = true;
 import LoginPage from './app/LoginPage/LoginPage';
@@ -14,11 +17,11 @@ import LogOut from './app/LogOut/LogOut';
 import ParkingData from './app/ParkingData/ParkingData';
 import RemoveUser from './app/RemoveUser/RemoveUser';
 import EditMap from './app/EditMap/EditMap';
-import test2 from './app/test2';
 
 const Application=StackNavigator(
   {
-    Home:/*{screen:ManagerProfile},*/{screen:LoginPage},
+    AuthLoadingScreen:{screen:AuthLoadingScreen},
+    LoginPage:{screen:LoginPage},
     ManagerProfile:{screen:ManagerProfile},
     empWithParking:{screen:empWithParking},
     empWithNoParking:{screen:empWithNoParking},
@@ -28,22 +31,23 @@ const Application=StackNavigator(
     ParkingData:{screen:ParkingData},
     RemoveUser:{screen:RemoveUser},
     EditMap:{screen:EditMap},
-    //test2:{screen:test2},
-
   },
   {
     navigationOptions:
     {
       header:false,
     }
-  }    
+  },
+  {
+    initialRouteName: 'AuthLoadingScreen',
+  }   
 );
 
 export default class SharePark extends Component{
- 
+
   render(){
     return(
-          <Application/>
+          <Application/>  
     );
   }
 }

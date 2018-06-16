@@ -1,25 +1,40 @@
 import React , {Component} from 'react';
-import {AppRegistry,Text,View,StyleSheet,TouchableOpacity,ScrollView,Image} from 'react-native';
+import {AppRegistry,Text,View,StyleSheet,TouchableOpacity,ScrollView,Image,AsyncStorage,BackHandler} from 'react-native';
 import{Icon,Button,Container,Header,Content,Right,Left}from 'native-base';
 
+const ACCESS_TOKEN = 'access_token';
 
 export default class LogOut extends Component{
- 
+    constructor(props)
+    {
+        super(props);
+    }
+    componentDidMount()
+    {
+        this.removeToken();
+    }
+
+    async removeToken(){
+        try{
+            await AsyncStorage.removeItem(ACCESS_TOKEN);
+        }
+        catch(error){
+            console.log("something is wrong in removeToken!");
+            console.log(error);
+        }
+        this.exit_function();
+    }
+    exit_function = () => {
+        BackHandler.exitApp();
+     }
     render()
     {
         return(
             <ScrollView >
-            <Header style={styles.header} >
-            <Text style={styles.title}>LogOut</Text>
-            </Header>
                 <View style={styles.contentContainerStyle}>
-                
-                   
                         <Text textAlign='justify'>
-                        LogOut
+                        GOODBEY!    
                         </Text>
-                    
-
                 </View>
             </ScrollView>
     );

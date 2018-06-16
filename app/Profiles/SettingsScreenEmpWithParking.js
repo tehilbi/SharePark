@@ -26,7 +26,7 @@ export default class SettingsScreenEmpWithParking extends Component{
             user:this.props.user,
             event:"",
             time:"",
-            isDateTimePickerVisible: false
+            isDateTimePickerVisible: false//
         };
         
     }

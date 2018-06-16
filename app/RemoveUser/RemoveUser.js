@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {Container, Header, Title, Content,Text,Button, Left, Right, Body,List, ListItem,AppRegistry} from 'native-base';
-import { Animated,View, ScrollView ,ListView,TouchableOpacity,Alert} from 'react-native';
+import {Container, Header, Title, Content,Text,Button, Left, Right, Body,List, ListItem} from 'native-base';
+import { Animated,View, ScrollView ,ListView,TouchableOpacity,Alert,ToastAndroid} from 'react-native';
 import Swipeout from 'react-native-swipeout';
 import styles from './styles';
 import 'moment-timezone';
-
 
 var taskArray = [];
 
@@ -20,7 +19,8 @@ export default class RemoveUser extends Component{
             activeRowKey:null,
             fname:'',
             lname:'',
-            time:""
+            time:"",
+            user:this.props.navigation.state.params.user,
         };
     }
 
@@ -92,13 +92,11 @@ export default class RemoveUser extends Component{
                             ],
                             {cancelable:true}
                         );
-                        
                     },
                     text:'Delete',type:'delete'
                 },
                 {
                     onPress:()=>{
-
                     },
                     text:'Edit',type:'edit'
                 }
@@ -117,7 +115,6 @@ export default class RemoveUser extends Component{
             </ListItem >
         );
     }
-
     render() {
         let currentView = <View />;
         if (this.state.isLoading)
@@ -129,22 +126,19 @@ export default class RemoveUser extends Component{
                 enableEmptySections={true}
             />;
         }
-
         return (
             <Container style={{...styles.container}}>
                 <Header style={{...styles.header}}>
                     <Left>
                         <Text style={{...styles.title}}>Users</Text>   
                     </Left>
-                </Header>
-               
+                </Header>           
                 <Content>
                     {currentView}
                 </Content>
-
                     <View >
                         <TouchableOpacity 
-                        onPress={() => this.props.navigation.navigate('AddUser')}
+                        onPress={() => this.props.navigation.navigate('AddUser',{user:this.state.user})}
                         style={{...styles.buttonContainer}} >
                             <Text style={{...styles.buttonText}}>
                             Add User
@@ -156,7 +150,6 @@ export default class RemoveUser extends Component{
     }
     DeleteEmployee=()=>
     {
-        //לשנות אייפי
         fetch('http://share-park-back-end.herokuapp.com/RemoveEmployee',{
             method: 'POST',
             headers: {
@@ -165,7 +158,6 @@ export default class RemoveUser extends Component{
             },
             body: JSON.stringify({
                 emp : this.state.activeRowKey
-                
             })
         
             }).then((response) => response.json())
@@ -173,16 +165,17 @@ export default class RemoveUser extends Component{
 
             if(responseJson.success===true)
             {
-                alert(responseJson.message);
+                //ToastAndroid.show(responseJson.message, ToastAndroid.SHORT);
+                this.AddEvent();     
             }
             else
             {
-                alert(responseJson.message);
+                ToastAndroid.show(responseJson.message, ToastAndroid.SHORT);
             }  
             }).catch((error) => {
                 console.error(error);
-            });  
-            this.AddEvent();         
+            }) 
+            .done();
       }
 
     SetCurrentDate()
@@ -199,24 +192,36 @@ export default class RemoveUser extends Component{
 
     AddEvent=()=>
     {
+        const { FirstName, LastName } = this.state.user;
+        const { fname, lname } = this.state;
         this.SetCurrentDate();
-      //לשנות אייפי
-      fetch('http://share-park-back-end.herokuapp.com/AddEvent',{
+        fetch('http://share-park-back-end.herokuapp.com/AddEvent',{
         method:'POST',
         headers:{
             'Accept':'application/json',
             'Content-Type':'application/json',
         },
         body: JSON.stringify({
-            event:this.state.fname+" "+this.state.lname+" removed from the system.",
-            time:this.state.time
-            
+           // event:`${FirstName} ${LastName} removed ${fname} ${lname} from the system.`,
+            event:FirstName+" "+LastName+" removed "+fname+" "+lname+" from the system.",
+            time:this.state.time   
         })
       })
         .then((response)=>response.json())
+        .then((res)=>
+        {
+            if(res.success===true)
+            {
+                ToastAndroid.show(this.state.fname+" "+this.state.lname+" removed from the system successfully.", ToastAndroid.SHORT);
+            }
+            else
+            {
+                ToastAndroid.show(res.message, ToastAndroid.SHORT);
+            }
+        })
         .done();
     }   
 }
 
 
-// AppRegistry.registerComponent('test',()=>test);
+//  AppRegistry.registerComponent('RemoveUser',()=>RemoveUser);

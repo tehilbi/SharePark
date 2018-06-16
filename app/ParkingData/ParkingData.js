@@ -12,11 +12,11 @@ export default class ManagerProfile extends Component{
         super(props);
         this.state = {
         
-           AvalibleGeneral:"3",
-           OcupiedGeneral:"3",
-           ReservedAvalibleParkingSpots:"2",
-           ReservedOcupiedParkingSpots:"2",
-           UnReservedAvalibleParkingSpots:"1",
+           AvalibleGeneral:"",
+           OcupiedGeneral:"",
+           ReservedAvalibleParkingSpots:"",
+           ReservedOcupiedParkingSpots:"",
+           UnReservedAvalibleParkingSpots:"",
            UnReservedOcupiedParkingSpots:"",
            data:dataArray
 
@@ -32,14 +32,16 @@ export default class ManagerProfile extends Component{
             
             this.getTheData(function (json) {
                 dataArray = json;
+                console.log("dataArray: ");
+                console.log(json[0].Ocupied_General);
             this.setState({
-                data: dataArray
-               /* AvalibleGeneral:json.Avalible_General,
-                OcupiedGeneral:json.Ocupied_General,
-                ReservedAvalibleParkingSpots:json.Reserved_Avalible,
-                ReservedOcupiedParkingSpots:json.Reserved_Ocupied,
-                UnReservedAvalibleParkingSpots:json.UnReserved_Avalible,
-                UnReservedOcupiedParkingSpots:json.UnReserved_Ocupied,*/
+                data: dataArray,
+                AvalibleGeneral:json[0].Avalible_General,
+                OcupiedGeneral:json[0].Ocupied_General,
+                ReservedAvalibleParkingSpots:json[0].Reserved_Avalible,
+                ReservedOcupiedParkingSpots:json[0].Reserved_Ocupied,
+                UnReservedAvalibleParkingSpots:json[0].UnReserved_Avalible,
+                UnReservedOcupiedParkingSpots:json[0].UnReserved_Ocupied,
                
             })
         }.bind(this));
@@ -47,6 +49,7 @@ export default class ManagerProfile extends Component{
         } catch (error) {
             console.log("There was an error getting the data");
         }
+       
     }
 
     getTheData(callback) {
