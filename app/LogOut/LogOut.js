@@ -8,7 +8,11 @@ export default class LogOut extends Component{
     constructor(props)
     {
         super(props);
+        this.state={
+            user:this.props.user
+        };
     }
+
     componentDidMount()
     {
         this.removeToken();
@@ -17,6 +21,7 @@ export default class LogOut extends Component{
     async removeToken(){
         try{
             await AsyncStorage.removeItem(ACCESS_TOKEN);
+            await this.logoutToken();            
         }
         catch(error){
             console.log("something is wrong in removeToken!");
@@ -24,11 +29,29 @@ export default class LogOut extends Component{
         }
         this.exit_function();
     }
+
+    async logoutToken(){
+        await fetch('http://share-park-back-end.herokuapp.com/updateTokenLogout',{
+        method:'POST',
+        headers:{
+            'Accept':'application/json',
+            'Content-Type':'application/json',
+        },
+        body: JSON.stringify({
+            id:/*this.state.id*/this.state.user.id
+        })
+      })
+     
+
+    }
+    
+    
     exit_function = () => {
         BackHandler.exitApp();
      }
     render()
     {
+        
         return(
             <ScrollView >
                 <View style={styles.contentContainerStyle}>

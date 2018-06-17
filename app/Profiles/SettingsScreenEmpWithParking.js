@@ -13,7 +13,7 @@ import{
 import{Icon,Button,Container,Header,Content,Left,Title,Right}from 'native-base'
 // import Parking1 from './Parking1';
 import Parking from './Parking';
-import DateTimePicker from 'react-native-modal-datetime-picker';
+// import DateTimePicker from 'react-native-modal-datetime-picker';
 
 export default class SettingsScreenEmpWithParking extends Component{
     constructor(props)

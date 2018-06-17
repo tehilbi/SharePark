@@ -5,6 +5,8 @@ import {AppRegistry,Text,View,StyleSheet,TouchableOpacity,} from 'react-native';
 import HomeEmp from './HomeEmp';
 import SettingsScreenEmpWithParking from './SettingsScreenEmpWithParking';
 import Navigation from './Navigation';
+import Gamification from './Gamification';
+import Logout from '../LogOut/LogOut';
 
 import {StackNavigator} from 'react-navigation';
 import {DrawerNavigator} from 'react-navigation'
@@ -20,13 +22,7 @@ export default class empWithParking extends Component{
         }
     }
   render(){
-    //    console.log(this);
-    //    console.log(this.props);
-    //    console.log(this.props.navigation);
-    //    console.log(this.props.navigation.state);
-    //    console.log(this.props.navigation.state.params);
-      // console.log(this.props.navigation.state.params.id);
-       console.log( this.props.navigation.state.params.user);
+    
     return(
        <AppEmpWithParking /*id={id=this.state.id}*/ user={user=this.state.user}/>   
       
@@ -46,9 +42,12 @@ const AppEmpWithParking=DrawerNavigator({
     Navigation:{
         screen:Navigation
     },
-    // Gamification:{
-    //     screen:Gamification
-    // }
+    Gamification:{
+        screen:Gamification
+    },
+    Logout:{
+        screen:props=><Logout {...props} user={user}/>
+    }
 })
 
 // const styles=StyleSheet.create(

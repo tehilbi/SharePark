@@ -179,8 +179,6 @@ export default class HomeEmp extends Component{
 
     notificationReq=()=>
     {
-        console.log("333333333333333333333333333333333333333333333333333");
-
         fetch('http://share-park-back-end.herokuapp.com/noti',{
             method:'GET',
             headers:{

@@ -156,7 +156,7 @@ export default class LoginPage extends Component{
                 }  
                 else if(this.state.user.PermissionId==='3')
                 {
-                    this.props.navigation.navigate('empWithNoParking');    
+                    this.props.navigation.navigate('empWithNoParking',{ user:this.state.user});    
                 }
                 this.AddEvent();
             }
