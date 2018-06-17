@@ -5,6 +5,8 @@ import {AppRegistry,Text,View,StyleSheet,TouchableOpacity,} from 'react-native';
 import HomeEmp from './HomeEmp';
 import SettingsScreenEmpWithParking from './SettingsScreenEmpWithParking';
 import Navigation from './Navigation';
+import Gamification from './Gamification';
+import Logout from '../LogOut/LogOut';
 
 import {StackNavigator} from 'react-navigation';
 import {DrawerNavigator} from 'react-navigation'
@@ -19,6 +21,7 @@ export default class empWithParking extends Component{
         }
     }
   render(){
+    
     return(
        <AppEmpWithParking  user={user=this.state.user}/>   
     );
@@ -36,9 +39,12 @@ const AppEmpWithParking=DrawerNavigator({
     Navigation:{
         screen:Navigation
     },
-    // Gamification:{
-    //     screen:Gamification
-    // }
+    Gamification:{
+        screen:Gamification
+    },
+    Logout:{
+        screen:props=><Logout {...props} user={user}/>
+    }
 })
 
 

@@ -9,7 +9,7 @@ import{
 
 import{Icon,Button,Container,Header,Content,Left,Right,Title}from 'native-base'
 
-export default class Navigation extends Component{
+export default class Gamification extends Component{
     render(){
         return(
             <Container style={styles.container}>
@@ -18,16 +18,15 @@ export default class Navigation extends Component{
                     <Icon name="menu"  onPress={()=>
                     this.props.navigation.navigate('DrawerOpen')}/>
                 </Left>
-                <Title style={styles.settingText}>Navigation</Title>
+                <Title style={styles.settingText}>Gamification</Title>
                 <Right>
-                    <Icon name="navigate"/>
+                    <Icon name="md-game-controller-b"/>
                 </Right>
             </Header>         
-                <Content >
-                <Image source={require('./navigate.png')}/>  
-                </Content>    
+               
+            <Image source={require('./gamification.png')}/>     
             <Text style={styles.nav}>
-                Navigation will be available soon
+                Gamification will be available soon
             </Text>    
         </Container>        
         );
@@ -53,7 +52,7 @@ const styles=StyleSheet.create(
             textAlign: 'center', alignSelf: 'center', fontWeight: 'normal'
         },
         nav:{
-            // flex: 1,
+            flex: 1,
             fontSize: 20,
             justifyContent: 'center',
             textAlign:'center',
@@ -67,5 +66,5 @@ const styles=StyleSheet.create(
         }
     })
 
-AppRegistry.registerComponent('Navigation',()=>Navigation);
+AppRegistry.registerComponent('SettingsScreenEmpWithNoParking',()=>SettingsScreenEmpWithNoParking);
 

@@ -53,7 +53,8 @@ export default class HomeEmp extends Component{
       }
 
     async componentWillMount(){
-     
+        this.interval = setInterval(() => this.setState({ time: Date.now() }), 1000);
+
         await this.parking1();
         await this.parking2();
         await this.parking3();
@@ -179,8 +180,6 @@ export default class HomeEmp extends Component{
 
     notificationReq=()=>
     {
-        console.log("333333333333333333333333333333333333333333333333333");
-
         fetch('http://share-park-back-end.herokuapp.com/noti',{
             method:'GET',
             headers:{

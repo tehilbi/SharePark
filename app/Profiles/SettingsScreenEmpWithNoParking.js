@@ -3,7 +3,8 @@ import{
     View,
     Text,
     StyleSheet,
-    AppRegistry
+    AppRegistry,
+    Image
 }from "react-native";
 
 import{Icon,Button,Container,Header,Content,Left,Right,Title}from 'native-base'
@@ -19,11 +20,13 @@ export default class SettingsScreenEmpWithNoParking extends Component{
                 </Left>
                 <Title style={styles.settingText}>Settings</Title>
                 <Right>
-                    <Icon name="information-circle"/>
+                    <Icon name="settings"/>
                 </Right>
             </Header>         
-                <Content >
-                </Content>        
+            <Image style={styles.set} source={require('./settings.png')}/>     
+            <Text style={styles.nav}>
+                Settings will be available soon
+            </Text>      
         </Container>        
         );
     }
@@ -46,6 +49,22 @@ const styles=StyleSheet.create(
             textShadowColor:'black',
             textShadowOffset:{width:1,height:1},
             textAlign: 'center', alignSelf: 'center', fontWeight: 'normal'
+        },
+        set:{
+            textAlign: 'center', alignSelf: 'center', fontWeight: 'normal'
+        },
+        nav:{
+            flex: 1,
+            fontSize: 20,
+            justifyContent: 'center',
+            textAlign:'center',
+            alignSelf:'center',
+            alignItems: 'center',
+            fontFamily: 'Cochin',
+            fontWeight: 'bold',
+            color:'white',
+            // margin:10,
+            padding:100
         }
     }
 )
