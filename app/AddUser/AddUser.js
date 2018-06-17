@@ -59,12 +59,10 @@ export default class AddUser extends Component{
   
     onValueChange(key,value){
         console.log(key+':'+value);
-        
         this.setState({Ocupation:value});
     }
 
   render(){
-   
     if (this.state.isLoading) {
         return (
           <View style={{flex: 1, paddingTop: 20}}>
