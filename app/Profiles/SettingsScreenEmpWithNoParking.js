@@ -23,15 +23,10 @@ export default class SettingsScreenEmpWithNoParking extends Component{
                     <Icon name="settings"/>
                 </Right>
             </Header>         
-<<<<<<< HEAD
             <Image style={styles.set} source={require('./settings.png')}/>     
             <Text style={styles.nav}>
                 Settings will be available soon
             </Text>      
-=======
-                <Content >
-                </Content>        
->>>>>>> 97005cbb65c841912d227dbd67bf2c1f0005f5a0
         </Container>        
         );
     }

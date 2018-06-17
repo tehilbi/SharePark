@@ -53,7 +53,8 @@ export default class HomeEmp extends Component{
       }
 
     async componentWillMount(){
-     
+        this.interval = setInterval(() => this.setState({ time: Date.now() }), 1000);
+
         await this.parking1();
         await this.parking2();
         await this.parking3();
