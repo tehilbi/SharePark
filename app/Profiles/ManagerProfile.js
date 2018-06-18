@@ -14,18 +14,18 @@ export default class ManagerProfile extends Component{
         }
     }
     
-    componentDidMount() {
-        BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
-      }
+    // componentDidMount() {
+    //     BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
+    //   }
     
-      componentWillUnmount() {
-          BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
-      }
+    //   componentWillUnmount() {
+    //       BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+    //   }
     
-      handleBackButton() {
-          ToastAndroid.show('Can not press the button!! for logout you have to go to setting page', ToastAndroid.SHORT);
-          return true;
-      }
+    //   handleBackButton() {
+    //       ToastAndroid.show('Can not press the button!! for logout you have to go to setting page', ToastAndroid.SHORT);
+    //       return true;
+    //   }
     render()
     {
         return(  

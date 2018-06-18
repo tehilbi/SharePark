@@ -7,9 +7,30 @@ export default class Parking3 extends Component{
        super(props);
        this.state={
         // parkingColor3:''
+        hour:'',
+        minute:''
        }       
    }
-  
+   async componentWillMount(){
+    await this.time();
+   }
+   async time(){
+    const res = await fetch('http://share-park-back-end.herokuapp.com/timePicker3',{
+        method:'POST',
+        headers:{
+            'Accept':'application/json',
+            'Content-Type':'application/json',
+        }   
+      })
+    const result =await res.json()
+    if(result.hour!='')
+    {
+      this.setState({hour:result.hour, minute: result.minute });
+    }
+    else{
+      this.setState({hour:'22', minute:'00' });
+    }
+}
   // availableParking(){
   //       this.setState({parkingColor3:'g'});
   // }
@@ -42,6 +63,7 @@ export default class Parking3 extends Component{
         <View>
           <Image source={require('./carGreen.png')}/>
           <Text style={styles.num}>3</Text>
+          <Text style={styles.time}>{this.state.hour}:{this.state.minute}</Text>
         </View>
         )
     }else if(this.props.parkingColor3=='red'){
@@ -73,6 +95,10 @@ const styles=StyleSheet.create(
     num:{
       color:'white',
       padding:20
+    },
+    time:{
+      color:'white',
+      padding:10
     }
   })
 

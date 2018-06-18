@@ -1,7 +1,7 @@
 
 import React , {Component} from 'react';
 
-import {Platform,AppRegistry,Text,View,TextInput} from 'react-native';
+import {Platform,AppRegistry,Text,View,TextInput,BackHandler,ToastAndroid} from 'react-native';
 import {StackNavigator} from 'react-navigation';
 
 import AuthLoadingScreen from './app/AuthLoadingScreen/AuthLoadingScreen';
@@ -17,6 +17,7 @@ import LogOut from './app/LogOut/LogOut';
 import ParkingData from './app/ParkingData/ParkingData';
 import RemoveUser from './app/RemoveUser/RemoveUser';
 import EditMap from './app/EditMap/EditMap';
+import SettingsScreenEmpWithParking from './app/Profiles/SettingsScreenEmpWithParking';
 
 const Application=StackNavigator(
   {
@@ -31,6 +32,7 @@ const Application=StackNavigator(
     ParkingData:{screen:ParkingData},
     RemoveUser:{screen:RemoveUser},
     EditMap:{screen:EditMap},
+    SettingsScreenEmpWithParking:{screen:SettingsScreenEmpWithParking},
   },
   {
     navigationOptions:
@@ -44,6 +46,18 @@ const Application=StackNavigator(
 );
 
 export default class SharePark extends Component{
+  // componentDidMount() {
+  //       BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
+  //     }
+    
+    // componentWillUnmount() {
+    //       BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+    //   }
+    
+    //   handleBackButton() {
+    //       ToastAndroid.show('Can not press the button!! for logout you have to go to setting page', ToastAndroid.SHORT);
+    //       return true;
+    //   }
 
   render(){
     return(
