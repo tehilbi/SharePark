@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {AppRegistry,Container, Header, Title, Content,Text,Button, Left, Right, Body,List, ListItem,Picker} from 'native-base';
+import {AppRegistry,Container, Header, Title, Content,Text,Button, Left, Right, Body,List, ListItem,Picker,Item} from 'native-base';
 import { View, ScrollView ,ListView,TouchableOpacity,Alert,StyleSheet} from 'react-native';
 import 'moment-timezone';
 
@@ -17,6 +17,7 @@ export default class EditMap extends Component{
             user:this.props.navigation.state.params.user,
             event:"",
             PickerValueHolder :'',  
+            status:'yy'
 
         };
     }
@@ -31,10 +32,10 @@ export default class EditMap extends Component{
             this.setState({
                 tasks: taskArray,
                 dataSource: this.state.dataSource.cloneWithRows(taskArray),
-                isLoading: false
+                isLoading: false,
+                task:''
             })
-        }.bind(this));
-            
+        }.bind(this));         
         } catch (error) {
             console.log("There was an error getting the parking spots");
         }
@@ -47,51 +48,51 @@ export default class EditMap extends Component{
             .catch(error => console.log(error));
     }
 
-    renderRow(rowData, sectionId, rowId) {     
+    onValueChange(key,value){
+        console.log("onValueChange");
+        console.log(key+':'+value);
+        // tasks[rowData.id].status=this.rowData.status;
+        // this.setState({tasks[rowData.id].status:this.rowData.status});
+    }
+    renderRow(rowData, sectionId, rowId){    
+        console.log(this.state.tasks[rowData.id]);
         return(
             <ListItem >
                 <Body>
-                    <View style={{flex: 1,flexDirection: 'row',  alignItems: 'stretch'}}>
-                        <View>
-                            <Text style={styles.row}>{rowData.id} </Text>
+                    <View style={{flexDirection: 'row',alignItems:'center'}}>
+                        <View style={{flex: 1}}>
+                            <Text /*style={styles.row}*/>{rowData.id} </Text>          
                         </View>
-                        <View  >
-                                <Picker 
-                                    label="status"
-                                    style={{ width: 200,
-                                        height: 44,
-                                        backgroundColor: '#FFF0E0',
-                                        borderColor: 'blue',
-                                        borderBottomWidth: 2,
-                                        flex: 1}}
-                                    selectedValue={this.state.PickerValueHolder}
-                                    onValueChange={(itemValue,itemIndex) => this.setState({PickerValueHolder:itemValue})}
-                                    >                 
-                                    <Picker.Item label='Please select an option...' value='0' />          
-                                    <Picker.Item label="Manager" value="1" />
-                                    <Picker.Item label="Employee with parking spot" value="2"/>
-                                    <Picker.Item label="Employee without parking spot" value="3"/>
+                            <View style={{flex: 1}}>
+                                <Picker
+                                    style={styles.picker}
+                                    mode="dropdown"
+                                    itemStyle={styles.itemStyle} 
+                                    selectedValue={this.state.tasks[0].status}
+                                    onValueChange={status =>{this.setState({tasks})}}> 
+                                    <Picker.Item label="Reserved" value="1"/>
+                                    <Picker.Item label="Unreserved" value="2"/> 
                                 </Picker>
                             </View>
-                            <View   style={{flex: 1}}>
-                                <Picker 
-                                    label="status"
-                                    style={{width:'20%'}}
-                                    selectedValue={this.state.PickerValueHolder}
-                                    onValueChange={(itemValue,itemIndex) => this.setState({PickerValueHolder:itemValue})}
-                                    >                 
-                                    <Picker.Item label='Please select an option...' value='0' />          
-                                    <Picker.Item label="Manager" value="1" />
-                                    <Picker.Item label="Employee with parking spot" value="2"/>
-                                    <Picker.Item label="Employee without parking spot" value="3"/>
+                            <View style={{flex:1}}>
+                                <Picker
+                                    style={styles.picker}
+                                    mode="dropdown"
+                                    itemStyle={styles.itemStyle}
+                                    selectedValue={this.state.tasks[0].color}
+                                    onValueChange={color =>{this.setState({tasks})}}>                 
+                                    <Picker.Item label="Orange" value="1"/>
+                                    <Picker.Item label="Red" value="2"/>
+                                    <Picker.Item label="Green" value="3"/>
+                                    <Picker.Item label="Blue" value="3"/>
                                 </Picker>
                             </View>
                         </View>
-                </Body>
-            </ListItem >
-        );
-    }
-
+                    </Body>
+                </ListItem>
+            );
+            console.log(this.state);
+        }
     render(){
         let currentView = <View />;
         if (this.state.isLoading)
@@ -111,7 +112,7 @@ export default class EditMap extends Component{
                     <Text style={styles.title}>Edit Map</Text>
                 </Header>
                 <Content>
-                    <View style={{ flexDirection: 'row'}}>
+                    <View style={{flexDirection:'row'}}>
                         <View style={{flex: 1}}>
                             <Left>
                                 <Text>Parking Spot</Text> 
@@ -135,6 +136,16 @@ export default class EditMap extends Component{
             }
         }
 const styles=StyleSheet.create({
+    itemStyle: {
+        fontSize: 15,
+        height: 75,
+        color: 'black',
+        textAlign: 'center',
+        fontWeight: 'bold'
+      },
+    picker: {
+        width: 128
+      },
     header:{
         backgroundColor:'#0099FF'
     },

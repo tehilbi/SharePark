@@ -14,9 +14,9 @@ export default class ManagerProfile extends Component{
         }
     }
     
-    componentDidMount() {
-        BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
-      }
+    // componentDidMount() {
+    //     BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
+    //   }
     
       componentWillUnmount() {
           BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
