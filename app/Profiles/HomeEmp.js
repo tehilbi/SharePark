@@ -35,16 +35,19 @@ export default class HomeEmp extends Component{
               loaded1:false,
               loaded2:false,
               loaded3:false,
-              loaded4:false
+              loaded4:false,
+            //   flag:'0'
         }
     }
 
     componentDidMount() {
         BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
+
       }
-    
+     
       componentWillUnmount() {
           BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+
       }
     
       handleBackButton() {
@@ -52,16 +55,19 @@ export default class HomeEmp extends Component{
           return true;
       }
 
+   
     async componentWillMount(){
-        this.interval = setInterval(() => this.setState({ time: Date.now() }), 1000);
-
         await this.parking1();
         await this.parking2();
         await this.parking3();
         await this.parking4();
         
     }
-
+    // componentDidMount()
+    // {
+    //     this.setState({flag:this.state.flag+1});
+    //     console.log(this.state.flag);
+    // }
     async parking1(){
         const res = await fetch('http://share-park-back-end.herokuapp.com/parkingSpots1',{
             method:'POST',
@@ -111,6 +117,10 @@ export default class HomeEmp extends Component{
     }
 
     render(){
+        // if(this.state.flag==1000){
+        //     this.componentWillMount();
+        // }
+        // this.componentDidMount();
         if (this.state.loaded1==false|| this.state.loaded2==false || this.state.loaded3==false || this.state.loaded4==false) {
             return(
                 <ActivityIndicator style={{padding: 300}} size="large" color="#C71585" />

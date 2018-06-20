@@ -1,7 +1,6 @@
 import React , {Component} from 'react';
 import {AppRegistry,Text,View,StyleSheet,TouchableOpacity,} from 'react-native';
 
-
 import HomeEmp from './HomeEmp';
 import SettingsScreenEmpWithParking from './SettingsScreenEmpWithParking';
 import Navigation from './Navigation';
@@ -17,7 +16,7 @@ export default class empWithParking extends Component{
         super(props);
         this.state=
         {
-            user:this.props.navigation.state.params.user
+            user:this.props.navigation.state.params.user,
         }
     }
   render(){
@@ -30,6 +29,7 @@ export default class empWithParking extends Component{
 
 const AppEmpWithParking=DrawerNavigator({
     Home:{
+        // screen:props => <HomeEmp {...props}/* id={id}*/ flag={true}  /> //im here
         screen:HomeEmp
     },
     Settings:{

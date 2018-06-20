@@ -1,5 +1,5 @@
 import React , {Component} from 'react';
-import {Platform,AppRegistry,Text,View,TextInput,Image,StyleSheet,ScrollView,Button,TouchableOpacity,AsyncStorage,} from 'react-native';
+import {Platform,AppRegistry,Text,View,TextInput,Image,StyleSheet,ScrollView,Button,TouchableOpacity,AsyncStorage,BackHandler,ToastAndroid} from 'react-native';
 import {StackNavigator} from 'react-navigation';
 import 'moment-timezone';
 
@@ -23,6 +23,9 @@ export default class LoginPage extends Component{
             userToken:""
         }
     }
+   
+    
+  
     async componentWillMount(){
         // console.log("componentWillMount");
         FCM.requestPermissions().then(()=>console.log('grantedddddddddddddddddddddddddddd')).catch(()=>console.log('noti'));

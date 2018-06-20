@@ -33,8 +33,6 @@ export default class Gamification extends Component{
     }
 }
 
-
-
 const styles=StyleSheet.create(
     {
         header:{

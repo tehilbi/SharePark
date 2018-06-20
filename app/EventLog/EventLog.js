@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {Container, Header, Title, Content,Text,Button, Left, Right, Body,List, ListItem,AppRegistry} from 'native-base';
+import {Container, Header, Title, Content,Text,Button, Left, Right, Body,List, ListItem,AppRegistry,BackHandler,ToastAndroid} from 'native-base';
 import { View, ScrollView ,ListView,TouchableOpacity,Alert} from 'react-native';
 import styles from './styles';
 import Moment from 'react-moment';
@@ -18,7 +18,7 @@ export default class EventLog extends Component{
             isLoading: true,          
         };
     }
-
+    
     componentDidMount() {
         this.getTaskList();
     }

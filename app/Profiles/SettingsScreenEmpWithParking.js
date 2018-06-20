@@ -7,13 +7,19 @@ import{
     Image,
     TouchableOpacity,
     Alert,
-    ActivityIndicator
+    ActivityIndicator,
+    Navigator,
+    TextInput
 }from "react-native";
+
+import {StackNavigator} from 'react-navigation';
 
 import{Icon,Button,Container,Header,Content,Left,Title,Right}from 'native-base'
 // import Parking1 from './Parking1';
 import Parking from './Parking';
-// import DateTimePicker from 'react-native-modal-datetime-picker';
+import TimePicker from 'react-native-simple-time-picker';
+// import TimePicker from './TimePicker';
+// import Prompt from 'react-native-prompt';
 
 export default class SettingsScreenEmpWithParking extends Component{
     constructor(props)
@@ -25,11 +31,11 @@ export default class SettingsScreenEmpWithParking extends Component{
             user:this.props.user,
             event:"",
             time:"",
-            isDateTimePickerVisible: false//
+            selectedHours: 0,
+            selectedMinutes: 0
         };
-        
     }
-
+    
     async componentWillMount(){
         if(this.state.user.parkingNum=='1')
         await this.parking1();
@@ -91,6 +97,8 @@ export default class SettingsScreenEmpWithParking extends Component{
     }
 
     render(){
+        const { selectedHours, selectedMinutes } = this.state;
+
         if (this.state.loaded==false) {
             return(
                 <ActivityIndicator style={{padding: 300}} size="large" color="#C71585" />
@@ -115,6 +123,7 @@ export default class SettingsScreenEmpWithParking extends Component{
                     top:40
                 }}>
                     <Parking parkingColor={color=this.state.color}/>  
+                    <View style={styles.timepick}>
 
                     <TouchableOpacity onPress={this.release} 
                         style={styles.buttonGreen} >
@@ -122,6 +131,13 @@ export default class SettingsScreenEmpWithParking extends Component{
                             Release My Parking Spot
                         </Text>
                     </TouchableOpacity>
+                        <Text>Selected time{selectedHours}:{selectedMinutes}</Text>
+                        <TimePicker
+                        selectedHours={selectedHours}
+                        selectedMinutes={selectedMinutes}
+                        onChange={(hours, minutes) => this.setState({ selectedHours: hours, selectedMinutes: minutes })}
+                        />
+                    </View>
 
                     <TouchableOpacity onPress={this.reset} 
                         style={styles.buttonOrange} >
@@ -164,7 +180,8 @@ export default class SettingsScreenEmpWithParking extends Component{
                 // this.setState({color:'green'});
                 this.componentWillMount();
                 alert("Update successful");
-                this.AddEvent();    
+                this.AddEvent();       
+                this.editTime();      
             }
             else
             {
@@ -236,6 +253,7 @@ export default class SettingsScreenEmpWithParking extends Component{
                 // this.setState({color:'orange'});
                 this.componentWillMount();
                 alert("Update successful");
+                // this.TimePicker
                 this.AddEvent();    
             }
             else
@@ -256,6 +274,37 @@ export default class SettingsScreenEmpWithParking extends Component{
             time:date + '-' + month + '-' + year+' '+hour+":"+minute
         });
     }
+
+    async editTime()
+    {
+        await fetch('http://share-park-back-end.herokuapp.com/updateTime',{
+            method:'POST',
+            headers:{
+                'Accept':'application/json',
+                'Content-Type':'application/json',
+            },
+            body: JSON.stringify({
+                // username:
+                hour:this.state.selectedHours,
+                minute:this.state.selectedMinutes,
+                parkingNum:this.state.user.parkingNum
+            })
+          })
+            .then((response)=>response.json())
+            .then((res)=>
+            {
+                if(res.success===true)
+                {
+                    
+                }
+                else
+                {
+                    alert(res.message);
+                }
+            })
+            .done();    
+    }
+
     AddEvent=()=>
     {
         this.SetCurrentDate();
@@ -272,6 +321,7 @@ export default class SettingsScreenEmpWithParking extends Component{
         })
       })
         .then((response)=>response.json())
+    
         .done();
     }   
 }
@@ -294,11 +344,11 @@ const styles=StyleSheet.create(
         buttonGreen:{
             alignSelf:'stretch',
             margin:30,
-            padding:40,
+            padding:30,
             backgroundColor:'green',//'#0099FF',
             borderWidth:1,
             borderColor:'black',
-            // top:30
+            // right:-25
            // backgroundColor:'rgba(255,255,255,0.6)',
         },
         buttonGreenText:{
@@ -309,7 +359,7 @@ const styles=StyleSheet.create(
         buttonRed:{
             alignSelf:'stretch',
             margin:30,
-            padding:40,
+            padding:30,
             backgroundColor:'red',//'#0099FF',
             borderWidth:1,
             borderColor:'black',
@@ -324,7 +374,7 @@ const styles=StyleSheet.create(
         buttonOrange:{
             alignSelf:'stretch',
             margin:30,
-            padding:40,
+            padding:30,
             backgroundColor:'orange',//'#0099FF',
             borderWidth:1,
             borderColor:'black',
@@ -335,6 +385,16 @@ const styles=StyleSheet.create(
             fontSize: 16,
             fontWeight:'bold',
             textAlign:'center',
+        },
+        timepick:{
+            flex: 1,
+            paddingTop:-10,
+            margin:30,
+            padding:10,
+            // backgroundColor: '#fff',
+            backgroundColor: '#228B22',
+            alignItems: 'center',
+            justifyContent: 'center',
         }
     }
 )
