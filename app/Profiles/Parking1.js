@@ -24,7 +24,7 @@ export default class Parking1 extends Component{
         }   
       })
     const result =await res.json()
-    if(result.hour!='')
+    if(result.hour!=''&&result.hour!='0'&&result.hour!='23')
     {
       this.setState({hour:result.hour, minute: result.minute });
     }

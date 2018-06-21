@@ -45,6 +45,7 @@
     "react-native-fcm": "^15.0.2",
     "react-native-material-dropdown": "^0.11.1",
     "react-native-modal-datetime-picker": "^5.1.0",
+    "react-native-modal-picker": "0.0.16",
     "react-native-prompt": "^1.0.0",
     "react-native-simple-time-picker": "^0.2.0",
     "react-native-swipe-list-view": "^1.3.0",

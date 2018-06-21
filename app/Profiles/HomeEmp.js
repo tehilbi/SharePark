@@ -36,6 +36,8 @@ export default class HomeEmp extends Component{
               loaded2:false,
               loaded3:false,
               loaded4:false,
+              user:this.props.user,
+
             //   flag:'0'
         }
     }
@@ -182,6 +184,22 @@ export default class HomeEmp extends Component{
         {
             alert('Park in parking Spot number 4!!');
         }
+        else if(this.state.user.parkingNum==='1'&&this.state.color1=='orange')
+        {
+            alert('Your parking spot number 1 is available!!');
+        }
+        else if(this.state.user.parkingNum==='2'&&this.state.color2=='orange')
+        {
+            alert('Your parking spot number 2 is available!!');
+        }
+        else if(this.state.user.parkingNum==='3'&&this.state.color3=='orange')
+        {
+            alert('Your parking spot number 3 is available!!');
+        }
+        else if(this.state.user.parkingNum==='4'&&this.state.color4=='orange')
+        {
+            alert('Your parking spot number 4 is available!!');
+        }
         else
         {
             this.notificationReq();
@@ -191,14 +209,24 @@ export default class HomeEmp extends Component{
     notificationReq=()=>
     {
         fetch('http://share-park-back-end.herokuapp.com/noti',{
-            method:'GET',
+            method:'POST',
             headers:{
                 'Accept':'application/json',
                 'Content-Type':'application/json',
-            }
-            }
-        );
-    }
+            },
+            body: JSON.stringify({
+            })
+          })
+            .then((response)=>response.json())
+            .then((res)=>
+            {
+                if(res.success===false)
+                {
+                    alert(res.message);
+                }
+            })
+            .done();
+        }
 }
 const styles=StyleSheet.create(
     {

@@ -29,7 +29,7 @@ export default class empWithNoParking extends Component{
 }
 const AppEmpWithNoParking=DrawerNavigator({
     Home:{
-        screen:HomeEmp 
+        screen:props => <HomeEmp {...props}/* id={id}*/ user={user}  /> //im here
     },
     Settings:{
         screen:SettingsScreenEmpWithNoParking

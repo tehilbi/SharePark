@@ -277,6 +277,10 @@ export default class SettingsScreenEmpWithParking extends Component{
 
     async editTime()
     {
+        if(this.state.selectedMinutes>='0'&&this.state.selectedMinutes<='9')
+        {
+            this.setState({selectedMinutes:'0'+this.state.selectedMinutes});
+        }
         await fetch('http://share-park-back-end.herokuapp.com/updateTime',{
             method:'POST',
             headers:{
@@ -285,6 +289,7 @@ export default class SettingsScreenEmpWithParking extends Component{
             },
             body: JSON.stringify({
                 // username:
+             
                 hour:this.state.selectedHours,
                 minute:this.state.selectedMinutes,
                 parkingNum:this.state.user.parkingNum

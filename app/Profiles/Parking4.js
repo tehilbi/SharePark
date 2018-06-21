@@ -15,7 +15,7 @@ export default class Parking4 extends Component{
     await this.time();
    }
    async time(){
-    const res = await fetch('http://share-park-back-end.herokuapp.com/timePicker3',{
+    const res = await fetch('http://share-park-back-end.herokuapp.com/timePicker4',{
         method:'POST',
         headers:{
             'Accept':'application/json',
@@ -23,7 +23,7 @@ export default class Parking4 extends Component{
         }   
       })
     const result =await res.json()
-    if(result.hour!='')
+    if(result.hour!=''&&result.hour!='0'&&result.hour!='23')
     {
       this.setState({hour:result.hour, minute: result.minute });
     }
