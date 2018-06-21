@@ -8,7 +8,6 @@ export default class Parking1 extends Component{
        this.state={
         // parkingColor1:''
         hour:'',
-        minute:''
        }       
    }
 
@@ -24,18 +23,16 @@ export default class Parking1 extends Component{
         }   
       })
     const result =await res.json()
-    if(result.hour!=''&&result.hour!='0'&&result.hour!='23')
+    if(result.hour!='')
     {
-      this.setState({hour:result.hour, minute: result.minute });
+      this.setState({hour:result.hour});
     }
     else{
-      this.setState({hour:'22', minute:'00' });
+      this.setState({hour:'22:00'});
     }
 }
    render(){
-     console.log("hhhhhhhhhhhhhhhhhhhhhhhooooooooooooooooooooouuuuuuuuuuuuuuuuurrrrrrrrrrr1111111111111111111111111111")
      console.log(this.state.hour);
-     console.log(this.state.minute);
     if(this.props.parkingColor1=='orange'){
       return(
         <View>
@@ -48,7 +45,7 @@ export default class Parking1 extends Component{
         <View>
           <Image source={require('./carGreen.png')}/>
           <Text style={styles.num}>1</Text>
-          <Text style={styles.time}>{this.state.hour}:{this.state.minute}</Text>
+          <Text style={styles.time}>{this.state.hour}</Text>
         </View>
         )
     }else if(this.props.parkingColor1=='red'){

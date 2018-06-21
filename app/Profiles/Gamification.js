@@ -64,5 +64,5 @@ const styles=StyleSheet.create(
         }
     })
 
-AppRegistry.registerComponent('SettingsScreenEmpWithNoParking',()=>SettingsScreenEmpWithNoParking);
+AppRegistry.registerComponent('Gamification',()=>Gamification);
 

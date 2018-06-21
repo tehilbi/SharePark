@@ -6,9 +6,7 @@ export default class Parking4 extends Component{
   constructor(props){
        super(props);
        this.state={
-        // parkingColor4:''
         hour:'',
-        minute:''
        }       
    }
    async componentWillMount(){
@@ -23,33 +21,15 @@ export default class Parking4 extends Component{
         }   
       })
     const result =await res.json()
-    if(result.hour!=''&&result.hour!='0'&&result.hour!='23')
+    if(result.hour!='')
     {
-      this.setState({hour:result.hour, minute: result.minute });
+      this.setState({hour:result.hour});
     }
     else{
-      this.setState({hour:'22', minute:'00' });
+      this.setState({hour:'22:00'});
     }
 }
-  // availableParking(){
-  //       this.setState({parkingColor4:'g'});
-  // }
-
-  // notAvailableParking(){
-  //     this.setState({parkingColor4:'r'});
-  // }
-
-  // blueParking(){
-  //   this.setState({parkingColor4:'b'});
-  // }
-
-  // componentWillMount(){
-  //   if(this.props.parkingColor4==='g')
-  //        this.availableParking();
-  //   if(this.props.parkingColor4==='r')
-  //        this.notAvailableParking();
-  // }
-
+  
    render(){
     if(this.props.parkingColor4=='orange'){
       return(
@@ -63,7 +43,7 @@ export default class Parking4 extends Component{
         <View>
           <Image source={require('./carGreen.png')}/>
           <Text style={styles.num}>4</Text>
-          <Text style={styles.time}>{this.state.hour}:{this.state.minute}</Text>
+          <Text style={styles.time}>{this.state.hour}</Text>
         </View>
         )
     }else if(this.props.parkingColor4=='red'){

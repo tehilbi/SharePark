@@ -16,6 +16,7 @@ import{
 
 import {StackNavigator} from 'react-navigation';
 import{IconToggle,Icon,Button,Container,Header,Content,Left,Right,Center,Body,Title}from 'native-base'
+import Pickerise from '@rimiti/react-native-pickerise';
 
 import Parking1 from './Parking1';
 import Parking2 from './Parking2';
@@ -37,7 +38,7 @@ export default class HomeEmp extends Component{
               loaded3:false,
               loaded4:false,
               user:this.props.user,
-
+              item:'Select'
             //   flag:'0'
         }
     }
@@ -65,11 +66,7 @@ export default class HomeEmp extends Component{
         await this.parking4();
         
     }
-    // componentDidMount()
-    // {
-    //     this.setState({flag:this.state.flag+1});
-    //     console.log(this.state.flag);
-    // }
+
     async parking1(){
         const res = await fetch('http://share-park-back-end.herokuapp.com/parkingSpots1',{
             method:'POST',
@@ -119,10 +116,12 @@ export default class HomeEmp extends Component{
     }
 
     render(){
-        // if(this.state.flag==1000){
-        //     this.componentWillMount();
-        // }
-        // this.componentDidMount();
+        const items = [
+			{ section: true, label: 'Please select time:' }, { label: '9:00' }, { label: '10:00' }, { label: '11:00' }, { label: '12:00' },
+            { label: '13:00' },{ label: '14:00' },{ label: '15:00' },{ label: '16:00' },{ label: '17:00' },{ label: '18:00' },{ label: '19:00' },
+            { label: '20:00' },{ label: '21:00' },{ label: '22:00' }
+		];
+     
         if (this.state.loaded1==false|| this.state.loaded2==false || this.state.loaded3==false || this.state.loaded4==false) {
             return(
                 <ActivityIndicator style={{padding: 300}} size="large" color="#C71585" />
@@ -163,12 +162,35 @@ export default class HomeEmp extends Component{
                         source={require('./BUTTON.png')}
                         />
                     </TouchableOpacity>
-            </Container>         
+                    <Pickerise style={styles.picker}
+                        itemsContainerStyle={styles.itemsContainerStyle}
+                        itemsChildStyle={styles.itemsChildStyle}
+                        itemStyle={styles.itemStyle}
+                        itemTextStyle={styles.itemTextStyle}
+                        selectTextStyle={styles.selectTextStyle}
+                        selectStyle={styles.selectStyle}
+                        sectionStyle={styles.sectionStyle}
+                        sectionTextStyle={styles.sectionTextStyle}
+                        cancelStyle={styles.cancelStyle}
+                        cancelTextStyle={styles.cancelTextStyle}
+                        items={items}
+                        initValue="Push me first"
+                        cancelText="Cancel"
+                        onChange={(item)=>this.setState({item:item.label})}
+                       />
+            </Container>     
+                
         );     
     }
     reqParkingSpot=()=>
     {
-        if(this.state.color1==='green')
+        console.log("pppppppppppppppppppppppppppppp");
+        console.log(this.state.item);
+        if(this.state.item=="Select")
+        {
+            alert('Please select time first!!');
+        }    
+        else if(this.state.color1==='green')
         {
             alert('Park in parking Spot number 1!!');
         }
@@ -202,6 +224,7 @@ export default class HomeEmp extends Component{
         }
         else
         {
+            alert('We are looking for parking for you:) Please try again in few minutes');
             this.notificationReq();
         }
     }
@@ -277,6 +300,55 @@ const styles=StyleSheet.create(
             fontFamily: 'Cochin',
             fontWeight: 'bold',
             color:'black'
+        },
+        itemsContainerStyle: {
+            borderRadius: 0,
+            backgroundColor: 'green',
+            marginBottom: 30,
+            padding: 0,
+        },
+        itemsChildStyle: {
+            paddingHorizontal: 0
+        },
+        itemStyle: {
+            marginTop: 10,
+            backgroundColor: '#919191',
+            borderBottomColor: 'transparent',
+        },
+        itemTextStyle: {
+            color: '#fff',
+            fontSize: 18,
+        },
+        selectTextStyle: {
+            color: 'white',
+            fontSize: 20,
+        },
+        selectStyle: {
+            borderWidth: 0,
+            paddingTop: 21,
+            paddingLeft: 0,
+        },
+        sectionStyle: {
+            borderRadius: 0,
+        },
+        sectionTextStyle: {
+            fontSize: 20,
+            color: '#fff',
+        },
+        cancelStyle: {
+            backgroundColor: '#22A7F0',
+            paddingVertical: 20,
+            alignItems: 'center',
+            justifyContent: 'center',
+            marginBottom: 15,
+            borderRadius: 0,
+        },
+        cancelTextStyle: {
+            color: "#FFF",
+            fontSize: 18,
+        },
+        picker:{
+            backgroundColor: '#0099FF',
         }
     });
 
