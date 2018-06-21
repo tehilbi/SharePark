@@ -23,6 +23,7 @@ import Parking2 from './Parking2';
 import Parking3 from './Parking3';
 import Parking4 from './Parking4';
 
+const timer = require('react-native-timer');
 
 export default class HomeEmp extends Component{
     constructor(props)
@@ -38,7 +39,9 @@ export default class HomeEmp extends Component{
               loaded3:false,
               loaded4:false,
               user:this.props.user,
-              item:'Select'
+              item:'Select',
+              showMsg: false
+
             //   flag:'0'
         }
     }
@@ -50,7 +53,7 @@ export default class HomeEmp extends Component{
      
       componentWillUnmount() {
           BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
-
+          timer.clearTimeout(this);
       }
     
       handleBackButton() {
@@ -59,12 +62,19 @@ export default class HomeEmp extends Component{
       }
 
    
-    async componentWillMount(){
+    async componentWillMount() {
+        //   componentDidMount() {
+        console.log('Modal Mounts!')
+        setTimeout(() => {
+        console.log('Open')
+        this.componentWillMount()
+        }, 20000)
+
+
         await this.parking1();
         await this.parking2();
         await this.parking3();
         await this.parking4();
-        
     }
 
     async parking1(){
@@ -115,8 +125,10 @@ export default class HomeEmp extends Component{
         this.setState({color4:result.color, loaded4: true });
     }
 
-    render(){
-        const items = [
+    render(){     
+  
+
+            const items = [
 			{ section: true, label: 'Please select time:' }, { label: '9:00' }, { label: '10:00' }, { label: '11:00' }, { label: '12:00' },
             { label: '13:00' },{ label: '14:00' },{ label: '15:00' },{ label: '16:00' },{ label: '17:00' },{ label: '18:00' },{ label: '19:00' },
             { label: '20:00' },{ label: '21:00' },{ label: '22:00' }
