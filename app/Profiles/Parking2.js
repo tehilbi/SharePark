@@ -6,16 +6,14 @@ export default class Parking2 extends Component{
   constructor(props){
        super(props);
        this.state={
-        // parkingColor2:''
-        hour:'',
-        minute:''
+        hour:''
        }       
    }
    async componentWillMount(){
     await this.time();
    }
    async time(){
-    const res = await fetch('http://192.168.1.121:3000/timePicker2',{
+    const res = await fetch('http://share-park-back-end.herokuapp.com/timePicker2',{
         method:'POST',
         headers:{
             'Accept':'application/json',
@@ -25,10 +23,10 @@ export default class Parking2 extends Component{
     const result =await res.json()
     if(result.hour!='')
     {
-      this.setState({hour:result.hour, minute: result.minute });
+      this.setState({hour:result.hour});
     }
     else{
-      this.setState({hour:'22', minute:'00' });
+      this.setState({hour:'22:00' });
     }
 }
 
@@ -46,7 +44,7 @@ export default class Parking2 extends Component{
         <View>
           <Image source={require('./carGreen.png')}/>
           <Text style={styles.num}>2</Text>
-            <Text style={styles.time}>{this.state.hour}:{this.state.minute}</Text>
+            <Text style={styles.time}>{this.state.hour}</Text>
         </View>
         )
     }else if(this.props.parkingColor2=='red'){

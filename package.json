@@ -32,6 +32,7 @@
   },
   "homepage": "https://github.com/tehilbi/SharePark#readme",
   "dependencies": {
+    "@rimiti/react-native-pickerise": "^1.5.2",
     "jest-cli": "^22.4.3",
     "json-circular-stringify": "0.0.1",
     "moment": "^2.22.1",
@@ -45,6 +46,8 @@
     "react-native-fcm": "^15.0.2",
     "react-native-material-dropdown": "^0.11.1",
     "react-native-modal-datetime-picker": "^5.1.0",
+    "react-native-modal-picker": "0.0.16",
+    "react-native-modal-selector": "0.0.27",
     "react-native-prompt": "^1.0.0",
     "react-native-simple-time-picker": "^0.2.0",
     "react-native-swipe-list-view": "^1.3.0",

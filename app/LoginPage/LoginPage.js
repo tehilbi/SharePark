@@ -97,9 +97,7 @@ export default class LoginPage extends Component{
     
     login=()=>
     {
-        // console.log("in login");
-      // fetch('http://share-park-back-end.herokuapp.com/AddEvent',{
-        fetch('http://192.168.1.121:3000/users',{
+        fetch('http://share-park-back-end.herokuapp.com/users',{
         method:'POST',
         headers:{
             'Accept':'application/json',
@@ -130,7 +128,7 @@ export default class LoginPage extends Component{
         // console.log("token:")
         // console.log(this.state.userToken);
     
-        fetch('http://192.168.1.121:3000/updateToken',{
+        fetch('http://share-park-back-end.herokuapp.com/updateToken',{
             method:'POST',
             headers:{
                 'Accept':'application/json',
@@ -199,7 +197,7 @@ export default class LoginPage extends Component{
   {
       const { FirstName, LastName } = this.state.user;
       this.SetCurrentDate();
-      fetch('http://192.168.1.121:3000/AddEvent',{
+      fetch('http://share-park-back-end.herokuapp.com/AddEvent',{
       method:'POST',
       headers:{
           'Accept':'application/json',

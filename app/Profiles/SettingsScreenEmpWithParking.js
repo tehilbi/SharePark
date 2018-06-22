@@ -18,8 +18,8 @@ import{Icon,Button,Container,Header,Content,Left,Title,Right}from 'native-base'
 // import Parking1 from './Parking1';
 import Parking from './Parking';
 import TimePicker from 'react-native-simple-time-picker';
-// import TimePicker from './TimePicker';
-// import Prompt from 'react-native-prompt';
+import Pickerise from '@rimiti/react-native-pickerise';
+
 
 export default class SettingsScreenEmpWithParking extends Component{
     constructor(props)
@@ -31,8 +31,9 @@ export default class SettingsScreenEmpWithParking extends Component{
             user:this.props.user,
             event:"",
             time:"",
-            selectedHours: 0,
-            selectedMinutes: 0
+            // selectedHours: 0,
+            // selectedMinutes: 0
+            item:'Select'
         };
     }
     
@@ -49,7 +50,7 @@ export default class SettingsScreenEmpWithParking extends Component{
     }
 
     async parking1(){
-        const res = await fetch('http://192.168.1.121:3000/parkingSpots1',{
+        const res = await fetch('http://share-park-back-end.herokuapp.com/parkingSpots1',{
             method:'POST',
             headers:{
                 'Accept':'application/json',
@@ -61,7 +62,7 @@ export default class SettingsScreenEmpWithParking extends Component{
     }
 
     async parking2(){
-        const res = await fetch('http://192.168.1.121:3000/parkingSpots2',{
+        const res = await fetch('http://share-park-back-end.herokuapp.com/parkingSpots2',{
             method:'POST',
             headers:{
                 'Accept':'application/json',
@@ -73,7 +74,7 @@ export default class SettingsScreenEmpWithParking extends Component{
     }
 
     async parking3(){
-        const res = await fetch('http://192.168.1.121:3000/parkingSpots3',{
+        const res = await fetch('http://share-park-back-end.herokuapp.com/parkingSpots3',{
             method:'POST',
             headers:{
                 'Accept':'application/json',
@@ -85,7 +86,7 @@ export default class SettingsScreenEmpWithParking extends Component{
     }
 
     async parking4(){
-        const res = await fetch('http://192.168.1.121:3000/parkingSpots4',{
+        const res = await fetch('http://share-park-back-end.herokuapp.com/parkingSpots4',{
             method:'POST',
             headers:{
                 'Accept':'application/json',
@@ -97,8 +98,13 @@ export default class SettingsScreenEmpWithParking extends Component{
     }
 
     render(){
-        const { selectedHours, selectedMinutes } = this.state;
-
+        // const { selectedHours, selectedMinutes } = this.state;
+        const items = [
+			{ section: true, label: 'Please select time:' }, { label: '9:00' },{ label: '9:30' }, { label: '10:00' },{ label: '10:30' }, { label: '11:00' },{ label: '11:30' }, { label: '12:00' },{ label: '12:30' },
+            { label: '13:00' },{ label: '13:30' },{ label: '14:00' },{ label: '14:30' },{ label: '15:00' },{ label: '15:30' },{ label: '16:00' },{ label: '16:30' },{ label: '17:00' },{ label: '17:30' },{ label: '18:00' },{ label: '18:30' },{ label: '19:00' },{ label: '19:30' },
+            { label: '20:00' },{ label: '20:30' },{ label: '21:00' },{ label: '21:30' },{ label: '22:00' }
+		];
+     
         if (this.state.loaded==false) {
             return(
                 <ActivityIndicator style={{padding: 300}} size="large" color="#C71585" />
@@ -123,7 +129,6 @@ export default class SettingsScreenEmpWithParking extends Component{
                     top:40
                 }}>
                     <Parking parkingColor={color=this.state.color}/>  
-                    <View style={styles.timepick}>
 
                     <TouchableOpacity onPress={this.release} 
                         style={styles.buttonGreen} >
@@ -131,13 +136,22 @@ export default class SettingsScreenEmpWithParking extends Component{
                             Release My Parking Spot
                         </Text>
                     </TouchableOpacity>
-                        <Text>Selected time{selectedHours}:{selectedMinutes}</Text>
-                        <TimePicker
-                        selectedHours={selectedHours}
-                        selectedMinutes={selectedMinutes}
-                        onChange={(hours, minutes) => this.setState({ selectedHours: hours, selectedMinutes: minutes })}
-                        />
-                    </View>
+                        <Pickerise style={styles.picker}
+                        itemsContainerStyle={styles.itemsContainerStyle}
+                        itemsChildStyle={styles.itemsChildStyle}
+                        itemStyle={styles.itemStyle}
+                        itemTextStyle={styles.itemTextStyle}
+                        selectTextStyle={styles.selectTextStyle}
+                        selectStyle={styles.selectStyle}
+                        sectionStyle={styles.sectionStyle}
+                        sectionTextStyle={styles.sectionTextStyle}
+                        cancelStyle={styles.cancelStyle}
+                        cancelTextStyle={styles.cancelTextStyle}
+                        items={items}
+                        initValue="Push me first"
+                        cancelText="Cancel"
+                        onChange={(item)=>this.setState({item:item.label})}
+                       />
 
                     <TouchableOpacity onPress={this.reset} 
                         style={styles.buttonOrange} >
@@ -160,7 +174,7 @@ export default class SettingsScreenEmpWithParking extends Component{
     release=()=>
     {
         this.setState({event:this.state.user.FirstName+" "+ this.state.user.LastName+" realesed his parking spot"});
-        fetch('http://192.168.1.121:3000/updateParkingSpot',{
+        fetch('http://share-park-back-end.herokuapp.com/updateParkingSpot',{
         method:'POST',
         headers:{
             'Accept':'application/json',
@@ -198,7 +212,7 @@ export default class SettingsScreenEmpWithParking extends Component{
         this.setState({
             event:this.state.user.FirstName+" "+ this.state.user.LastName+" blocked his parking spot"
         });
-        fetch('http://192.168.1.121:3000/updateParkingSpot',{
+        fetch('http://share-park-back-end.herokuapp.com/updateParkingSpot',{
             method:'POST',
             headers:{
                 'Accept':'application/json',
@@ -233,7 +247,7 @@ export default class SettingsScreenEmpWithParking extends Component{
         this.setState({
             event:this.state.user.FirstName+" "+ this.state.user.LastName+" reseted his parking spot"
         });
-        fetch('http://192.168.1.121:3000/updateParkingSpot',{
+        fetch('http://share-park-back-end.herokuapp.com/updateParkingSpot',{
         method:'POST',
         headers:{
             'Accept':'application/json',
@@ -277,7 +291,13 @@ export default class SettingsScreenEmpWithParking extends Component{
 
     async editTime()
     {
-        await fetch('http://192.168.1.121:3000/updateTime',{
+        if(this.state.item=='Select')
+        {
+            console.log("lllllllllllllllllllllllllllllllllllllll");
+            this.setState({item:"22:00"});
+
+        }
+        await fetch('http://share-park-back-end.herokuapp.com/updateTime',{
             method:'POST',
             headers:{
                 'Accept':'application/json',
@@ -285,8 +305,8 @@ export default class SettingsScreenEmpWithParking extends Component{
             },
             body: JSON.stringify({
                 // username:
-                hour:this.state.selectedHours,
-                minute:this.state.selectedMinutes,
+             
+                hour:this.state.item,
                 parkingNum:this.state.user.parkingNum
             })
           })
@@ -308,7 +328,7 @@ export default class SettingsScreenEmpWithParking extends Component{
     AddEvent=()=>
     {
         this.SetCurrentDate();
-      fetch('http://192.168.1.121:3000/AddEvent',{
+      fetch('http://share-park-back-end.herokuapp.com/AddEvent',{
         method:'POST',
         headers:{
             'Accept':'application/json',
@@ -385,15 +405,55 @@ const styles=StyleSheet.create(
             fontWeight:'bold',
             textAlign:'center',
         },
-        timepick:{
-            flex: 1,
-            paddingTop:-10,
-            margin:30,
-            padding:10,
-            // backgroundColor: '#fff',
-            backgroundColor: '#228B22',
+        itemsContainerStyle: {
+            borderRadius: 0,
+            backgroundColor: 'green',
+            marginBottom: 30,
+            padding: 0,
+        },
+        itemsChildStyle: {
+            paddingHorizontal: 0
+        },
+        itemStyle: {
+            marginTop: 10,
+            backgroundColor: '#919191',
+            borderBottomColor: 'transparent',
+        },
+        itemTextStyle: {
+            color: '#fff',
+            fontSize: 18,
+        },
+        selectTextStyle: {
+            color: 'white',
+            fontSize: 20,
+        },
+        selectStyle: {
+            borderWidth: 0,
+            paddingTop: 21,
+            paddingLeft: 0,
+        },
+        sectionStyle: {
+            borderRadius: 0,
+        },
+        sectionTextStyle: {
+            fontSize: 20,
+            color: '#fff',
+        },
+        cancelStyle: {
+            backgroundColor: '#22A7F0',
+            paddingVertical: 20,
             alignItems: 'center',
             justifyContent: 'center',
+            marginBottom: 15,
+            borderRadius: 0,
+        },
+        cancelTextStyle: {
+            color: "#FFF",
+            fontSize: 18,
+        },
+        picker:{
+            backgroundColor:'green',
+            width:200
         }
     }
 )
