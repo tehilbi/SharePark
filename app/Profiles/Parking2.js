@@ -15,7 +15,7 @@ export default class Parking2 extends Component{
     await this.time();
    }
    async time(){
-    const res = await fetch('http://share-park-back-end.herokuapp.com/timePicker2',{
+    const res = await fetch('http://192.168.1.121:3000/timePicker2',{
         method:'POST',
         headers:{
             'Accept':'application/json',
@@ -31,25 +31,6 @@ export default class Parking2 extends Component{
       this.setState({hour:'22', minute:'00' });
     }
 }
-
-  // availableParking(){
-  //       this.setState({parkingColor2:'g'});
-  // }
-
-  // notAvailableParking(){
-  //     this.setState({parkingColor2:'r'});
-  // }
-
-  // blueParking(){
-  //   this.setState({parkingColor2:'b'});
-  // }
-
-  // componentWillMount(){
-  //   if(this.props.parkingColor2==='g')
-  //        this.availableParking();
-  //   if(this.props.parkingColor2==='r')
-  //        this.notAvailableParking();
-  // }
 
    render(){
 

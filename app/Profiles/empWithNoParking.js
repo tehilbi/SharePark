@@ -17,13 +17,12 @@ export default class empWithNoParking extends Component{
         super(props);
         this.state=
         {
-           // id:this.props.navigation.state.params.id,
             user:this.props.navigation.state.params.user
         }
     }
   render(){  
     return(
-       <AppEmpWithNoParking  /*id={id=this.state.id}*/ user={user=this.state.user}/> 
+       <AppEmpWithNoParking  user={user=this.state.user}/> 
     );
   }
 }

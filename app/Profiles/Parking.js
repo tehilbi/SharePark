@@ -9,25 +9,6 @@ export default class Parking extends Component{
          parkingColor:''
        }       
    }
-  
-  // availableParking(){
-  //       this.setState({parkingColor1:'g'});
-  // }
-
-  // notAvailableParking(){
-  //     this.setState({parkingColor1:'r'});
-  // }
-
-  // blueParking(){
-  //   this.setState({parkingColor1:'b'});
-  // }
-
-  // componentWillMount(){
-  //   if(this.props.parkingColor1==='g')
-  //        this.availableParking();
-  //   if(this.props.parkingColor1==='r')
-  //        this.notAvailableParking();
-  // }
 
    render(){
         if(this.props.parkingColor=='orange'){

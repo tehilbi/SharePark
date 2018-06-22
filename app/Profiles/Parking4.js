@@ -6,7 +6,6 @@ export default class Parking4 extends Component{
   constructor(props){
        super(props);
        this.state={
-        // parkingColor4:''
         hour:'',
         minute:''
        }       
@@ -15,7 +14,7 @@ export default class Parking4 extends Component{
     await this.time();
    }
    async time(){
-    const res = await fetch('http://share-park-back-end.herokuapp.com/timePicker3',{
+    const res = await fetch('http://192.168.1.121:3000/timePicker3',{
         method:'POST',
         headers:{
             'Accept':'application/json',
@@ -31,24 +30,6 @@ export default class Parking4 extends Component{
       this.setState({hour:'22', minute:'00' });
     }
 }
-  // availableParking(){
-  //       this.setState({parkingColor4:'g'});
-  // }
-
-  // notAvailableParking(){
-  //     this.setState({parkingColor4:'r'});
-  // }
-
-  // blueParking(){
-  //   this.setState({parkingColor4:'b'});
-  // }
-
-  // componentWillMount(){
-  //   if(this.props.parkingColor4==='g')
-  //        this.availableParking();
-  //   if(this.props.parkingColor4==='r')
-  //        this.notAvailableParking();
-  // }
 
    render(){
     if(this.props.parkingColor4=='orange'){

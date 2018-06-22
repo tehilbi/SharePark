@@ -111,15 +111,15 @@ export default class AddUser extends Component{
                     </TextInput>
 
                     <Picker
-                            label="Permission"
-                            style={{width:'100%'}}
-                            selectedValue={this.state.permission}
-                            onValueChange={(itemValue,itemIndex) => this.setState({permission:itemValue})}
-                            >                 
-                            <Picker.Item label='Please select an option...' value='0' />          
-                            <Picker.Item label="Manager" value="1" />
-                            <Picker.Item label="Employee with parking spot" value="2"/>
-                            <Picker.Item label="Employee without parking spot" value="3"/>
+                        label="Permission"
+                        style={{width:'100%'}}
+                        selectedValue={this.state.permission}
+                        onValueChange={(itemValue,itemIndex) => this.setState({permission:itemValue})}
+                        >                 
+                        <Picker.Item label='Please select an option...' value='0' />          
+                        <Picker.Item label="Manager" value="1" />
+                        <Picker.Item label="Employee with parking spot" value="2"/>
+                        <Picker.Item label="Employee without parking spot" value="3"/>
                     </Picker>
 
                     <Picker

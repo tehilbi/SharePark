@@ -16,7 +16,7 @@ export default class Parking1 extends Component{
     await this.time();
    }
    async time(){
-    const res = await fetch('http://share-park-back-end.herokuapp.com/timePicker1',{
+    const res = await fetch('http://192.168.1.121:3000/timePicker1',{
         method:'POST',
         headers:{
             'Accept':'application/json',
@@ -33,7 +33,6 @@ export default class Parking1 extends Component{
     }
 }
    render(){
-     console.log("hhhhhhhhhhhhhhhhhhhhhhhooooooooooooooooooooouuuuuuuuuuuuuuuuurrrrrrrrrrr1111111111111111111111111111")
      console.log(this.state.hour);
      console.log(this.state.minute);
     if(this.props.parkingColor1=='orange'){
