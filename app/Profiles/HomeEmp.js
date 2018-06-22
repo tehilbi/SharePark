@@ -126,13 +126,12 @@ export default class HomeEmp extends Component{
     }
 
     render(){     
-  
-
-            const items = [
-			{ section: true, label: 'Please select time:' }, { label: '9:00' }, { label: '10:00' }, { label: '11:00' }, { label: '12:00' },
-            { label: '13:00' },{ label: '14:00' },{ label: '15:00' },{ label: '16:00' },{ label: '17:00' },{ label: '18:00' },{ label: '19:00' },
-            { label: '20:00' },{ label: '21:00' },{ label: '22:00' }
+        const items = [
+			{ section: true, label: 'Please select time:' }, { label: '9:00' },{ label: '9:30' }, { label: '10:00' },{ label: '10:30' }, { label: '11:00' },{ label: '11:30' }, { label: '12:00' },{ label: '12:30' },
+            { label: '13:00' },{ label: '13:30' },{ label: '14:00' },{ label: '14:30' },{ label: '15:00' },{ label: '15:30' },{ label: '16:00' },{ label: '16:30' },{ label: '17:00' },{ label: '17:30' },{ label: '18:00' },{ label: '18:30' },{ label: '19:00' },{ label: '19:30' },
+            { label: '20:00' },{ label: '20:30' },{ label: '21:00' },{ label: '21:30' },{ label: '22:00' }
 		];
+     
      
         if (this.state.loaded1==false|| this.state.loaded2==false || this.state.loaded3==false || this.state.loaded4==false) {
             return(
