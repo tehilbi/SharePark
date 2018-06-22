@@ -13,7 +13,7 @@ export default class Parking4 extends Component{
     await this.time();
    }
    async time(){
-    const res = await fetch('http://share-park-back-end.herokuapp.com/timePicker4',{
+    const res = await fetch('http://192.168.1.121:3000/timePicker4',{
         method:'POST',
         headers:{
             'Accept':'application/json',

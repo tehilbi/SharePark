@@ -50,7 +50,7 @@ export default class AddUser extends Component{
     }
 
     getTheData(callback) {
-        var url = "http://share-park-back-end.herokuapp.com/FetchOcupations/";
+        var url = "http://192.168.1.121:3000/FetchOcupations/";
         fetch(url).then(response => response.json())
             .then(json => callback(json))
             .catch(error => console.log(error));
@@ -148,7 +148,7 @@ export default class AddUser extends Component{
 
   AddUser=()=>
   {
-        fetch('http://share-park-back-end.herokuapp.com/AddEmployee',{
+        fetch('http://192.168.1.121:3000/AddEmployee',{
         method:'POST',
         headers:{
             'Accept':'application/json',
@@ -194,7 +194,7 @@ export default class AddUser extends Component{
     AddEvent=()=>
     {
         this.SetCurrentTime();
-        fetch('http://share-park-back-end.herokuapp.com/AddEvent',{
+        fetch('http://192.168.1.121:3000/AddEvent',{
         method:'POST',
         headers:{
             'Accept':'application/json',

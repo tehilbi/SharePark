@@ -40,7 +40,7 @@ export default class EventLog extends Component{
     }
 
     getTheData(callback) {
-        var url = "http://share-park-back-end.herokuapp.com/fetchEvents/";
+        var url = "http://192.168.1.121:3000/fetchEvents/";
         fetch(url).then(response => response.json())
             .then(json => callback(json))
             .catch(error => console.log(error));

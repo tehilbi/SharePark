@@ -45,7 +45,7 @@ export default class RemoveUser extends Component{
     }
 
     getTheData(callback) {
-        var url = "http://share-park-back-end.herokuapp.com/Employees/";
+        var url = "http://192.168.1.121:3000/Employees/";
         fetch(url).then(response => response.json())
             .then(json => callback(json))
             .catch(error => console.log(error));
@@ -149,7 +149,7 @@ export default class RemoveUser extends Component{
     }
     DeleteEmployee=()=>
     {
-        fetch('http://share-park-back-end.herokuapp.com/RemoveEmployee',{
+        fetch('http://192.168.1.121:3000/RemoveEmployee',{
             method: 'POST',
             headers: {
             'Accept': 'application/json',
@@ -194,7 +194,7 @@ export default class RemoveUser extends Component{
         const { FirstName, LastName } = this.state.user;
         const { fname, lname } = this.state;
         this.SetCurrentDate();
-        fetch('http://share-park-back-end.herokuapp.com/AddEvent',{
+        fetch('http://192.168.1.121:3000/AddEvent',{
         method:'POST',
         headers:{
             'Accept':'application/json',

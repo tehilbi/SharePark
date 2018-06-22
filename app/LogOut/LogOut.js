@@ -31,7 +31,7 @@ export default class LogOut extends Component{
     }
 
     async logoutToken(){
-        await fetch('http://share-park-back-end.herokuapp.com/updateTokenLogout',{
+        await fetch('http://192.168.1.121:3000/updateTokenLogout',{
         method:'POST',
         headers:{
             'Accept':'application/json',

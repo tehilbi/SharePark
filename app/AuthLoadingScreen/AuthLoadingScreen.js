@@ -60,7 +60,7 @@ export default class AuthLoadingScreen extends Component {
     }
      getPermission()
     {
-        fetch('http://share-park-back-end.herokuapp.com/FetchToken',{
+        fetch('http://192.168.1.121:3000/FetchToken',{
         method:'POST',
         headers:{
             'Accept':'application/json',
@@ -118,7 +118,7 @@ export default class AuthLoadingScreen extends Component {
         const { FirstName, LastName } = this.state.user;
         this.SetCurrentDate();
        
-        fetch('http://share-park-back-end.herokuapp.com/AddEvent',{
+        fetch('http://192.168.1.121:3000/AddEvent',{
         method:'POST',
         headers:{
             'Accept':'application/json',
