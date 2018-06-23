@@ -120,6 +120,9 @@ export default class LoginPage extends Component{
                 this.setState({user:res.user});
                 this.updateToken();
             }
+            else{
+                alert(res.message);
+            }
         })
         .done();
     }
